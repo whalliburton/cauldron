@@ -1,0 +1,33 @@
+#!/bin/bash
+
+repo="conrad@chartthenet.com"
+repodir="/mnt/projects"
+
+upper=`echo -n ${1:0:1} | tr [a-z] [A-Z]; echo ${1:1}`
+
+cd /lisp/projects/new-project
+
+if [ -d ../$1 ]; then 
+    echo "Error: ../$1 already exists."
+    exit -1
+fi
+
+mkdir ../$1
+cp -r * ../$1
+cp .* ../$1
+find ../$1 -type f -exec sed -i "s/new-project/$1/g" {} \;
+find ../$1 -type f -exec sed -i "s/New-Project/$upper/g" {} \;
+
+rm ../$1/new_*
+mv ../$1/new-project.asd ../$1/$1.asd
+ln -s ../$1/$1.asd ../systems
+
+cd ../$1
+git init
+git add * .gitignore
+git commit -m "Initial."
+cd ..
+rsync -avz $1 -e ssh $repo:$repodir
+rm -rf $1
+git clone ssh://$repo$repodir/$1
+
