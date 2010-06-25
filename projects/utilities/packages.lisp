@@ -1,9 +1,9 @@
 ;; packages.lisp
 
 (defpackage utilities
-  (:use common-lisp)
+  (:use common-lisp iterate)
   (:import-from sb-ext quit)
-  (:export newline))
+  (:export newline slurp slurp-stream slurp-lines))
 
 
 
