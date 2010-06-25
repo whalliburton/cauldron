@@ -12,7 +12,7 @@
       do 
    (handler-case 
        (progn
-         (format t "Staring SWANK on ~a~%" port)
+         (format t "Starting SWANK on ~a~%" port)
          (swank:create-server :dont-close t :port port :coding-system "utf-8-unix")
          (setf running nil))
      (sb-bsd-sockets:address-in-use-error () nil)))

@@ -1,16 +1,7 @@
 #!/bin/bash
 
-if [[ -f /mnt/cores/cards.core ]]; then
-    /usr/local/bin/sbcl \
-        --core /mnt/cores/cards.core \
-        --dynamic-space-size 1024 \
-        --load start.lisp \
-        --eval "(in-package :cards)" \
-        "$@"
-else
-    /usr/local/bin/sbcl \
-        --dynamic-space-size 1024 \
-        --load start.lisp \
-        --eval "(in-package :cards)" \
-        "$@"
-fi
+/usr/local/bin/sbcl \
+    --dynamic-space-size 1024 \
+    --load start.lisp \
+    --eval "(in-package :cards)" \
+    "$@"
