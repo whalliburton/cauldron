@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rm -rf `find . -type d | grep "\.sbcl-"`
+rm -f `find . -type f | grep "\.fasl"`
+rm -f `find . -type f | grep "~"`
+rm -f `find . -type f | grep "#.*#$"`
+rmdir `find . | grep "~"` 2> /dev/null
