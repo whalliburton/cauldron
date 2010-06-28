@@ -4,7 +4,8 @@
   :serial t
   :components ((:static-file "web.asd")
 	       (:file "packages")
-	       (:file "web"))
+	       (:file "web")
+	       (:file "surfraw"))
   :depends-on ())
 
 
