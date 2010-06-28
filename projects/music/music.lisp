@@ -16,6 +16,9 @@
       (setf *timidity* (run-program "/usr/bin/timidity" '("-ie" "") :input :stream :output :stream :wait nil))
       (make-thread #'message-read-thread :name "message-read-thread"))))
 
+(defun start-if-not-running ()
+  (unless (running) (start)))
+
 (defun message-read-thread ()
   (loop (send-message *messages* (read (sb-ext:process-output *timidity*)))))
 
@@ -33,10 +36,10 @@
     (format stream "~a~%" command)
     (force-output stream)))
 
-(defparameter *song* "/home/conrad/music/beethoven/Sonate01_Opus2_1.mid")
-(defparameter *song2* "/home/conrad/music/beethoven/Sonate02_Opus2_2.mid")
+(defparameter *song* "/lisp/projects/music/songs/Sonate14_Opus27_2_ClairDeLune.mid")
 
-(defun play (filename)
+(defun play (&optional (filename *song*))
+  (start-if-not-running)
   (send-command "L")
   (send-command (format nil "PLAY ~a" filename)))
 
