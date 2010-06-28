@@ -15,7 +15,7 @@ cp .* ../$1
 find ../$1 -type f -exec sed -i "s/new-project/$1/g" {} \;
 find ../$1 -type f -exec sed -i "s/New-Project/$upper/g" {} \;
 
-rm ../$1/new_*
+rm ../$1/new_* ../$1/new-sub*
 mv ../$1/new-project.asd ../$1/$1.asd
 ln -s ../$1/$1.asd ../systems
 
