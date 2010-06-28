@@ -75,3 +75,6 @@
 
 (defun graphics-toggle ()
   (send-command "g"))
+
+(defun quit-timidity ()
+  (send-command "Q"))
