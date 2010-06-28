@@ -6,6 +6,6 @@
 	       (:file "packages")
 	       (:file "first")
 	       (:file "initialize"))
-  :depends-on (:cards :laptop))
+  :depends-on (:cards :laptop :web))
 
 
