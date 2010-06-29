@@ -6,7 +6,8 @@
 	       (:file "packages")
 	       (:file "thinkpad")
 	       (:file "devices")
-               (:file "memory"))
-  :depends-on (:utilities :print-table :split-sequence :cl-fad))
+               (:file "memory")
+               (:file "processes"))
+  :depends-on (:utilities :print-table :split-sequence :cl-fad :anaphora))
 
 

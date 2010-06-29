@@ -23,3 +23,9 @@ a vector of ELEMENT-TYPE."
     (iter (for line = (read-line f nil))
           (while line)
           (collect line))))
+
+(defun slurp-and-split-on-colon (filename)
+  "For parsing /proc files."
+  (mapcar (lambda (el)
+            (mapcar (lambda (el) (string-trim '(#\space #\tab) el)) (split-sequence #\: el)))
+          (slurp-lines filename)))
