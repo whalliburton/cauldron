@@ -19,7 +19,7 @@
 ;(row-extend '((1 2 3) (1)) 5)
 
 (defun print-table (rows &key indent (spacing 2) (stream t) max-column-width
-                         title (indent-title t))
+                         title (indent-title t) right-justified)
   (when title
     (format stream
             (if (and indent (< 0 indent) indent-title)
@@ -54,9 +54,7 @@
                  (when (and indent (< 0 indent)) (princ (format nil "~~~AT" indent) str))
                  (iter (for size in-vector maxs)
                        (for x upfrom 1)
-                       (if (= x (length maxs))
-                         (princ "~A" str)
-                         (format str "~~~Aa" (+ size spacing))))
+                       (format str "~~~A~Aa" (+ size spacing) (if right-justified "@" "")))
                  (princ "~%" str))))
           (iter (for row in row-strings)
                 (apply #'format stream format-string row)))))))
