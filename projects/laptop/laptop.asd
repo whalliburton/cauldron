@@ -5,7 +5,8 @@
   :components ((:static-file "laptop.asd")
 	       (:file "packages")
 	       (:file "thinkpad")
-	       (:file "devices"))
+	       (:file "devices")
+               (:file "memory"))
   :depends-on (:utilities :print-table :split-sequence :cl-fad))
 
 
