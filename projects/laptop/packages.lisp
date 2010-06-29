@@ -1,9 +1,9 @@
 ;; packages.lisp
 
 (defpackage laptop
-  (:use common-lisp utilities split-sequence print-table)
+  (:use common-lisp utilities split-sequence print-table cl-fad)
   (:import-from sb-ext quit)
-  (:export thermal))
+  (:export thermal device devices))
 
 
 

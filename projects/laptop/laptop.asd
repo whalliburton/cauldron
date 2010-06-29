@@ -4,7 +4,8 @@
   :serial t
   :components ((:static-file "laptop.asd")
 	       (:file "packages")
-	       (:file "thinkpad"))
-  :depends-on (:utilities :print-table :split-sequence))
+	       (:file "thinkpad")
+	       (:file "devices"))
+  :depends-on (:utilities :print-table :split-sequence :cl-fad))
 
 

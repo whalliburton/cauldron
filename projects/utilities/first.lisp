@@ -7,4 +7,6 @@
     (iter (repeat (car args)) (apply #'terpri (cdr args)))
     (apply #'terpri args)))
 
+(defun last1 (list)
+  (car (last list)))
 
