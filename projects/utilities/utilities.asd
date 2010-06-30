@@ -5,7 +5,8 @@
   :components ((:static-file "utilities.asd")
 	       (:file "packages")
 	       (:file "first")
-	       (:file "slurping"))
-  :depends-on (:iterate))
+	       (:file "slurping")
+	       (:file "run"))
+  :depends-on (:iterate :split-sequence))
 
 

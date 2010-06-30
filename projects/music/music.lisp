@@ -13,7 +13,8 @@
   (if (running)
     (warn "Timidity is already running.")
     (progn
-      (setf *timidity* (run-program "/usr/bin/timidity" '("-ie" "") :input :stream :output :stream :wait nil))
+      (setf *timidity* (run-program "/usr/bin/timidity" '("-ie" "") 
+                                    :input :stream :output :stream :wait nil))
       (make-thread #'message-read-thread :name "message-read-thread"))))
 
 (defun start-if-not-running ()

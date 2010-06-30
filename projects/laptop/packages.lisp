@@ -6,8 +6,8 @@
   (:export thermal 
            devices device power-supply battery
            memory-information 
-           process processes 
-           identities))
+           processes process 
+           identities ssh-identity))
 
 
 
