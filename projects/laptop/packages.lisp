@@ -7,7 +7,8 @@
            devices device power-supply battery
            memory-information 
            processes process 
-           identities ssh-identity))
+           identities ssh-identity
+           system-information))
 
 
 

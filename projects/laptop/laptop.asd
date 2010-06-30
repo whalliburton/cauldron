@@ -7,7 +7,8 @@
 	       (:file "thinkpad")
 	       (:file "devices")
                (:file "memory")
-               (:file "processes"))
+               (:file "processes")
+               (:file "system"))
   :depends-on (:utilities :print-table :split-sequence :cl-fad :anaphora))
 
 
