@@ -47,20 +47,10 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
        (if (< pos blocksize)
 	   (return (subseq string 0 string-filled))))))
 
-(defun sysfs-field-exists? (path name)
-  (probe-file (merge-pathnames (make-pathname :name name) path)))
-
-(defun sysfs-field (path name)
-  (with-open-file (file (merge-pathnames (make-pathname :name name)  path))
-    (read-line-from-sysfs file)))
-
-(defun sysfs-int-field (path name)
-  (parse-integer (sysfs-field path name) :junk-allowed t))
-
-(defun sysfs-int-field-or-nil (path name)
-  (if (sysfs-field-exists? path name)
-    (sysfs-int-field path name)
-    nil))
+(defun read-sysfs-field (path field-name)
+ (with-open-file 
+     (file (merge-pathnames (make-pathname :name field-name) path))
+   (read-line-from-sysfs file)))
 
 ;;; original
 
@@ -69,9 +59,15 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
           (list-directory "/sys/class")))
 
 (defclass device ()
-  ((name :initarg :name :reader name)
+  ((name :initarg :name)
    (path :initarg :path :reader path)
-   (class :initarg :class :reader device-class)))
+   (class :initarg :class)))
+
+(defmethod sysfs-field ((device device) field-name &optional (as 'string))
+  (let ((val (read-sysfs-field (path device) field-name)))
+    (ecase as
+      (string val)
+      (integer (parse-integer val :junk-allowed t)))))
 
 (defmethod print-object ((device device) stream)
   (with-slots (name class) device
@@ -88,26 +84,26 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
 
 (defmethod initialize-instance :after ((power-supply power-supply) &rest rest)
   (declare (ignore rest))
-  (with-slots (type path) power-supply
-    (setf type (sysfs-field path "type"))))
+  (setf (slot-value power-supply 'type) (sysfs-field power-supply "type")))
 
-(defclass battery (power-supply) 
-  ())
+(defclass battery (power-supply) ())
 
 (defmethod battery-percentage ((battery battery))
-  (with-slots (path) battery
-    (* 100 (/ (sysfs-int-field path "power_now")
-              (sysfs-int-field path "energy_full")))))
+  (* 100 (/ (sysfs-field battery "energy_now" 'integer)
+            (sysfs-field battery "energy_full" 'integer))))
+
+(defmethod battery-status ((battery battery))
+  (sysfs-field battery "status"))
 
 (defmethod print-object ((battery battery) stream)
   (with-slots (name type) battery
     (print-unreadable-object (battery stream :type t) 
-      (format stream "~a ~,2f%" name (battery-percentage battery)))))
+      (format stream "~a ~,2f% ~a" name (battery-percentage battery) (battery-status battery)))))
 
 (defun class-from-sysfs-class-path (class path)
   (case class
     (:power_supply 
-       (let ((type (sysfs-field path "type")))
+       (let ((type (read-sysfs-field path "type")))
          (cond 
            ((string= type "Battery") 'battery)
            (t 'power-supply))))

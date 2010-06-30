@@ -4,7 +4,7 @@
   (:use common-lisp utilities split-sequence print-table cl-fad anaphora)
   (:import-from sb-ext quit)
   (:export thermal 
-           devices device power-supply
+           devices device power-supply battery
            memory-information 
            process processes 
            identities))
