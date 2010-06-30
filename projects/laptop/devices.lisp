@@ -78,6 +78,41 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
     (print-unreadable-object (device stream :type t) 
       (format stream "~a ~a" class name))))
 
+(defclass power-supply (device) 
+  ((type :initarg :type)))
+
+(defmethod print-object ((power-supply power-supply) stream)
+  (with-slots (name type) power-supply
+    (print-unreadable-object (power-supply stream :type t) 
+      (format stream "~a ~a" name type))))
+
+(defmethod initialize-instance :after ((power-supply power-supply) &rest rest)
+  (declare (ignore rest))
+  (with-slots (type path) power-supply
+    (setf type (sysfs-field path "type"))))
+
+(defclass battery (power-supply) 
+  ())
+
+(defmethod battery-percentage ((battery battery))
+  (with-slots (path) battery
+    (* 100 (/ (sysfs-int-field path "power_now")
+              (sysfs-int-field path "energy_full")))))
+
+(defmethod print-object ((battery battery) stream)
+  (with-slots (name type) battery
+    (print-unreadable-object (battery stream :type t) 
+      (format stream "~a ~,2f%" name (battery-percentage battery)))))
+
+(defun class-from-sysfs-class-path (class path)
+  (case class
+    (:power_supply 
+       (let ((type (sysfs-field path "type")))
+         (cond 
+           ((string= type "Battery") 'battery)
+           (t 'power-supply))))
+    (t 'device)))
+
 (defun devices (&optional class)
   "List all the devices of CLASS. If CLASS is NIL, list all the devices."
   (if (null class)
@@ -86,7 +121,7 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
       (unless (probe-file path)
         (error "SYSFS class ~a does not exists." class))
       (mapcar (lambda (el) 
-                (make-instance 'device 
+                (make-instance (class-from-sysfs-class-path class el)
                                :name (last1 (pathname-directory el)) 
                                :path el
                                :class class))
