@@ -80,7 +80,9 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
 (defmethod print-object ((power-supply power-supply) stream)
   (with-slots (name type) power-supply
     (print-unreadable-object (power-supply stream :type t) 
-      (format stream "~a ~a" name type))))
+      (format stream "~a ~a ~(~a~)" name type 
+              (case (sysfs-field power-supply "online" 'integer)
+                (1 :online) (0 :offline))))))
 
 (defmethod initialize-instance :after ((power-supply power-supply) &rest rest)
   (declare (ignore rest))
