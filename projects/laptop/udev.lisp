@@ -41,8 +41,7 @@
   (make-thread 'udev-monitor-thread :name "udev-monitor" ))
 
 (defun udev-monitor-thread ()
-  (let* ((udev (udev-new))
-         (monitor (udev-monitor-new-from-netlink udev "udev")))
+  (let ((monitor (udev-monitor-new-from-netlink (udev-new) "udev")))
     (iter (for subsystem in *udev-monitor-subsystems*)
           (udev-monitor-filter-add-match-subsystem-devtype monitor subsystem (null-pointer)))
     (udev-monitor-enable-receiving monitor)
