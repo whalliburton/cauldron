@@ -6,7 +6,8 @@
 	       (:file "packages")
 	       (:file "first")
 	       (:file "slurping")
-	       (:file "run"))
+	       (:file "run")
+               (:file "strings"))
   :depends-on (:iterate :split-sequence))
 
 
