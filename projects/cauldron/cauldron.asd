@@ -6,6 +6,6 @@
 	       (:file "packages")
 	       (:file "first")
 	       (:file "initialize"))
-  :depends-on (:cards :laptop :web :music))
+  :depends-on (:cards :laptop :web :music :print-table :iterate))
 
 
