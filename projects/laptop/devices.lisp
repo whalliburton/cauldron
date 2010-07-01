@@ -102,6 +102,18 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
     (print-unreadable-object (battery stream :type t) 
       (format stream "~a ~,2f% ~a" name (battery-percentage battery) (battery-status battery)))))
 
+(defclass input (device)
+  (name))
+
+(defmethod initialize-instance :after ((input input) &rest rest)
+  (declare (ignore rest))
+  (setf (slot-value input 'name) (sysfs-field input "name")))
+
+(defmethod print-object ((input input) stream)
+  (with-slots (name) input
+    (print-unreadable-object (input stream :type t) 
+      (format stream "~a" name))))
+
 (defun class-from-sysfs-class-path (class path)
   (case class
     (:power_supply 
@@ -109,6 +121,10 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
          (cond 
            ((string= type "Battery") 'battery)
            (t 'power-supply))))
+    (:input 
+       (if (string-starts-with (last1 (pathname-directory path)) "input")
+         'input
+         'device))
     (t 'device)))
 
 (defun devices (&optional class)
