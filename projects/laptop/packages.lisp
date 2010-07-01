@@ -1,7 +1,8 @@
 ;; packages.lisp
 
 (defpackage laptop
-  (:use common-lisp utilities split-sequence print-table cl-fad anaphora)
+  (:use common-lisp utilities split-sequence print-table cl-fad anaphora cffi iterate
+        sb-thread sb-concurrency)
   (:import-from sb-ext quit)
   (:export thermal 
            devices device power-supply battery input

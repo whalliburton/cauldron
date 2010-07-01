@@ -8,7 +8,8 @@
 	       (:file "devices")
                (:file "memory")
                (:file "processes")
-               (:file "system"))
-  :depends-on (:utilities :print-table :split-sequence :cl-fad :anaphora))
+               (:file "system")
+               (:file "udev"))
+  :depends-on (:utilities :print-table :split-sequence :cl-fad :anaphora :cffi :iterate))
 
 
