@@ -4,4 +4,5 @@
 
 (require :cauldron)
 (in-package :cauldron)
+(cauldron:initialize)
 

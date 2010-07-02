@@ -68,18 +68,20 @@
 ;;; monitor thread
 
 (defvar *udev-monitor-thread* nil)
-(defvar *udev-monitor-subsystems* '("block"))
+(defparameter *udev-monitor-subsystems* '("block" "usb"))
 (defvar *udev-messages* (make-mailbox))
 
 (defun start-udev-monitor ()
   (when (and *udev-monitor-thread* (thread-alive-p *udev-monitor-thread*))
     (error "The UDEV monitor is already running."))
+  (format t "Starting the udev monitor on subsystems: ~{~A~^ ~}~%" *udev-monitor-subsystems*)
   (setf *udev-monitor-thread* (make-thread 'udev-monitor-thread :name "udev-monitor" )))
 
 (defun restart-udev-monitor ()
   (unless (thread-alive-p *udev-monitor-thread*) (error "The UDEV monitor is not running."))
   ;;; does not properly clean up
   (destroy-thread *udev-monitor-thread*)
+  (sleep 1)
   (start-udev-monitor))
 
 (defun udev-monitor-thread ()
@@ -93,5 +95,5 @@
             (udev-device-get-properties-list-entry 
              (udev-monitor-receive-device monitor)))))))
 
-
-;;; (receive-pending-messages *udev-messages*)
+(defun print-pending-udev-messages ()
+  (print (receive-pending-messages *udev-messages*)))
