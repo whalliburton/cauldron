@@ -96,4 +96,7 @@
              (udev-monitor-receive-device monitor)))))))
 
 (defun print-pending-udev-messages ()
-  (print (receive-pending-messages *udev-messages*)))
+  (iter (for message in (receive-pending-messages *udev-messages*))
+        (iter (for el in message)
+              (format t "~20a ~a~%" (car el) (cdr el)))
+        (newline)))
