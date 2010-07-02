@@ -28,6 +28,12 @@
 (defcommand chromium () ()
   (run-or-raise "chromium" '(:title "Chromium")))
 
+(defcommand firefox () ()
+  (run-or-raise "firefox" '(:title "Firefox"))) 
+
+(defcommand iptraf () ()
+  (run-or-raise "exec urxvt -e /lisp/scripts/paused-iptraf" '(:title "iptraf")))
+
 (defcommand tmux () ()
   (run-or-raise "exec urxvt -tn rxvt-unicode256 -e tmux attach" '(:title "tmux")))
 
@@ -43,17 +49,17 @@
   
   (fill-keymap 
    *top-map*
-   (kbd "s-x") '*root-map*
-   (kbd "s-h") *help-map*
-   (kbd "F1") "emacs-cauldron"
-   (kbd "F2") "tmux"
-   (kbd "F3") "chromium"
-   (kbd "F4") "start-terminal 0"
-   (kbd "F5") "start-terminal 1"
-   (kbd "F6") "start-terminal 2"
-   (kbd "F7") "start-terminal 3"
-   (kbd "F8") "start-terminal 4"
-   (kbd "s-h") "htop"
+   (kbd "s-x")       '*root-map*
+   (kbd "s-h")       *help-map*
+   (kbd "F1")        "emacs-cauldron"
+   (kbd "F2")        "tmux"
+   (kbd "F3")        "chromium"
+   (kbd "F4")        "start-terminal 0"
+   (kbd "F5")        "start-terminal 1"
+   (kbd "F6")        "start-terminal 2"
+   (kbd "F7")        "start-terminal 3"
+   (kbd "F8")        "start-terminal 4"
+   (kbd "s-h")       "htop"
    (kbd "s-Up")      "move-focus up"
    (kbd "s-Down")    "move-focus down"
    (kbd "s-Left")    "move-focus left"
@@ -62,14 +68,16 @@
    (kbd "s-M-Down")  "move-window down"
    (kbd "s-M-Left")  "move-window left"
    (kbd "s-M-Right") "move-window right"
-   (kbd "s-'")  "windowlist"
-   (kbd "s-p")  "show-window-properties"
+   (kbd "s-'")       "windowlist"
+   (kbd "s-p")       "show-window-properties"
    (kbd "s-SPC")     "pull-hidden-next"
-   (kbd "s-;")   "colon"
-   (kbd "s-:")   "eval"
+   (kbd "s-;")       "colon"
+   (kbd "s-:")       "eval"
    (kbd "s-3")       "vsplit"
    (kbd "s-2")       "hsplit"
-   (kbd "s-1")       "only")
+   (kbd "s-1")       "only"
+   (kbd "s-f")       "firefox"
+   (kbd "s-n")       "iptraf")
   
   (fill-keymap 
    *root-map*
@@ -177,5 +185,5 @@
 
 (run-shell-command "unclutter -idle 1 -jitter 2 -root")
 
-(load "/lisp/startup.lisp")
+;(load "/lisp/startup.lisp")
 

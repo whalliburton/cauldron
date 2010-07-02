@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# firing iptraf up immediatly via stumpwm is causeing display issues
+
+sleep 0.2
+sudo /usr/sbin/iptraf -i all
