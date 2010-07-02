@@ -4,19 +4,12 @@
   (:use common-lisp utilities split-sequence print-table cl-fad anaphora cffi iterate
         sb-thread sb-concurrency)
   (:import-from sb-ext quit)
+  (:import-from alexandria flatten)
   (:export thermal 
            devices device power-supply battery input
            memory-information 
            processes process 
            identities ssh-identity
-           system-information))
-
-
-
-  
-
-	   
-	   
-
-	   
-	
+           system-information
+           start-udev-monitor
+           ))

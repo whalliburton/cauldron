@@ -11,6 +11,6 @@
                (:file "system")
                (:file "udev"))
   :depends-on (:utilities :print-table :split-sequence :cl-fad :anaphora :cffi :iterate
-                          :sb-concurrency))
+                          :sb-concurrency :alexandria))
 
 

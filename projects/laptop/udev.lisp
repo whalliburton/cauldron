@@ -5,6 +5,13 @@
 (load-foreign-library "/usr/lib/libudev.so")
 
 (defcfun "udev_new" :pointer)
+(defcfun "udev_unref" :void (udev :pointer))
+
+(defmacro with-udev ((var) &body body)
+  `(let ((,var (udev-new)))
+     (unwind-protect 
+          (progn ,@body)
+       (udev-unref ,var))))
 
 ;;; monitor
 
@@ -30,6 +37,34 @@
                        (udev-list-entry-get-value list-entry)))
         (setf list-entry (udev-list-entry-get-next list-entry))))
 
+;;; enumerate
+
+(defcfun "udev_enumerate_new" :pointer (udev :pointer))
+(defcfun "udev_enumerate_unref" :void (enumerate :pointer))
+(defcfun "udev_enumerate_scan_subsystems" :int (enumerate :pointer))
+(defcfun "udev_enumerate_scan_devices" :int (enumerate :pointer))
+(defcfun "udev_enumerate_get_list_entry" :pointer (enumerate :pointer))
+
+(defmacro with-enumerate ((var udev) &body body)
+  `(let ((,var (udev-enumerate-new ,udev)))
+     (unwind-protect 
+          (progn ,@body)
+       (udev-enumerate-unref ,var))))
+
+(defun list-subsystems ()
+  (flatten
+   (with-udev (udev) 
+     (with-enumerate (enum udev)
+       (udev-enumerate-scan-subsystems enum)
+       (list-entry-to-list (udev-enumerate-get-list-entry enum))))))
+
+(defun list-devices ()
+  (flatten
+   (with-udev (udev) 
+     (with-enumerate (enum udev)
+       (udev-enumerate-scan-devices enum)
+       (list-entry-to-list (udev-enumerate-get-list-entry enum))))))
+
 ;;; monitor thread
 
 (defvar *udev-monitor-thread* nil)
@@ -37,8 +72,15 @@
 (defvar *udev-messages* (make-mailbox))
 
 (defun start-udev-monitor ()
-  (when *udev-monitor* (error "The UDEV monitor is already running."))
-  (make-thread 'udev-monitor-thread :name "udev-monitor" ))
+  (when (and *udev-monitor-thread* (thread-alive-p *udev-monitor-thread*))
+    (error "The UDEV monitor is already running."))
+  (setf *udev-monitor-thread* (make-thread 'udev-monitor-thread :name "udev-monitor" )))
+
+(defun restart-udev-monitor ()
+  (unless (thread-alive-p *udev-monitor-thread*) (error "The UDEV monitor is not running."))
+  ;;; does not properly clean up
+  (destroy-thread *udev-monitor-thread*)
+  (start-udev-monitor))
 
 (defun udev-monitor-thread ()
   (let ((monitor (udev-monitor-new-from-netlink (udev-new) "udev")))
@@ -50,3 +92,6 @@
            (list-entry-to-list
             (udev-device-get-properties-list-entry 
              (udev-monitor-receive-device monitor)))))))
+
+
+;;; (receive-pending-messages *udev-messages*)
