@@ -4,8 +4,8 @@
 
 (defclass window ()
   ((name :reader name :initarg :name :initform "window")
-   (width :reader width :initarg :width :initform 500)
-   (height :reader height :initarg :height :initform 500)
+   (width :reader width :initarg :width :initform (screen-size :width))
+   (height :reader height :initarg :height :initform (screen-size :height))
    (context :reader context :initarg :context)))
 
 (defmethod print-object ((window window) stream)
