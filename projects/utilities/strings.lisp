@@ -7,3 +7,26 @@
   (let ((mismatch (mismatch prefix string :test test)))
     (or (not mismatch) (= mismatch (length prefix)))))
 
+(defun process-string (string commands)
+  "A simple language for splitting and subseqing strings."  
+  (iter (with working = string) 
+        (for command in commands)
+        (let ((function (ecase (first command)
+                          (:split 'process-split)
+                          (:trim 'process-trim)
+                          (:up-to 'process-up-to))))
+          (setf working 
+                (if (consp working)
+                  (mapcar (lambda (el) (apply function el (cdr command))) working)
+                  (apply function working (cdr command)))))
+        (finally (return working))))
+
+(defun process-split (string delimiter)
+  (split-sequence delimiter string :remove-empty-subseqs t))
+
+(defun process-trim (string &rest characters)
+  (string-trim characters string))
+
+(defun process-up-to (string character)
+  (subseq string 0 (or (position character string)
+                       (error "Character ~s was not found in ~s." character string))))
