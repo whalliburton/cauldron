@@ -7,7 +7,8 @@
 	       (:file "first")
 	       (:file "slurping")
 	       (:file "run")
-               (:file "strings"))
+               (:file "strings")
+               (:file "pretty-printing"))
   :depends-on (:iterate :split-sequence))
 
 
