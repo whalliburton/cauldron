@@ -8,7 +8,9 @@
 	       (:file "slurping")
 	       (:file "run")
                (:file "strings")
-               (:file "pretty-printing"))
-  :depends-on (:iterate :split-sequence))
+               (:file "print-table")
+               (:file "pretty-printing")
+               (:file "time"))
+  :depends-on (:iterate :split-sequence :local-time))
 
 
