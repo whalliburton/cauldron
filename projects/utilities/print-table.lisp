@@ -1,6 +1,6 @@
 ;; print-table.lisp
 
-(in-package :print-table)
+(in-package :utilities)
 
 (defun max-min-row-length (rows)
   (iter (for row in rows)

@@ -1,7 +1,7 @@
 ;; packages.lisp
 
 (defpackage laptop
-  (:use common-lisp utilities split-sequence print-table cl-fad anaphora cffi iterate
+  (:use common-lisp utilities split-sequence cl-fad anaphora cffi iterate
         sb-thread sb-concurrency)
   (:import-from sb-ext quit)
   (:import-from alexandria flatten)
