@@ -4,7 +4,9 @@
   :serial t
   :components ((:static-file "graphics.asd")
 	       (:file "packages")
-	       (:file "window"))
+               (:file "constants")
+	       (:file "window")
+               (:file "demo"))
   :depends-on (:utilities :cl-cairo2 :cl-cairo2-xlib :cl-colors))
 
 
