@@ -7,6 +7,7 @@
 	       (:file "first")
                (:file "threads")
 	       (:file "initialize"))
-  :depends-on (:cards :laptop :web :music :databases :print-table :iterate))
+  :depends-on (:cards :laptop :web :music :databases :print-table :iterate
+                      :timer))
 
 
