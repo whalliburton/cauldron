@@ -25,3 +25,5 @@
        (list (make-instance 'process :pid it))))
    (list-directory "/proc/")))
 
+(defun describe-process (pid)
+  (print-table (slot-value (make-instance 'process :pid pid) 'status)))

@@ -8,8 +8,9 @@
   (:export thermal 
            devices device power-supply battery input
            memory-information 
-           processes process 
+           processes process describe-process
            identities ssh-identity
            system-information
            start-udev-monitor
+           print-pending-udev-messages
            ))
