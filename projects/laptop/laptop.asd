@@ -9,7 +9,9 @@
                (:file "memory")
                (:file "processes")
                (:file "system")
-               (:file "udev"))
+               (:file "udev")
+               ;;(:file "wireless")
+               )
   :depends-on (:utilities :split-sequence :cl-fad :anaphora :cffi :iterate
                           :sb-concurrency :alexandria))
 
