@@ -28,5 +28,6 @@
                           (seconds-to-duration-string 
                            (timestamp-difference 
                             (now)
-                            (parse-timestring (get-launch-time instance))))))))
+                            (parse-timestring (get-launch-time instance))))
+                          (get-key-name instance)))))
     (newline)))
