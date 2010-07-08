@@ -7,6 +7,9 @@
   (let ((mismatch (mismatch prefix string :test test)))
     (or (not mismatch) (= mismatch (length prefix)))))
 
+(defun string-contains-p (string string-to-find)
+  (search string-to-find string :test #'string=))
+
 (defun process-string (string commands)
   "A simple language for splitting and subseqing strings."  
   (iter (with working = string) 
