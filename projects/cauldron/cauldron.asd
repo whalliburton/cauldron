@@ -8,6 +8,6 @@
                (:file "threads")
 	       (:file "initialize"))
   :depends-on (:cards :laptop :web :music :databases :iterate
-                      :timer :network))
+                      :timer :network :linux))
 
 
