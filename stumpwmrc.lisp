@@ -31,6 +31,9 @@
 (defcommand firefox () ()
   (run-or-raise "firefox" '(:title "Firefox"))) 
 
+(defcommand conkeror () ()
+  (run-or-raise "conkeror" '(:title "Conkeror"))) 
+
 (defcommand iptraf () ()
   (run-or-raise "exec urxvt -e /lisp/scripts/paused-iptraf" '(:title "iptraf")))
 
@@ -57,7 +60,7 @@
    (kbd "F1")        "emacs-cauldron"
    (kbd "F2")        "tmux"
    (kbd "F3")        "chromium"
-   (kbd "F4")        "firefox"
+   (kbd "F4")        "conkeror"
    (kbd "F5")        "start-terminal 0"
    (kbd "F6")        "start-terminal 1"
    (kbd "F7")        "start-terminal 2"
