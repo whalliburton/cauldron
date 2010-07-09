@@ -3,6 +3,8 @@
 (in-package :laptop)
 
 (defun memory-information ()
-  (print-table (slurp-and-split-on-colon "/proc/meminfo") :right-justified t))
+  (print-table (process-string (slurp-lines "/proc/meminfo") '((:split #\:) (:trim #\space)))
+               :right-justified t))
+
 
 

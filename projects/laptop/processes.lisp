@@ -12,10 +12,14 @@
     (print-unreadable-object (process stream :type t)
       (format stream "~A ~A" pid name))))
 
+(defun proc-status (pid)
+  (process-string (slurp-lines (format nil "/proc/~a/status" pid))
+                  '((:split #\:) (:trim #\space #\tab))))
+
 (defmethod initialize-instance :after ((process process) &rest rest)
   (declare (ignore rest))
   (with-slots (pid status name) process
-    (setf status (slurp-and-split-on-colon (format nil "/proc/~a/status" pid))
+    (setf status (proc-status pid)
           name (cadr (assoc "Name" status :test #'string=)))))
 
 (defun processes ()
