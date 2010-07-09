@@ -40,6 +40,9 @@
 (defcommand htop () ()
   (run-or-raise "exec urxvt -e htop" '(:title "htop")))
 
+(defcommand iotop () ()
+  (run-or-raise "exec urxvt -e iotop -o" '(:title "iotop")))
+
 (defcommand start-terminal (&optional arg) ((:string "suffix: "))
   (run-or-raise  (format nil "exec urxvt -name urxvt~@[-~A~]" arg) `(:instance ,arg)))
 
@@ -61,6 +64,7 @@
    (kbd "F8")        "start-terminal 3"
    (kbd "F8")        "start-terminal 4"
    (kbd "s-h")       "htop"
+   (kbd "s-i")       "iotop"
    (kbd "s-Up")      "move-focus up"
    (kbd "s-Down")    "move-focus down"
    (kbd "s-Left")    "move-focus left"
