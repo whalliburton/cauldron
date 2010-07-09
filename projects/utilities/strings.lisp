@@ -20,7 +20,7 @@
                           (:up-to 'process-up-to))))
           (setf working 
                 (if (consp working)
-                  (mapcar (lambda (el) (apply function el (cdr command))) working)
+                  (mapcar (lambda (el) (process-string el (list command))) working)
                   (apply function working (cdr command)))))
         (finally (return working))))
 
