@@ -46,6 +46,21 @@
 (defcommand iotop () ()
   (run-or-raise "exec urxvt -e iotop -o" '(:title "iotop")))
 
+(defun goto-win (win)
+  (let* ((group (window-group win))
+         (frame (window-frame win))
+         (old-frame (tile-group-current-frame group)))
+    (frame-raise-window group frame win)
+    (focus-all win)
+    (unless (eq frame old-frame)
+      (show-frame-indicator group))))
+
+(defcommand xpdf () ()
+  (let ((hits (find-matching-windows '(:title "Xpdf") t nil)))
+    (if (car hits)
+      (goto-win (car hits))
+      (message "No running Xpdf."))))
+
 (defcommand start-terminal (&optional arg) ((:string "suffix: "))
   (run-or-raise  (format nil "exec urxvt -name urxvt~@[-~A~]" arg) `(:instance ,arg)))
 
@@ -66,6 +81,7 @@
    (kbd "F7")        "start-terminal 2"
    (kbd "F8")        "start-terminal 3"
    (kbd "F8")        "start-terminal 4"
+   (kbd "s-p")       "xpdf"
    (kbd "s-h")       "htop"
    (kbd "s-i")       "iotop"
    (kbd "s-Up")      "move-focus up"
@@ -77,7 +93,7 @@
    (kbd "s-M-Left")  "move-window left"
    (kbd "s-M-Right") "move-window right"
    (kbd "s-'")       "windowlist"
-   (kbd "s-p")       "show-window-properties"
+   (kbd "s-w")       "show-window-properties"
    (kbd "s-SPC")     "pull-hidden-next"
    (kbd "s-;")       "colon"
    (kbd "s-:")       "eval"
