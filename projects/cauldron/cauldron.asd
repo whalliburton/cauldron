@@ -6,8 +6,12 @@
 	       (:file "packages")
 	       (:file "first")
                (:file "threads")
+               (:file "stumpwm")
 	       (:file "initialize"))
-  :depends-on (:cards :laptop :web :music :databases :iterate
-                      :timer :network :linux))
+  :depends-on (:stumpwm :swank
+               :cards :laptop :web :music :databases :iterate
+               :timer :network 
+               ;;                      :linux
+               ))
 
 

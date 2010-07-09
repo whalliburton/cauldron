@@ -5,6 +5,6 @@
   :components ((:static-file "linux.asd")
 	       (:file "packages")
 	       (:file "shared-libraries"))
-  :depends-on ())
+  :depends-on (:utilities))
 
 

@@ -1,12 +1,9 @@
+;; stumpwm.lisp
+
 (in-package :stumpwm)
 
 (setf *startup-message* nil)
 
-(run-shell-command "xsetroot -cursor_name left_ptr")
-
-;; Load swank.
-(load "/lisp/site-lisp/slime/swank-loader.lisp")
-(swank-loader:init)
 (defcommand swank () ()
   (setf stumpwm:*top-level-error-action* :break)
   (loop for try-port = 4005 then (1+ try-port)
@@ -20,7 +17,6 @@
                 (sb-bsd-sockets:address-in-use-error () 
                   (warn "SWANK port ~a taken, trying the next." try-port)
                   t))))
-(swank)
 
 (defcommand emacs-cauldron () ()
   (run-or-raise "emacs --eval \"(connect-to-cauldron)\"" '(:class "Emacs")))
@@ -200,14 +196,19 @@
    (kbd "f") "describe-function"
    (kbd "k") "describe-key"
    (kbd "c") "describe-command"
-   (kbd "w") "where-is")
+   (kbd "w") "where-is"))
+
+(defun load-rc-file ()
+  (run-shell-command "xsetroot -cursor_name left_ptr")
+
+;; Load swank.
+  (load "/lisp/site-lisp/slime/swank-loader.lisp")
+  (swank-loader:init)
+  (swank)
+
+  (banish)
+  (emacs-cauldron)
+
+  (run-shell-command "unclutter -idle 1 -jitter 2 -root")
 
   (sync-keys))
-
-(banish)
-(emacs-cauldron)
-
-(run-shell-command "unclutter -idle 1 -jitter 2 -root")
-
-;(load "/lisp/startup.lisp")
-

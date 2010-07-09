@@ -4,6 +4,6 @@
 
 (defun initialize ()
   (start-udev-monitor)
-  (format t "Welcome to cauldron."))
+  (format t "~%Welcome to cauldron.~%~%"))
 
 

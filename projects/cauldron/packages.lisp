@@ -2,7 +2,9 @@
 
 (defpackage cauldron
   (:use common-lisp cards laptop web music utilities iterate sb-thread databases
-        network linux)
+        network 
+;;        linux
+        )
   (:import-from sb-ext quit)
   (:export initialize))
 
