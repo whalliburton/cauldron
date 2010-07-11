@@ -21,8 +21,10 @@
 (defcommand emacs-cauldron () ()
   (run-or-raise "emacs --eval \"(connect-to-cauldron)\"" '(:class "Emacs")))
 
+;; --enable-ipv6 is to workaround chromium failing to open localhost
+;; when no resolver is present
 (defcommand chromium () ()
-  (run-or-raise "chromium" '(:title "Chromium")))
+  (run-or-raise "chromium --enable-ipv6" '(:title "Chromium")))
 
 (defcommand firefox () ()
   (run-or-raise "firefox" '(:title "Firefox"))) 
@@ -52,7 +54,9 @@
       (show-frame-indicator group))))
 
 (defcommand xpdf () ()
-  (let ((hits (find-matching-windows '(:title "Xpdf") t nil)))
+  (let ((hits (append
+               (find-matching-windows '(:title "Xpdf") t nil)
+               (find-matching-windows '(:instance "acroread") t nil))))
     (if (car hits)
       (goto-win (car hits))
       (message "No running Xpdf."))))
