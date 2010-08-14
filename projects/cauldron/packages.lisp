@@ -5,8 +5,8 @@
         network 
 ;;        linux
         )
-  (:import-from sb-ext quit)
-  (:export initialize))
+  (:import-from sb-ext quit run-program)
+  (:export initialize new-project))
 
 
 
