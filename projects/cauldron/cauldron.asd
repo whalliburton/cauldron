@@ -11,7 +11,7 @@
 	       (:file "initialize"))
   :depends-on (:stumpwm :swank
                :cards :laptop :web :music :databases :iterate
-               :timer :network 
+               :timer :network :language
                ;;                      :linux
                ))
 
