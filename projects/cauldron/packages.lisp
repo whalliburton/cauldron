@@ -5,7 +5,7 @@
         network 
 ;;        linux
         )
-  (:import-from sb-ext quit run-program)
+  (:import-from sb-ext quit run-program posix-getenv)
   (:export initialize new-project))
 
 

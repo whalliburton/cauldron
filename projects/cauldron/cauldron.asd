@@ -4,7 +4,7 @@
   :serial t
   :components ((:static-file "cauldron.asd")
 	       (:file "packages")
-	       (:file "first")
+	       (:file "files")
                (:file "threads")
                (:file "stumpwm")
                (:file "new-project")
