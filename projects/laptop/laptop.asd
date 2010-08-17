@@ -8,6 +8,7 @@
 	       (:file "devices")
                (:file "memory")
                (:file "processes")
+               (:file "monitor")
                (:file "system")
                (:file "udev")
                ;;(:file "wireless")
