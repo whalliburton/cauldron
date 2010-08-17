@@ -10,7 +10,9 @@
                (:file "strings")
                (:file "print-table")
                (:file "pretty-printing")
-               (:file "time"))
+               (:file "time")
+               (:file "symbols")
+               (:file "assoc"))
   :depends-on (:iterate :split-sequence :local-time))
 
 
