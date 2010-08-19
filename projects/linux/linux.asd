@@ -2,8 +2,7 @@
 
 (defsystem :linux
   :serial t
-  :components ((:static-file "linux.asd")
-	       (:file "packages")
+  :components ((:file "packages")
 	       (:file "shared-libraries"))
   :depends-on (:utilities))
 
