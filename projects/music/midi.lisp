@@ -41,9 +41,9 @@
     (format stream "~a~%" command)
     (force-output stream)))
 
-(defparameter *song* "/lisp/projects/music/songs/Sonate14_Opus27_2_ClairDeLune.mid")
+(defparameter *midi-song* "/lisp/projects/music/songs/Sonate14_Opus27_2_ClairDeLune.mid")
 
-(defun play-midi (&optional (filename *song*))
+(defun play-midi (&optional (filename *midi-song*))
   "Start playing a midi song with filename FILENAME."
   (start-if-not-running)
   (send-command "L")

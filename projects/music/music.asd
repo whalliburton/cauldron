@@ -5,7 +5,9 @@
   :components ((:static-file "music.asd")
 	       (:file "packages")
 	       (:file "midi")
-	       (:file "play"))
-  :depends-on (:sb-concurrency))
+	       (:file "ogg")
+	       (:file "play")
+               (:file "initialize"))
+  :depends-on (:sb-concurrency :vorbisfile-ffi :mixalot))
 
 

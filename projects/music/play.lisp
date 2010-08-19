@@ -14,6 +14,7 @@
       (let ((mime (magic-mime what)))
         (cond 
           ((string= mime "audio/midi") (play-midi what))
+          ((string= mime "application/ogg") (play-ogg what))
           (t (format t "Unsupported file format ~s." mime)))))
     (play-midi)))
 
@@ -23,5 +24,6 @@
     (format t "Nothing is currently playing.~%")
     (progn
       (ecase (car *currently-playing*)
-        (:midi (stop-midi)))
+        (:midi (stop-midi))
+        (:ogg (stop-ogg)))
       (setf *currently-playing* nil))))
