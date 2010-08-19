@@ -1,6 +1,8 @@
-;; music.lisp
+;; midi.lisp
 
 (in-package :music)
+
+(defparameter *help-text* "Play music.")
 
 (defvar *timidity* nil)
 (defvar *messages* (make-mailbox))
@@ -13,9 +15,11 @@
   (if (running)
     (warn "Timidity is already running.")
     (progn
-      (setf *timidity* (run-program "/usr/bin/timidity" '("-ie" "") 
-                                    :input :stream :output :stream :wait nil))
-      (make-thread #'message-read-thread :name "message-read-thread"))))
+      (setf *timidity* 
+            (run-program "/usr/bin/timidity" '("-ie" "") 
+                         :input :stream :output :stream :wait nil)
+            *message-read-thread*
+            (make-thread #'message-read-thread :name "message-read-thread")))))
 
 (defun start-if-not-running ()
   (unless (running) (start)))
@@ -23,7 +27,7 @@
 (defun message-read-thread ()
   (loop (send-message *messages* (read (sb-ext:process-output *timidity*)))))
 
-(defun stop ()
+(defun stop-midi ()
   (if (running)
     (progn 
       (destroy-thread *message-read-thread*)
@@ -39,10 +43,12 @@
 
 (defparameter *song* "/lisp/projects/music/songs/Sonate14_Opus27_2_ClairDeLune.mid")
 
-(defun play (&optional (filename *song*))
+(defun play-midi (&optional (filename *song*))
+  "Start playing a midi song with filename FILENAME."
   (start-if-not-running)
   (send-command "L")
-  (send-command (format nil "PLAY ~a" filename)))
+  (send-command (format nil "PLAY ~a" filename))
+  (setf *currently-playing* (list :midi filename)))
 
 (defun messages ()
   (mapcar 'process-message (receive-pending-messages *messages*)))

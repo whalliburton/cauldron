@@ -4,7 +4,8 @@
   :serial t
   :components ((:static-file "music.asd")
 	       (:file "packages")
-	       (:file "music"))
+	       (:file "midi")
+	       (:file "play"))
   :depends-on (:sb-concurrency))
 
 
