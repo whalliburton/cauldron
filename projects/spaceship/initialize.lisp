@@ -3,7 +3,7 @@
 (in-package :spaceship)
 
 (defun initialize ()
-  (setup-data-directory)
+  (start-database)
   (start-udev-monitor)
   (format t "~%Welcome to the spaceship.~%~%"))
 

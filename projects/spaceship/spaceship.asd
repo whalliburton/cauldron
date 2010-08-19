@@ -7,11 +7,13 @@
                (:file "threads")
                (:file "stumpwm")
                (:file "new-project")
+               (:file "database")
 	       (:file "initialize"))
   :depends-on (
                
                :stumpwm 
                :swank
+               :bknr.datastore
 
                :cards 
                :laptop 
