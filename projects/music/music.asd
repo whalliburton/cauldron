@@ -8,6 +8,9 @@
 	       (:file "ogg")
 	       (:file "play")
                (:file "initialize"))
-  :depends-on (:sb-concurrency :vorbisfile-ffi :mixalot))
+  :depends-on (:linux 
+               :sb-concurrency 
+               :iterate 
+               :mixalot :mixalot-vorbis :vorbisfile-ffi))
 
 
