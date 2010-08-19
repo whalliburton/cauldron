@@ -1,6 +1,6 @@
 ;; threads.lisp
 
-(in-package :cauldron)
+(in-package :spaceship)
 
 (defun print-threads ()
   (print-table 

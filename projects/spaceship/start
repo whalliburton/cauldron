@@ -3,5 +3,5 @@
 /usr/local/bin/sbcl \
     --dynamic-space-size 1024 \
     --load start.lisp \
-    --eval "(in-package :cauldron)" \
+    --eval "(in-package :spaceship)" \
     "$@"

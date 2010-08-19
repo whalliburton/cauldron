@@ -1,6 +1,6 @@
 ;; packages.lisp
 
-(defpackage cauldron
+(defpackage spaceship
   (:use common-lisp cards laptop web music utilities iterate sb-thread databases
         network language
 ;;        linux

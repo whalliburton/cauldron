@@ -1,9 +1,8 @@
-;; cauldron.asd
+;; spaceship.asd
 
-(defsystem :cauldron
+(defsystem :spaceship
   :serial t
-  :components ((:static-file "cauldron.asd")
-	       (:file "packages")
+  :components ((:file "packages")
 	       (:file "files")
                (:file "threads")
                (:file "stumpwm")

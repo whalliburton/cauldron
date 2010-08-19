@@ -4,8 +4,8 @@
 (setf asdf:*central-registry* 
       '("/lisp/projects/systems/" "/lisp/site-lisp/systems/")) 
 
-(require 'cauldron)
-(in-package :cauldron)
+(require 'spaceship)
+(in-package :spaceship)
 
 (require 'swank)
 
@@ -20,5 +20,5 @@
          (setf running nil))
      (sb-bsd-sockets:address-in-use-error () nil)))
 
-(cauldron::initialize)
+(spaceship::initialize)
 

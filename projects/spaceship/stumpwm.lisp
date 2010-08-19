@@ -18,8 +18,8 @@
                   (warn "SWANK port ~a taken, trying the next." try-port)
                   t))))
 
-(defcommand emacs-cauldron () ()
-  (run-or-raise "emacs --eval \"(connect-to-cauldron)\"" '(:class "Emacs")))
+(defcommand emacs-spaceship () ()
+  (run-or-raise "emacs --eval \"(connect-to-spaceship)\"" '(:class "Emacs")))
 
 ;; --enable-ipv6 is to workaround chromium failing to open localhost
 ;; when no resolver is present
@@ -72,7 +72,7 @@
    *top-map*
    (kbd "s-x")       '*root-map*
    (kbd "s-h")       *help-map*
-   (kbd "F1")        "emacs-cauldron"
+   (kbd "F1")        "emacs-spaceship"
    (kbd "F2")        "tmux"
    (kbd "F3")        "chromium"
    (kbd "F4")        "conkeror"
@@ -211,7 +211,7 @@
   (swank)
 
   (banish)
-  (emacs-cauldron)
+  (emacs-spaceship)
 
   (run-shell-command "unclutter -idle 1 -jitter 2 -root")
 

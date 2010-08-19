@@ -1,6 +1,6 @@
 ;; new-project.lisp
 
-(in-package :cauldron)
+(in-package :spaceship)
 
 (defun new-project (name)
   (run-program "/lisp/projects/new-project/new_sub_project" 
