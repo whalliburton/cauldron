@@ -4,6 +4,8 @@
 
 (defparameter *help-text* "Play music.")
 
+(defvar *currently-playing* nil)
+
 (defvar *timidity* nil)
 (defvar *messages* (make-mailbox))
 (defvar *message-read-thread* nil)

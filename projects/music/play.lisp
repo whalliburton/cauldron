@@ -4,8 +4,6 @@
 
 (defparameter *help-text* "Play music.")
 
-(defvar *currently-playing* nil)
-
 (defun play (&optional what)
   "Play an audio file."
   (if what
