@@ -26,10 +26,12 @@ external functions in these packages should have docstrings."
           (print-heading (format nil "Help for the ~(~A~) subsystem" subsystem))
           (format t "  ~A~%~%" help-text)
           (print-table 
-           (iter (for sym in-package subsystem external-only t)
-                 (when (fboundp sym)
-                   (when-let (doc (documentation sym 'function))
-                     (collect (list (string-downcase sym) doc)))))
+           (sort
+            (iter (for sym in-package subsystem external-only t)
+                  (when (fboundp sym)
+                    (when-let (doc (documentation sym 'function))
+                      (collect (list (string-downcase sym) doc)))))
+            'string< :key 'car)
            :indent 2 :spacing 3)
           (newline))))
     (progn
