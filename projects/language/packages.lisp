@@ -5,7 +5,8 @@
         anaphora)
   (:import-from sb-ext quit run-program process-status process-kill)
   (:import-from flexi-streams with-output-to-sequence)
-  (:export translate say speak-in-english speak-in-russian))
+  (:export translate say speak-in-english speak-in-russian
+           language-name-from-code))
 
 (in-package :language)
 
