@@ -1,9 +1,11 @@
 ;; packages.lisp
 
 (defpackage databases
-  (:use common-lisp drakma json iterate)
+  (:use common-lisp drakma json iterate 
+        bknr.datastore bknr.indices bknr.utils
+        utilities)
   (:import-from sb-ext quit)
-  (:export recipe))
+  (:export cached-http-request recipe))
 
 (in-package :databases)
 

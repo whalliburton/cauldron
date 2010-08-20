@@ -13,7 +13,8 @@
 
 (defun start-database ()
   (make-instance 'mp-store :directory (ensure-data-directory)
-                 :subsystems (list (make-instance 'store-object-subsystem))))
+                 :subsystems (list (make-instance 'store-object-subsystem)
+                                   (make-instance 'blob-subsystem))))
 
 
 
