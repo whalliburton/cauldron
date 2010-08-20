@@ -23,8 +23,8 @@ external functions in these packages should have docstrings."
         (print-table 
          (iter (for sym in-package subsystem external-only t)
                (when (fboundp sym)
-                 (collect (list (string-downcase sym)
-                                (documentation sym 'function)))))
+                 (when-let (doc (documentation sym 'function))
+                   (collect (list (string-downcase sym) doc)))))
          :indent 2)))
     (progn
       (format t "Help is available on the following sybsystems:~%~%")
