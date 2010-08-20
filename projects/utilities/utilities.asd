@@ -3,8 +3,10 @@
 (defsystem :utilities
   :serial t
   :components ((:static-file "utilities.asd")
+               (:file "isaac")
 	       (:file "packages")
 	       (:file "first")
+	       (:file "random")
 	       (:file "slurping")
 	       (:file "run")
                (:file "strings")

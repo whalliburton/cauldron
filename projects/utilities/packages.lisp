@@ -7,7 +7,8 @@
            string-starts-with string-contains-p
            chew-string process-string print-table print-heading
            seconds-to-duration-string with-assoc
-           mkstr symb ksymb))
+           mkstr symb ksymb
+           random-string random-byte-vector))
 
 
 
