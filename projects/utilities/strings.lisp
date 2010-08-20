@@ -7,6 +7,15 @@
   (let ((mismatch (mismatch prefix string :test test)))
     (or (not mismatch) (= mismatch (length prefix)))))
 
+(defun string-ends-with (string suffix &key (test #'char=))
+  "Returns true if STRING ends with PREFIX."
+  (let ((mm 0))
+    (iter (for end1 from (1- (length string)) downto 0)
+          (for end2 from (1- (length suffix)) downto 0)
+          (while (funcall test (aref string end1) (aref suffix end2)))
+          (incf mm))
+    (= mm (length suffix))))
+
 (defun string-contains-p (string string-to-find)
   (search string-to-find string :test #'string=))
 
