@@ -13,6 +13,7 @@
                :sb-concurrency 
                :iterate 
                :mixalot :mixalot-vorbis :vorbisfile-ffi
-               :cl-web-utils))
+               :cl-web-utils
+               :databases))
 
 

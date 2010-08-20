@@ -2,7 +2,8 @@
 
 (in-package :network)
 
-(defparameter *current-keys* '(:self :mike))
+(defvar *keys* nil)
+(defvar *current-keys* nil)
 
 (defun set-aws-keys (key-set)
   (let ((keys (assoc key-set *keys*)))
