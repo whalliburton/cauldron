@@ -4,6 +4,7 @@
   :serial t
   :components ((:static-file "utilities.asd")
                (:file "isaac")
+               (:file "string-case")
 	       (:file "packages")
 	       (:file "first")
 	       (:file "random")
