@@ -1,7 +1,8 @@
 ;; packages.lisp
 
 (defpackage music
-  (:use common-lisp sb-concurrency sb-thread iterate databases bknr.datastore)
+  (:use common-lisp sb-concurrency sb-thread iterate databases bknr.datastore
+        drakma cl-web-utils databases utilities)
   (:import-from sb-ext quit run-program process-kill process-alive-p process-input)
   (:import-from linux magic-mime)
   (:import-from alexandria when-let)
@@ -12,4 +13,5 @@
                 get-vorbis-rate
                 get-vorbis-comment get-vorbis-raw-tags-from-comment)
   (:import-from mixalot-vorbis make-vorbis-streamer vorbis-streamer)
-  (:export *currently-playing* initialize-music play stop))
+  (:export *currently-playing* initialize-music play stop
+           freesound-search))

@@ -3,7 +3,8 @@
 (in-package :cl-web-utils)
 
 (defmacro simple-http-request (url args &key all-args-p additional-headers (convert-dash t)
-                               want-stream authorization camel-caps cookie-jar method)
+                               want-stream authorization camel-caps cookie-jar method
+                               force-binary)
   (flet ((down (el)
 	   (awhen (string-downcase el)
 	     (cond
@@ -47,6 +48,7 @@
                 ,@(when want-stream '(:want-stream t))
                 ,@(when authorization '(:basic-authorization (list username password)))
                 ,@(when cookie-jar `(:cookie-jar ,cookie-jar))
+                ,@(when force-binary `(:force-binary ,force-binary))
                 ,@(when method `(:method ,method))))
          (values-list
           `(,(when (eql code 200)
@@ -104,7 +106,7 @@
 (defmacro define-xml-request (name args url &key additional-headers
                               (convert-dash t) fields (item-name "item")
                               authorization raw camel-caps cookie-jar
-                              remove-whitespace)
+                              remove-whitespace initial force-binary)
   (let ((request-args (if authorization
                         (remove-if (lambda (el) (member
                                                  (if (consp el) (car el) el)
@@ -115,6 +117,7 @@
 			 if (http-arg-no-encode arg)
 			   collect (http-arg-no-encode-base arg)
 			 else collect arg)
+       ,@(when initial (list (list initial)))
        (let ((stream
 	      (simple-http-request
                ,url ,request-args
@@ -125,7 +128,8 @@
                :want-stream t
                :authorization ,authorization
                :camel-caps ,camel-caps
-               :cookie-jar ,cookie-jar)))
+               :cookie-jar ,cookie-jar
+               :force-binary ,force-binary)))
 	 ,(if raw
             (if remove-whitespace
               `(xml-remove-whitespace (xml-url-raw nil stream))

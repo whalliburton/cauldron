@@ -7,6 +7,7 @@
                (:file "cached-http-request")
 	       (:file "recipe"))
   :depends-on (:drakma :cl-json :iterate 
-                       :bkrn.datastore :bknr.indices :bknr.utils))
+                       :bknr.datastore :bknr.indices :bknr.utils
+                       :utilities :linux :anaphora))
 
 

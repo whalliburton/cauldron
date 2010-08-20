@@ -33,3 +33,10 @@
   (iter (for argument in keywords)
         (setf list (remove-keyword list argument))
         (finally (return list))))
+
+(defun parse-float (s)
+  (let ((*read-eval* nil))
+    (let ((val (read-from-string s)))
+      (cond
+	((typep val 'float) val)
+	((typep val 'fixnum) (coerce val 'float))))))

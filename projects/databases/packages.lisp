@@ -3,7 +3,7 @@
 (defpackage databases
   (:use common-lisp drakma json iterate 
         bknr.datastore bknr.indices bknr.utils
-        utilities)
+        utilities linux string-case anaphora)
   (:import-from sb-ext quit)
   (:export cached-http-request recipe))
 
