@@ -4,6 +4,7 @@
   :serial t
   :components ((:static-file "music.asd")
 	       (:file "packages")
+               (:file "wav")
 	       (:file "midi")
 	       (:file "ogg")
 	       (:file "play")
