@@ -2,9 +2,10 @@
 
 (defpackage language
   (:use common-lisp drakma json iterate usocket babel utilities string-case
-        anaphora)
+        anaphora databases bknr.datastore bknr.indices)
   (:import-from sb-ext quit run-program process-status process-kill)
   (:import-from flexi-streams with-output-to-sequence)
+  (:import-from alexandria)
   (:export translate say speak-in-english speak-in-russian
            language-name-from-code))
 
