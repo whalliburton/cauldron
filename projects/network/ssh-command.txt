@@ -1,0 +1,35 @@
+
+SSH-COMMAND is really useful for monitoring the activity on a bunch of
+systems. 
+
+What you have to do first though is set up SSH to not require
+passwords. This requires two things, setting up your local X server to
+run inside a ssh-agent and copying your public keys over to the remote
+systems.
+
+
+The first step is done by having the ~/.xinitrc file read as such:
+
+  exec /usr/bin/ssh-agent /lisp/projects/spaceship/spaceship
+
+and executing 'ssh-add' from the shell once X has started.
+
+
+The second step is done by copying the local
+
+  ~/.ssh/id_rsa.pub
+
+over to the remote system and renaming it 
+
+  ~/.ssh/authorized_keys2
+
+
+TODO. Add in how to create the id_rsa.pub.
+
+
+Once this is all set up things like 
+
+SPACESHIP> (ssh-command "w" '("12.34.56.78" "23.45.78.89"))
+
+work like a charm.
+

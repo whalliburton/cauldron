@@ -19,6 +19,7 @@
              ,@body))))
 
 (defun instances ()
+  "Print out a table of all the running instances."
   (with-keys
     (print-heading (string-downcase key-set))
     (print-table 

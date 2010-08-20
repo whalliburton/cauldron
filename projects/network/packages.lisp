@@ -5,3 +5,7 @@
   (:import-from sb-ext quit run-program)
   (:import-from alexandria with-gensyms)
   (:export instances set-aws-keys ssh-command))
+
+(in-package :network)
+
+(defparameter *help-text* "Inspect remote systems.")
