@@ -11,6 +11,7 @@
       (decode-json-from-string rtn))))
 
 (defun recipe (query &optional ingredients page)
+  "Print a list of cooking recipes."
   (let ((recipes (recipe-query query ingredients page)))
     (when recipes
       (iter (for recipe in (cdr (assoc :results recipes)))
