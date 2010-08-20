@@ -9,7 +9,7 @@
            seconds-to-duration-string with-assoc
            mkstr symb ksymb in-home
            random-string random-byte-vector
-           safe-read-from-string))
+           safe-read-from-string remove-keywords))
 
 
 

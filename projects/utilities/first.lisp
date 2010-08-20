@@ -20,3 +20,16 @@
 (defun safe-read-from-string (string)
   (let ((*read-eval* nil))
     (read-from-string string)))
+
+(defun remove-keyword (list keyword)
+  (iter (with remove) 
+        (for i in list)
+        (cond
+          ((eql i keyword) (setf remove t))
+          (remove (setf remove nil))
+          (t (collect i)))))
+
+(defun remove-keywords (list &rest keywords)
+  (iter (for argument in keywords)
+        (setf list (remove-keyword list argument))
+        (finally (return list))))
