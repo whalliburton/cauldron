@@ -10,3 +10,9 @@
 (defun last1 (list)
   (car (last list)))
 
+(defun in-home (suffix)
+  (concatenate 'string 
+               (or (sb-posix:getenv "HOME")
+                   (let ((dir (concatenate 'string  "/tmp/" (random-string))))
+                     (progn (warn "No HOME environment set, using ~a" dir) dir)))
+               suffix))
