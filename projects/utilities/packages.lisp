@@ -8,7 +8,8 @@
            chew-string process-string print-table print-heading
            seconds-to-duration-string with-assoc
            mkstr symb ksymb in-home
-           random-string random-byte-vector))
+           random-string random-byte-vector
+           safe-read-from-string))
 
 
 

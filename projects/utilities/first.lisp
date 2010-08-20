@@ -16,3 +16,7 @@
                    (let ((dir (concatenate 'string  "/tmp/" (random-string))))
                      (progn (warn "No HOME environment set, using ~a" dir) dir)))
                suffix))
+
+(defun safe-read-from-string (string)
+  (let ((*read-eval* nil))
+    (read-from-string string)))
