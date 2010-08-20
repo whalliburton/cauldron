@@ -12,4 +12,4 @@
                 get-vorbis-rate
                 get-vorbis-comment get-vorbis-raw-tags-from-comment)
   (:import-from mixalot-vorbis make-vorbis-streamer vorbis-streamer)
-  (:export *help-text* *currently-playing* initialize-music play stop))
+  (:export *currently-playing* initialize-music play stop))

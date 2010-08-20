@@ -1,6 +1,6 @@
 ;; identity.lisp
 
-(in-package :laptop)
+(in-package :hardware)
 
 (defclass ssh-identity ()
   ((key-size :initarg :key-size)

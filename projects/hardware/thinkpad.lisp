@@ -1,6 +1,6 @@
 ;; thinkpad.lisp
 
-(in-package :laptop)
+(in-package :hardware)
 
 ;; http://www.thinkwiki.org/wiki/Thermal_Sensors#ThinkPad_T500
 

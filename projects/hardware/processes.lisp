@@ -1,6 +1,6 @@
 ;; processes.lisp
 
-(in-package :laptop)
+(in-package :hardware)
 
 (defclass process ()
   ((pid :initarg :pid :reader pid)

@@ -1,9 +1,9 @@
-;; laptop.asd
+;; hardware.asd
 
-(defsystem :laptop
+(defsystem :hardware
   :serial t
-  :components ((:static-file "laptop.asd")
-	       (:file "packages")
+  :components ((:static-file "hardware.asd")
+	       (:file "subsystem")
 	       (:file "thinkpad")
 	       (:file "devices")
                (:file "memory")

@@ -1,6 +1,6 @@
 ;; devices.lisp
 
-(in-package :laptop)
+(in-package :hardware)
 
 ;;; from stumpwm
 

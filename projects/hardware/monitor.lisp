@@ -1,6 +1,6 @@
 ;; monitor.lisp
 
-(in-package :laptop)
+(in-package :hardware)
 
 (defvar *monitor-thread* nil)
 (defparameter *monitor-sleep* 1.0)

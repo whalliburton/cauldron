@@ -1,6 +1,6 @@
-;; packages.lisp
+;; subsystem.lisp
 
-(defpackage laptop
+(defpackage hardware
   (:use common-lisp utilities split-sequence cl-fad anaphora cffi iterate
         sb-thread sb-concurrency)
   (:import-from sb-ext quit)
@@ -12,5 +12,8 @@
            identities ssh-identity
            system-information
            start-udev-monitor
-           print-pending-udev-messages
-           ))
+           print-pending-udev-messages))
+
+(in-package :hardware)
+
+(defparameter *help-text* "System information.")

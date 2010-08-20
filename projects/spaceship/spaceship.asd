@@ -15,17 +15,17 @@
                :stumpwm 
                :swank
                :bknr.datastore
+               :iterate
 
+               :hardware
+               :linux
                :cards 
-               :laptop 
                :web 
                :music 
                :databases 
-               :iterate
                :timer 
                :network 
                :language
-               :linux
 
                ))
 

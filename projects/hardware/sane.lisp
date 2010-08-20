@@ -1,6 +1,6 @@
 ;; scanner.lisp
 
-(in-package :laptop)
+(in-package :hardware)
 
 (load-foreign-library "/usr/lib/libsane.so")
 

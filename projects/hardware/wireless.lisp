@@ -1,6 +1,6 @@
 ;; wireless.lisp
 
-(in-package :laptop)
+(in-package :hardware)
 
 (load-foreign-library "/lib64/libiw.so")
 

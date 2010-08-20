@@ -3,9 +3,8 @@
 (in-package :spaceship)
 
 (defun subsystem-help-text (subsystem)
-  (multiple-value-bind (symbol accessable) (find-symbol "*HELP-TEXT*" subsystem)
-    (when (eq accessable :external)
-      (symbol-value symbol))))
+  (when-let (symbol (find-symbol "*HELP-TEXT*" subsystem))
+    (and (boundp symbol) (symbol-value symbol))))
 
 (defun all-spaceship-subsystems ()
   (iter (for package in (list-all-packages))
