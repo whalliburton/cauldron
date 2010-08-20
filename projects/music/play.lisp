@@ -4,17 +4,23 @@
 
 (defparameter *help-text* "Play music.")
 
+(defgeneric %play (what)
+  (:method (what)
+   (if what
+     (if (not (probe-file what))
+       (format t "No file named ~s found." what)
+       (let ((mime (magic-mime what)))
+         (cond 
+           ((string= mime "audio/midi") (play-midi what))
+           ((string= mime "application/ogg") (play-ogg what))
+           (t (format t "Unplayable file format ~s.~%" mime)))))
+     (play-midi)))
+  (:method ((what cached-http-request))
+    (%play (namestring (blob-pathname what)))))
+
 (defun play (&optional what)
-  "Play an audio file."
-  (if what
-    (if (not (probe-file what))
-      (format t "No file named ~s found." what)
-      (let ((mime (magic-mime what)))
-        (cond 
-          ((string= mime "audio/midi") (play-midi what))
-          ((string= mime "application/ogg") (play-ogg what))
-          (t (format t "Unsupported file format ~s." mime)))))
-    (play-midi)))
+  "Play music or sounds."
+  (%play what))
 
 (defun stop ()
   "Stop anything playing."

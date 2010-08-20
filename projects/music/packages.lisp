@@ -1,7 +1,7 @@
 ;; packages.lisp
 
 (defpackage music
-  (:use common-lisp sb-concurrency sb-thread iterate)
+  (:use common-lisp sb-concurrency sb-thread iterate databases bknr.datastore)
   (:import-from sb-ext quit run-program process-kill process-alive-p process-input)
   (:import-from linux magic-mime)
   (:import-from alexandria when-let)
