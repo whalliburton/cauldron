@@ -20,6 +20,7 @@
     :method :post :external-format-out :utf-8 :parameters `(("q" . ,query)))))
 
 (defun translate (query &optional (langpair "en|ru"))
+  "Translate QUERY from one language to another."
   (cdr (assoc :translated-text
 	      (cdr (assoc :response-data
 			  (google-translate query langpair))))))
