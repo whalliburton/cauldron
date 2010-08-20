@@ -26,6 +26,7 @@
                :timer 
                :network 
                :language
+               :journal
 
                ))
 
