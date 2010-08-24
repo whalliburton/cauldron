@@ -1,3 +1,4 @@
 #!/bin/bash
 
+cp -f spaceship old_spaceship
 /usr/local/bin/sbcl --load ./make-image.lisp
