@@ -4,12 +4,12 @@
   (:use common-lisp drakma json iterate 
         bknr.datastore bknr.indices bknr.utils
         utilities linux string-case anaphora)
-  (:import-from sb-ext quit)
-  (:export cached-http-request recipe))
+  (:import-from sb-ext quit posix-getenv)
+  (:export cached-http-request recipe start-local-database))
 
 (in-package :databases)
 
-(defparameter *help-text* "Access to online databases.")
+(defparameter *help-text* "Access to online and local databases.")
 
 
   

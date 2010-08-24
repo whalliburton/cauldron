@@ -7,14 +7,12 @@
                (:file "threads")
                (:file "stumpwm")
                (:file "new-project")
-               (:file "database")
                (:file "help")
 	       (:file "initialize"))
   :depends-on (
                
                :stumpwm 
                :swank
-               :bknr.datastore
                :iterate
 
                :hardware
