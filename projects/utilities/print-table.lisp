@@ -19,7 +19,8 @@
 ;(row-extend '((1 2 3) (1)) 5)
 
 (defun print-table (rows &key indent (spacing 2) (stream t) max-column-width
-                         title (indent-title t) right-justified)
+                    title (indent-title t) right-justified
+                    headings)
   (when title
     (format stream
             (if (and indent (< 0 indent) indent-title)
@@ -30,6 +31,12 @@
       (dotimes (x indent) (write-char #\Space stream)))
     (dotimes (x (length title)) (write-char #\- stream))
     (newline stream))
+  (when headings 
+    (setf rows (nconc
+                (list headings
+                      (iter (for heading in headings)
+                            (collect (make-string (length heading) :initial-element #\=))))
+                rows)))
   (when rows
     (multiple-value-bind (max-row min-row) (max-min-row-length rows)
       (let* ((maxs (make-array max-row :initial-element 0))

@@ -68,10 +68,9 @@
 (defun list-documents ()
   "List all the readable documents."
   (print-table 
-   (nconc (list (list "id" "filename" "author" "pages" "title")
-                (list "==" "========" "======" "=====" "====="))
-          (mapcar (lambda (doc) (list (store-object-id doc) (filename doc) 
-                                      (or (author doc) "")
-                                      (pages doc) (or (title doc) "")))
-                  (sort (store-objects-with-class 'document)
-                        #'string< :key #'filename)))))
+   (mapcar (lambda (doc) (list (store-object-id doc) (filename doc) 
+                               (or (author doc) "")
+                               (pages doc) (or (title doc) "")))
+           (sort (store-objects-with-class 'document)
+                 #'string< :key #'filename))
+   :headings '("id" "filename" "author" "pages" "title")))
