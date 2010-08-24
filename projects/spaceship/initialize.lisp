@@ -6,6 +6,7 @@
   (start-local-database ".spaceship")
   (start-udev-monitor)
   (initialize-music)
+  (start-shell-control-monitor)
   (format t "~%Welcome to the spaceship.~%~%"))
 
 

@@ -7,6 +7,7 @@
                (:file "threads")
                (:file "stumpwm")
                (:file "new-project")
+               (:file "shell-control")
                (:file "help")
 	       (:file "initialize"))
   :depends-on (

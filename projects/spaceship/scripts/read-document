@@ -1,0 +1,6 @@
+#!/bin/bash
+
+filename=`readlink -f "$1"`
+escaped=${filename//\ /\\\ }
+
+echo "read-document" $escaped >> ~/.spaceship/control
