@@ -25,6 +25,7 @@
                :network 
                :language
                :journal
+               :documents
 
                ))
 
