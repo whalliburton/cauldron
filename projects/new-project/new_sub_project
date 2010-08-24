@@ -10,7 +10,7 @@ if [ -d ../$1 ]; then
 fi
 
 mkdir ../$1
-cp packages.lisp first.lisp authors.txt new-sub-project.asd ../$1
+cp packages.lisp first.lisp new-sub-project.asd ../$1
 find ../$1 -type f -exec sed -i "s/new-project/$1/g" {} \;
 find ../$1 -type f -exec sed -i "s/New-Project/$upper/g" {} \;
 

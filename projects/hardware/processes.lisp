@@ -96,7 +96,7 @@
 (defmethod initialize-instance :after ((process process) &rest rest)
   (declare (ignore rest))
   (with-slots (pid name) process
-    (setf name (proc-comm pid))))
+    (setf name (cdr (assoc :comm (proc-stat pid))))))
 
 (defun processes ()
   (mapcan 
