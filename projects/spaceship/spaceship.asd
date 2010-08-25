@@ -27,6 +27,7 @@
                :language
                :journal
                :documents
+               :communications
 
                ))
 
