@@ -15,7 +15,8 @@
                (:file "pretty-printing")
                (:file "time")
                (:file "symbols")
-               (:file "assoc"))
-  :depends-on (:iterate :split-sequence :local-time))
+               (:file "assoc")
+               (:file "emacs-output-stream"))
+  :depends-on (:iterate :split-sequence :local-time :swank))
 
 
