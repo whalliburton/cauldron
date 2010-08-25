@@ -5,8 +5,10 @@
   :components ((:static-file "communications.asd")
 	       (:file "packages")
 	       (:file "bbdb")
-	       (:file "mail"))
-  :depends-on (:utilities :iterate :named-readtables :cl-smtp
+	       (:file "mail")
+               (:file "irc"))
+  :depends-on (:utilities :databases 
+                          :iterate :named-readtables :cl-smtp
                           :cl-irc :split-sequence))
 
 
