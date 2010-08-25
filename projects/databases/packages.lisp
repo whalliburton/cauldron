@@ -4,8 +4,10 @@
   (:use common-lisp drakma json iterate 
         bknr.datastore bknr.indices bknr.utils
         utilities linux string-case anaphora)
+  (:import-from alexandria if-let)
   (:import-from sb-ext quit posix-getenv)
-  (:export cached-http-request recipe start-local-database))
+  (:export cached-http-request recipe start-local-database
+           gethash-database))
 
 (in-package :databases)
 
