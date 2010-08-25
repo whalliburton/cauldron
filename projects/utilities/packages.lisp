@@ -12,7 +12,7 @@
            mkstr symb ksymb in-home
            random-string random-byte-vector
            safe-read-from-string remove-keywords parse-float
-           emacs-output-stream))
+           emacs-output-stream start-swank-server))
 
 
 
