@@ -7,6 +7,7 @@
   (start-udev-monitor)
   (initialize-music)
   (start-shell-control-monitor)
+  (load-email-identity)
   (format t "~%Welcome to the spaceship.~%~%"))
 
 

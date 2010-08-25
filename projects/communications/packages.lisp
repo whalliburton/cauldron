@@ -1,9 +1,9 @@
 ;; packages.lisp
 
 (defpackage communications
-  (:use common-lisp utilities iterate named-readtables)
+  (:use common-lisp utilities iterate named-readtables cl-smtp)
   (:import-from sb-ext quit)
-  (:export contacts))
+  (:export load-email-identity contacts mail))
 
 (in-package :communications)
 

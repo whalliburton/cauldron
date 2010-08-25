@@ -4,7 +4,8 @@
   :serial t
   :components ((:static-file "communications.asd")
 	       (:file "packages")
-	       (:file "bbdb"))
-  :depends-on (:named-readtables))
+	       (:file "bbdb")
+	       (:file "mail"))
+  :depends-on (:utilities :iterate :named-readtables :cl-smtp))
 
 
