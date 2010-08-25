@@ -5,17 +5,16 @@
   :components ((:file "packages")
 	       (:file "files")
                (:file "threads")
-               (:file "stumpwm")
                (:file "new-project")
                (:file "shell-control")
                (:file "help")
 	       (:file "initialize"))
   :depends-on (
                
-               :stumpwm 
                :swank
                :iterate
 
+               :windows
                :hardware
                :linux
                :cards 
