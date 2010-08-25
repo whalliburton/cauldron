@@ -1,7 +1,7 @@
 ;; packages.lisp
 
 (defpackage utilities
-  (:use common-lisp iterate split-sequence local-time)
+  (:use common-lisp iterate split-sequence local-time usocket sb-thread)
   (:import-from sb-ext quit run-program)
   (:import-from sb-gray fundamental-character-output-stream
                 stream-write-char stream-force-output)
@@ -12,7 +12,8 @@
            mkstr symb ksymb in-home
            random-string random-byte-vector
            safe-read-from-string remove-keywords parse-float
-           emacs-output-stream start-swank-server))
+           emacs-output-stream start-swank-server
+           simple-server stop-simple-server call-simple-server))
 
 
 

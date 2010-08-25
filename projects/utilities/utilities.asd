@@ -17,7 +17,8 @@
                (:file "symbols")
                (:file "assoc")
                (:file "emacs-output-stream")
-               (:file "slime"))
-  :depends-on (:iterate :split-sequence :local-time :swank))
+               (:file "slime")
+               (:file "simple-server"))
+  :depends-on (:iterate :split-sequence :local-time :swank :usocket))
 
 
