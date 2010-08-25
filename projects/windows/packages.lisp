@@ -1,5 +1,10 @@
 ;; packages.lisp
 
 (defpackage windows
-  (:use common-lisp)
-  (:import-from sb-ext quit))
+  (:use common-lisp stumpwm iterate utilities)
+  (:import-from sb-ext quit)
+  (:export list-windows destroy-window))
+
+(in-package :windows)
+
+(defparameter *help-text* "Desktop window tools.")

@@ -4,7 +4,8 @@
   :serial t
   :components ((:static-file "windows.asd")
 	       (:file "packages")
-	       (:file "stumpwm"))
-  :depends-on (:swank :stumpwm))
+	       (:file "stumpwm")
+               (:file "windows"))
+  :depends-on (:swank :stumpwm :iterate :utilities))
 
 
