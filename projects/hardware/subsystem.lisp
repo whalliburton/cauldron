@@ -10,10 +10,10 @@
            memory-information 
            processes process describe-process
            identities ssh-identity
-           system-information
+           system
            start-udev-monitor
            print-pending-udev-messages))
 
 (in-package :hardware)
 
-(defparameter *help-text* "System information.")
+(defparameter *help-text* "Hardware inspection utilities.")
