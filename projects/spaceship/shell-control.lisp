@@ -16,12 +16,20 @@
           (when line
             (handle-shell-control line)))))
 
+(defparameter *shell-control-functions* (all-functions))
+
 (defun handle-shell-control (line)
   (let* ((*read-eval* nil)
          (cmd (read-from-string (preprocess-shell-control-line line))))
-    (handler-case
-        (eval cmd)
-      (error (e) (format t "Error in shell control: ~A." e)))))
+    (let* ((output (second cmd))
+           (rtn (with-output-to-string (*standard-output*)
+                  (handler-case 
+                      (if (member (first cmd) *shell-control-functions* :key #'car :test #'eql)
+                        (eval (cons (first cmd) (cddr cmd)))
+                        (format t "No command named: ~A.~%" (first cmd)))
+                    (error (e) (format t "Error: ~A~%" e))))))
+      (with-open-file (out output :direction :output :if-exists :append)  
+        (write-string rtn out)))))
 
 (defun valid-integer-string (string)
   (handler-case 
