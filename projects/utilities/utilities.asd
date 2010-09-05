@@ -19,7 +19,8 @@
                (:file "emacs-output-stream")
                (:file "slime")
                (:file "simple-server")
-               (:file "sharpl"))
+               (:file "sharpl")
+               (:file "hash-tables"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket))
 
 

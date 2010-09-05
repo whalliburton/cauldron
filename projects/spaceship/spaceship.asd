@@ -4,7 +4,6 @@
   :serial t
   :components ((:file "packages")
 	       (:file "files")
-               (:file "threads")
                (:file "new-project")
                (:file "shell-control")
                (:file "help")
