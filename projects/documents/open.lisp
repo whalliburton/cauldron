@@ -2,7 +2,7 @@
 
 (in-package :documents)
 
-(defun open-document (which)
+(defun open-document (which &optional (error-on-unknown-p t))
   "Open for reading any readable file or unarchive any archive."
   (etypecase which
     (string 
@@ -11,8 +11,10 @@
              ((let ((mime (magic-mime which)))
                 (warn "mime ~A" mime)
                 mime)
-              :default (format t "OPEN-DOCUMENT does not know how to handle a document of mime type : ~A.~%"
-                               (magic-mime which)))
+              :default 
+              (when error-on-unknown-p
+                (format t "OPEN-DOCUMENT does not know how to handle a document of mime type : ~A.~%"
+                        (magic-mime which))))
            ("application/x-bzip2" (bunzip2 which))
            ("application/x-tar" (untar which)))
          (format t "No file found at ~A.~%" which)))))
@@ -25,7 +27,8 @@
       (format t "The destination file ~S already exists.~%" unzipped-filename)
       (progn
         (cl-bzip2:decompress (pathname filename) (pathname unzipped-filename))
-        (format t "sucessful bunzip2 : ~A -> ~A~%" filename (file-namestring unzipped-filename))))))
+        (format t "sucessful bunzip2 : ~A -> ~A~%" filename (file-namestring unzipped-filename))
+        (open-document unzipped-filename nil)))))
 
 (defun stat-formatted (filename)
   (when (probe-file filename)

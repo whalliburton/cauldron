@@ -6,4 +6,5 @@
 	       (:file "packages")
 	       (:file "read")
 	       (:file "open"))
-  :depends-on (:databases :iterate :split-sequence :utilities :editor :torrents))
+  :depends-on (:databases :iterate :split-sequence :utilities :editor :torrents
+                          :iolib.process :cl-bzip2))
