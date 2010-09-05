@@ -21,7 +21,8 @@
                (:file "simple-server")
                (:file "sharpl")
                (:file "hash-tables")
-               (:file "threads"))
+               (:file "threads")
+               (:file "emacs"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket))
 
 
