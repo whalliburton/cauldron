@@ -18,7 +18,8 @@
                (:file "assoc")
                (:file "emacs-output-stream")
                (:file "slime")
-               (:file "simple-server"))
+               (:file "simple-server")
+               (:file "sharpl"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket))
 
 

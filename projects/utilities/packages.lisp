@@ -13,7 +13,8 @@
            random-string random-byte-vector
            safe-read-from-string remove-keywords parse-float
            emacs-output-stream start-swank-server write-emacs-command
-           simple-server stop-simple-server call-simple-server))
+           simple-server stop-simple-server call-simple-server
+           enable-sharpL-reader))
 
 
 
