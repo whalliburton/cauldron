@@ -6,7 +6,8 @@
 	       (:file "packages")
 	       (:file "local")
                (:file "cached-http-request")
-	       (:file "recipe"))
+	       (:file "recipe")
+               (:file "ideas"))
   :depends-on (:drakma :cl-json :iterate :alexandria
                        :bknr.datastore :bknr.indices :bknr.utils
                        :utilities :linux :anaphora))
