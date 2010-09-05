@@ -18,3 +18,15 @@
           (write-char #\space stream)
           (princ value stream)
           (finally (write-char #\} stream)))))
+
+(defmacro with-hash-values ((keys hash &key (to-key nil to-key-set)) &body body)
+  (once-only (hash to-key) 
+    `(let (,@(mapcar 
+              (lambda (key) 
+                (list key `(gethash 
+                            ,@(if to-key-set
+                                `((funcall ,to-key ',key))
+                                `(',key))
+                            ,hash)))
+               keys))
+       ,@body)))
