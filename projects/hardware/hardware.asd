@@ -11,6 +11,7 @@
                (:file "monitor")
                (:file "system")
                (:file "udev")
+               (:file "cpu")
                ;;(:file "wireless")
                )
   :depends-on (:utilities :split-sequence :cl-fad :anaphora :cffi :iterate

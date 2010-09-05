@@ -12,7 +12,8 @@
            identities ssh-identity
            system
            start-udev-monitor
-           print-pending-udev-messages))
+           print-pending-udev-messages
+           cpu-info))
 
 (in-package :hardware)
 
