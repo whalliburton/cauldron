@@ -6,4 +6,4 @@
 	       (:file "packages")
 	       (:file "read")
 	       (:file "open"))
-  :depends-on (:databases :iterate :split-sequence :utilities :editor))
+  :depends-on (:databases :iterate :split-sequence :utilities :editor :torrents))

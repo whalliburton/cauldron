@@ -24,6 +24,10 @@
   ((title :initform nil :initarg :title :reader title))
   (:metaclass persistent-class))
 
+(defclass torrent-document (base-document)
+  ()
+  (:metaclass persistent-class))
+
 (defclass document (titled-document)
   ((author :initarg :author :reader author)
    (pages :initarg :pages :reader pages))
@@ -65,14 +69,27 @@
     (blob-from-file document filename)
     document))
 
+(defun import-torrent (filename)
+  (let ((document (make-object 'torrent-document :filename (file-namestring filename))))
+    (blob-from-file document filename)
+    document))
+
 (defparameter *html-viewer* :emacs)
+
+(defvar *inhibit-read-message* nil)
 
 (defgeneric read-document (document) 
   (:documentation "Read a document.")
   (:method ((document base-document))
     (view-in-emacs (filename document) (namestring (blob-pathname document))))
-  (:method :after ((document base-document))
-    (format t "reading : ~A~%" (filename document)))
+  (:method ((document torrent-document))
+    (setf *inhibit-read-message* t)
+    (describe-torrent (namestring (blob-pathname document))))
+  (:method :around ((document base-document))
+    (let (*inhibit-read-message*)
+      (call-next-method)
+      (unless *inhibit-read-message*
+        (format t "sucessfully read : ~A~%" (filename document)))))
   (:method ((document titled-document))
     (let ((link-name (create-blob-link (filename document) document)))
       (case *html-viewer*
@@ -88,11 +105,14 @@
       (progn
         (unless (probe-file name)
           (error "File not found: ~s" name))
-        (string-case  ((magic-mime name))
-          ("application/pdf" (read-document (import-pdf-document name)))
-          ("text/plain" (read-document (import-text-document name)))
-          ("text/x-lisp" (read-document (import-text-document name)))
-          ("text/html" (read-document (import-html-document name)))))))
+        (let ((mime (magic-mime name)))
+          (string-case  (mime)
+            ("application/pdf" (read-document (import-pdf-document name)))
+            ("text/plain" (read-document (import-text-document name)))
+            ("text/x-lisp" (read-document (import-text-document name)))
+            ("text/html" (read-document (import-html-document name)))
+            ("application/x-bittorrent" (read-document (import-torrent name)))
+            (t (format t "Uknown file type : ~A~%" mime)))))))
   (:method ((id integer))
     (let ((document (or (store-object-with-id id)
                         (error "No document with ID ~a found." id))))
@@ -112,3 +132,4 @@
            (sort (store-objects-with-class 'base-document)
                  #'string< :key #'filename))
    :headings '("id" "filename" "type" "author" "pages" "title")))
+
