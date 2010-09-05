@@ -23,3 +23,9 @@
   (:export *currently-playing* initialize-music play stop
            freesound-search freesound-download))
 
+(in-package :music)
+
+(defparameter *help-text* "Play music.")
+(defvar *currently-playing* nil)
+
+

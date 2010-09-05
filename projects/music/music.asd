@@ -5,7 +5,7 @@
   :components ((:static-file "music.asd")
 	       (:file "packages")
                (:file "wav")
-	       (:file "midi")
+	       (:file "play-midi")
 	       (:file "ogg")
 	       (:file "play")
                (:file "freesound")
@@ -15,6 +15,7 @@
                :iterate 
                :mixalot :mixalot-vorbis :vorbisfile-ffi
                :cl-web-utils
-               :databases))
+               :databases
+               :cffi))
 
 
