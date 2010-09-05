@@ -6,12 +6,24 @@
   (when-let (symbol (find-symbol "*HELP-TEXT*" subsystem))
     (and (boundp symbol) (symbol-value symbol))))
 
-(defun all-spaceship-subsystems ()
+(defun all-subsystems ()
   (sort 
    (iter (for package in (list-all-packages))
          (when-let (help (subsystem-help-text package))
            (collect package)))
    #'string< :key #'package-name))
+
+(defun subsystem-functions (subsystem)
+  (sort
+   (iter (for sym in-package subsystem external-only t)
+         (when (fboundp sym)
+           (when-let (doc (documentation sym 'function))
+             (collect (list sym doc)))))
+   'string< :key 'car))
+
+(defun all-functions ()
+  (iter (for subsystem in (all-subsystems))
+        (nconcing (subsystem-functions subsystem))))
 
 (defun help (&optional subsystem)
   "Display help for the spaceship and all it's subsystems. Any package
@@ -19,7 +31,7 @@ with a *help-text* external symbol is considered a subsystem. All
 external functions in these packages should have docstrings."
   (if subsystem
     (if (eq subsystem t)
-      (progn (mapc #'help (mapcar #'package-name (all-spaceship-subsystems))) nil)
+      (progn (mapc #'help (mapcar #'package-name (all-subsystems))) nil)
       (if-let (help-text (subsystem-help-text subsystem))
         (progn
           (newline)
@@ -38,7 +50,7 @@ external functions in these packages should have docstrings."
       (newline)
       (print-heading "Help is available on the following sybsystems")
       (print-table
-       (iter (for system in (all-spaceship-subsystems))
+       (iter (for system in (all-subsystems))
              (collect
                  (list (string-downcase (package-name system))
                        (subsystem-help-text system))))

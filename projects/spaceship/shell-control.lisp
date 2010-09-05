@@ -24,8 +24,9 @@
     (let* ((output (second cmd))
            (rtn (with-output-to-string (*standard-output*)
                   (handler-case 
-                      (if (member (first cmd) *shell-control-functions* :key #'car :test #'eql)
-                        (eval (cons (first cmd) (cddr cmd)))
+                      (if-let (fn (caar (member (first cmd) *shell-control-functions* 
+                                                :key #'car :test #'string-equal)))
+                        (eval (cons fn (cddr cmd)))
                         (format t "No command named: ~A.~%" (first cmd)))
                     (error (e) (format t "Error: ~A~%" e))))))
       (with-open-file (out output :direction :output :if-exists :append)  
@@ -67,6 +68,9 @@
             (write-char #\space stream)
             (write-char #\) stream)))))
 
+(defvar *shell-control-monitor-thread* nil)
+
 (defun start-shell-control-monitor ()
   (ensure-shell-control-pipe)
-  (make-thread 'shell-control-monitor-thread :name "shell-control-monitor"))
+  (setf *shell-control-monitor-thread* 
+        (make-thread 'shell-control-monitor-thread :name "shell-control-monitor")))

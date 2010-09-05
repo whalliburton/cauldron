@@ -5,8 +5,8 @@
   :components ((:file "packages")
 	       (:file "files")
                (:file "new-project")
-               (:file "shell-control")
                (:file "help")
+               (:file "shell-control")
 	       (:file "initialize"))
   :depends-on (
                
