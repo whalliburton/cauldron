@@ -59,7 +59,7 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
           (list-directory "/sys/class")))
 
 (defclass device ()
-  ((name :initarg :name)
+  ((name :initarg :name :reader name)
    (path :initarg :path :reader path)
    (class :initarg :class)))
 
@@ -198,14 +198,6 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
                (setf leading el))))
       (write-char #\] stream))))
 
-(defun devices ()
-  "List all the devices on this machine."
-  (print-table 
-   (iter (for (class devices) in-hashtable 
-              (group (list-devices) (lambda (el) (slot-value el 'class))))
-         (nconcing (iter (for name in (sort (shorten-devices devices) #'string<))
-                         (collect (list name (string-downcase class))))))))
-
 (defun list-devices (&optional class)
   "List all the devices of CLASS. If CLASS is NIL, list all the devices."
   (if (null class)
@@ -219,3 +211,20 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
                                :path el
                                :class class))
               (list-directory path)))))
+
+(defun devices ()
+  "List all the devices on this machine."
+  (print-table 
+   (iter (for (class devices) in-hashtable 
+              (group (list-devices) (lambda (el) (slot-value el 'class))))
+         (nconcing (iter (for name in (sort (shorten-devices devices) #'string<))
+                         (collect (list name (string-downcase class))))))))
+
+(defun battery ()
+  "Print out the battery status."
+  (print-table
+   (iter (for device in (list-devices :power_supply))
+         (when (typep device 'battery)
+           (collect (list (name device) 
+                          (format nil "~,2f%" (battery-percentage device))
+                          (battery-status device)))))))

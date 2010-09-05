@@ -13,7 +13,7 @@
            system
            start-udev-monitor
            print-pending-udev-messages
-           cpu-info))
+           cpu-info battery))
 
 (in-package :hardware)
 
