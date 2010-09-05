@@ -71,6 +71,8 @@
   (:documentation "Read a document.")
   (:method ((document base-document))
     (view-in-emacs (filename document) (namestring (blob-pathname document))))
+  (:method :after ((document base-document))
+    (format t "reading : ~A~%" (filename document)))
   (:method ((document titled-document))
     (let ((link-name (create-blob-link (filename document) document)))
       (case *html-viewer*

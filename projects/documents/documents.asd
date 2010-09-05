@@ -4,5 +4,6 @@
   :serial t
   :components ((:static-file "documents.asd")
 	       (:file "packages")
-	       (:file "read"))
+	       (:file "read")
+	       (:file "open"))
   :depends-on (:databases :iterate :split-sequence :utilities :editor))
