@@ -3,17 +3,29 @@
 (in-package :databases)
 
 (defun ensure-local-database-directory (name)
-  (ensure-directories-exist 
+  (ensure-directories-exist
    (concatenate 'string
                 (or (posix-getenv "HOME")
                     (error "HOME is not set."))
                 "/" name "/")))
 
+(defparameter *temporary-blob-directory* nil)
+
 (defun start-local-database (name)
   (assert name)
-  (make-instance 'mp-store :directory (ensure-local-database-directory name)
-                 :subsystems (list (make-instance 'store-object-subsystem)
-                                   (make-instance 'blob-subsystem))))
+  (let ((base (ensure-local-database-directory name)))
+    (make-instance 'mp-store :directory base
+                   :subsystems (list (make-instance 'store-object-subsystem)
+                                     (make-instance 'blob-subsystem)))
+    (setf *temporary-blob-directory* 
+          (ensure-directories-exist (concatenate 'string base "tmp/")))))
+
+(defun create-blob-link (name blob)
+  (let ((link-name (concatenate 'string *temporary-blob-directory* name)))  
+    (when (probe-file link-name)
+      (sb-posix:unlink link-name))
+    (sb-posix:link (blob-pathname blob) link-name)
+    link-name))
 
 (defclass database-key-value (store-object)
   ((key :initarg :key
@@ -41,3 +53,9 @@
   (if-let (obj (database-key-value-with-key key))
     (values (slot-value obj 'value) t)
     (values nil nil)))
+
+(defun local-database-statistics ()
+  (iter (with blobs)
+        (with other)
+        (for obj in (all-store-objects))
+        ))

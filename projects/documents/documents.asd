@@ -5,6 +5,4 @@
   :components ((:static-file "documents.asd")
 	       (:file "packages")
 	       (:file "read"))
-  :depends-on (:databases :iterate :split-sequence))
-
-
+  :depends-on (:databases :iterate :split-sequence :utilities :editor))

@@ -7,7 +7,8 @@
   (:import-from alexandria if-let)
   (:import-from sb-ext quit posix-getenv)
   (:export cached-http-request recipe start-local-database
-           gethash-database add-idea list-ideas))
+           gethash-database add-idea list-ideas
+           create-blob-link))
 
 (in-package :databases)
 
