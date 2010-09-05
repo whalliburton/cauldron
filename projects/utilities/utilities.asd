@@ -20,7 +20,8 @@
                (:file "slime")
                (:file "simple-server")
                (:file "sharpl")
-               (:file "hash-tables"))
+               (:file "hash-tables")
+               (:file "threads"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket))
 
 

@@ -1,8 +1,8 @@
 ;; threads.lisp
 
-(in-package :spaceship)
+(in-package :utilities)
 
-(defun print-threads ()
+(defun list-threads ()
   (print-table 
    (iter 
      (for thread in (list-all-threads))
