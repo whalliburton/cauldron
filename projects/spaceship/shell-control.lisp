@@ -14,7 +14,10 @@
     (iter (for line = (read-line str nil))
           (if (null line) (sleep 0.1))
           (when line
-            (handle-shell-control line)))))
+            (handler-case
+                (handle-shell-control line)
+              (error (c) 
+                (warn "Error in shell-control line ~S. ~A" line c)))))))
 
 (defparameter *shell-control-functions* (all-functions))
 

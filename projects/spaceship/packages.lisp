@@ -6,7 +6,11 @@
           network language linux journal documents
           communications windows bknr.datastore)
   (:import-from sb-ext quit run-program posix-getenv)
-  (:export initialize))
+  (:export help))
+
+(in-package :spaceship)
+
+(defparameter *help-text* "The bridge.")
 
 
 

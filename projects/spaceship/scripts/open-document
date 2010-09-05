@@ -6,7 +6,7 @@ escaped=${filename//\ /\\\ }
 output=`mktemp -u`
 mkfifo $output
 
-echo "read-document" $output $escaped >> ~/.spaceship/control
+echo "open-document" $output $escaped >> ~/.spaceship/control
 
 cat $output
 rm $output
