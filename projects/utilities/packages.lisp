@@ -16,14 +16,11 @@
            simple-server stop-simple-server call-simple-server
            enable-sharpL-reader
            list-threads kill-all-workers thread-backtrace thread-break
-           open-in-emacs))
+           view-in-web-browser))
 
 
 
-  
 
-	   
-	   
 
-	   
-	
+
+

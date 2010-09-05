@@ -40,3 +40,7 @@
       (cond
 	((typep val 'float) val)
 	((typep val 'fixnum) (coerce val 'float))))))
+
+(defun view-in-web-browser (filename)
+  "Open a chromium tab viewing FILENAME."
+  (run-program "/usr/bin/chromium" (list filename)))
