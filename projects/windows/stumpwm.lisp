@@ -41,6 +41,9 @@
 (defcommand htop () ()
   (run-or-raise "exec urxvt -e htop" '(:title "htop")))
 
+(defcommand xkill () ()
+  (run-shell-command "xkill"))
+
 (defcommand iotop () ()
   (run-or-raise "exec urxvt -e iotop -o" '(:title "iotop")))
 
@@ -107,6 +110,7 @@
    *root-map*
    (kbd "m")   "lastmsg"
    (kbd "b")   "banish"
+   (kbd "k")   "xkill"
    (kbd "!")   "exec"
    (kbd "s-g") "abort"
    (kbd "G")   "vgroups"
