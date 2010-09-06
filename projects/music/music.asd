@@ -9,6 +9,7 @@
 	       (:file "ogg")
 	       (:file "play")
                (:file "freesound")
+               (:file "alsa-mixer")
                (:file "initialize"))
   :depends-on (:linux 
                :sb-concurrency 
