@@ -5,6 +5,7 @@
   :components ((:file "packages")
 	       (:file "files")
                (:file "new-project")
+               (:file "scanner")
                (:file "help")
                (:file "shell-control")
 	       (:file "initialize"))

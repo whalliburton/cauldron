@@ -6,7 +6,7 @@
           network language linux journal documents
           communications windows bknr.datastore)
   (:import-from sb-ext quit run-program posix-getenv)
-  (:export help))
+  (:export help short-range-scan))
 
 (in-package :spaceship)
 

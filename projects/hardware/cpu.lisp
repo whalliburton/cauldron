@@ -31,4 +31,4 @@
    (iter (for cpu from 0 to (1- (cpu-count)))
          (collect (nconc (list cpu (cpufreq-get-freq-kernel cpu))
                          (multiple-value-list (cpu-limits cpu)))))
-   :headings '("num" "frequency (kHz)" "min (kHz)" "max (kHz)")))
+   :headings '("cpu" "frequency (kHz)" "min (kHz)" "max (kHz)")))
