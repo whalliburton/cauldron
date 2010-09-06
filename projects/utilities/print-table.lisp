@@ -19,6 +19,7 @@
 ;(row-extend '((1 2 3) (1)) 5)
 
 (defun print-table (rows &key indent (spacing 2) (stream t) max-column-width
+                         min-column-width
                     title (indent-title t) right-justified
                     headings)
   (when title
@@ -48,10 +49,14 @@
                         (iter (for el in row)
                               (collect
                                   (let ((str (princ-to-string el)))
-                                    (if (and max-column-width 
-                                             (> (length str) max-column-width))
-                                      (subseq str 0 max-column-width)
-                                      str))))))))
+                                    (cond
+                                      ((and max-column-width 
+                                            (> (length str) max-column-width))
+                                       (subseq str 0 max-column-width))
+                                      ((and min-column-width
+                                            (< (length str) min-column-width))
+                                       (pad-string str min-column-width))
+                                      (t str)))))))))
         (iter (for row in row-strings)
               (iter (for el in row)
                     (for x upfrom 0)
