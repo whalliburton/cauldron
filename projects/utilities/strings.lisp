@@ -42,3 +42,8 @@
 (defun process-up-to (string character)
   (subseq string 0 (or (position character string)
                        (error "Character ~s was not found in ~s." character string))))
+
+(defun pad-string (string min-length &optional (character #\space))
+  (let ((len (length string)))
+    (if (< len min-length)
+      (concatenate 'string string (make-string (- min-length len) :initial-element character )))))

@@ -9,6 +9,7 @@
   (:export newline slurp slurp-stream slurp-lines slurp-line last1 run
            string-starts-with string-ends-with string-contains-p
            chew-string process-string print-table print-heading
+           pad-string
            seconds-to-duration-string with-assoc
            mkstr symb ksymb in-home
            random-string random-byte-vector
@@ -19,10 +20,3 @@
            list-threads kill-all-workers thread-backtrace thread-break
            view-in-web-browser
            with-hash-values))
-
-
-
-
-
-
-
