@@ -8,7 +8,7 @@
   (:import-from sb-ext quit posix-getenv)
   (:export cached-http-request recipe start-local-database
            gethash-database add-idea list-ideas
-           create-blob-link))
+           create-blob-link weather))
 
 (in-package :databases)
 
