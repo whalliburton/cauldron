@@ -120,7 +120,7 @@
         (error "Object with id ~a is not a document." id))
       (read-document document))))
 
-(defun list-documents ()
+(defun list-documents (&optional (maximum-column-width 40))
   "List all the readable documents."
   (print-table 
    (mapcar (lambda (doc) (list (store-object-id doc) 
@@ -131,5 +131,6 @@
                                (or (title doc) "")))
            (sort (store-objects-with-class 'base-document)
                  #'string< :key #'filename))
-   :headings '("id" "filename" "type" "author" "pages" "title")))
+   :headings '("id" "filename" "type" "author" "pages" "title")
+   :max-column-width maximum-column-width :oversize-suffix "..."))
 
