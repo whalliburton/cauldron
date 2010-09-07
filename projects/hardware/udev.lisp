@@ -58,7 +58,7 @@
        (udev-enumerate-scan-subsystems enum)
        (list-entry-to-list (udev-enumerate-get-list-entry enum))))))
 
-(defun list-devices ()
+(defun list-udev-devices ()
   (flatten
    (with-udev (udev) 
      (with-enumerate (enum udev)
