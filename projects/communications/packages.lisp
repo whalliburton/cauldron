@@ -6,7 +6,7 @@
         bknr.datastore)
   (:import-from sb-ext quit)
   (:import-from alexandria shuffle if-let)
-  (:export load-email-identity contacts mail latest-irc network))
+  (:export load-email-identity contacts mail latest-irc network ids))
 
 (in-package :communications)
 
