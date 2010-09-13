@@ -6,7 +6,8 @@
 	       (:file "packages")
 	       (:file "bbdb")
 	       (:file "mail")
-               (:file "irc"))
+               (:file "irc")
+               (:file "network"))
   :depends-on (:utilities :databases 
                           :iterate :named-readtables :cl-smtp
                           :cl-irc :split-sequence))

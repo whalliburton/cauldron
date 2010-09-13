@@ -6,8 +6,9 @@
         bknr.datastore)
   (:import-from sb-ext quit)
   (:import-from alexandria shuffle if-let)
-  (:export load-email-identity contacts mail latest-irc))
+  (:export load-email-identity contacts mail latest-irc network))
 
 (in-package :communications)
 
 (defparameter *help-text* "Communicating with other people.")
+(enable-sharpl-reader)
