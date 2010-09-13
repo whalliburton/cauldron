@@ -23,6 +23,7 @@
                (:file "hash-tables")
                (:file "threads")
                (:file "processes"))
-  :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process))
+  :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process
+                        :fare-utils))
 
 
