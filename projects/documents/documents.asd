@@ -7,4 +7,4 @@
 	       (:file "read")
 	       (:file "open"))
   :depends-on (:databases :iterate :split-sequence :utilities :editor :torrents
-                          :iolib.process :cl-bzip2))
+                          :iolib.process :cl-bzip2 :gzip-stream))

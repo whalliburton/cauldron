@@ -16,6 +16,7 @@
                 (format t "OPEN-DOCUMENT does not know how to handle a document of mime type : ~A.~%"
                         (magic-mime which))))
            ("application/x-bzip2" (bunzip2 which))
+           ("application/x-gzip" (gunzip which))
            ("application/x-tar" (untar which)))
          (format t "No file found at ~A.~%" which)))))
 
@@ -42,3 +43,19 @@
        (iter (for line = (read-line (process-output process) nil nil))
              (while line)
              (collect (list line (stat-formatted (concatenate 'string directory line)))))))))
+
+(defun gunzip (filename)
+  (let* ((directory (directory-namestring filename))
+         (base-name (pathname-name filename))
+         (extension (pathname-type filename))
+         (uncompressed-filename
+          (concatenate 'string directory base-name 
+                       (string-case (extension :default "")
+                         ("tgz" ".tar")))))
+    (assert (string/= (namestring filename) uncompressed-filename))
+    (if (probe-file uncompressed-filename)
+      (format t "aborting gunzip, ~S already exists~%" uncompressed-filename)
+      (progn
+        (gzip-stream:gunzip filename uncompressed-filename)
+        (format t "sucessful gunzip : ~A -> ~A~%" filename (file-namestring uncompressed-filename))
+        (open-document uncompressed-filename nil)))))
