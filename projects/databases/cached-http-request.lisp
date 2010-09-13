@@ -45,16 +45,20 @@
 (deftransaction set-blob-type (cached blob-type)
   (setf (slot-value cached 'type) blob-type))
 
-(defun set-cached-http-request (uri &rest args &key return-object alias &allow-other-keys)
+(defun set-cached-http-request (uri &rest args &key return-object alias class initargs
+                                    &allow-other-keys)
   (with-assoc (content-type last-modified location)
     (multiple-value-bind (body code headers) 
         (apply 'http-request uri :redirect nil
-               (remove-keywords args :return-object :check-for-newer :alias))
+               (remove-keywords args :return-object :check-for-newer :alias :class :initargs))
       (cond
         ((eql code 200)
          (let* ((type (blob-type-from-content-type (:content-type headers)))
                 (object (or (cached-http-request-with-uri uri)
-                            (make-object 'cached-http-request :uri uri :type type :alias alias))))
+                            (apply 'make-object 
+                                   (or class 'cached-http-request) 
+                                   :uri uri :type type :alias alias
+                                   initargs))))
            (set-last-modified object (:last-modified headers))
            (if (eq type :text)
              (blob-from-string object body)
@@ -77,7 +81,8 @@
     ((string-starts-with content-type "application/ogg") :ogg)
     (t :unknown)))
 
-(defun cached-http-request (uri &rest args &key check-for-newer return-object
+(defun cached-http-request (uri &rest args 
+                                &key check-for-newer return-object class initargs
                             &allow-other-keys)
   (let ((cached (or (cached-http-request-with-uri uri)
                     (cached-http-request-with-alias uri))))
