@@ -3,7 +3,13 @@
 output=`mktemp -u`
 mkfifo $output
 
-echo $1 $output $2 $3 $4 $5 $6 $7 >> ~/.spaceship/control
+base=`basename $0`
+
+if [ $base = "spaceship-cmd" ]; then
+    echo $1 $output $2 $3 $4 $5 $6 $7 >> ~/.spaceship/control
+else
+    echo $base $output $1 $2 $3 $4 $5 $6 >> ~/.spaceship/control
+fi
 
 cat $output
 rm $output

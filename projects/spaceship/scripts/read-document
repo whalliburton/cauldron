@@ -1,12 +1,1 @@
-#!/bin/bash
-
-filename=`readlink -f "$1"`
-escaped=${filename//\ /\\\ }
-
-output=`mktemp -u`
-mkfifo $output
-
-echo "read-document" $output $escaped >> ~/.spaceship/control
-
-cat $output
-rm $output
+spaceship-cmd-file

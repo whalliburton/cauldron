@@ -1,0 +1,19 @@
+#!/bin/bash
+
+base=`basename $0`
+
+if [ $base = "spaceship-cmd-file" ]; then
+    echo spaceship-cmd-file must be called through a symbolic link
+    exit
+fi
+
+filename=`readlink -f "$1"`
+escaped=${filename//\ /\\\ }
+
+output=`mktemp -u`
+mkfifo $output
+
+echo $base $output $escaped >> ~/.spaceship/control
+
+cat $output
+rm $output
