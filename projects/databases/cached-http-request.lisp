@@ -20,7 +20,7 @@
 (defmethod print-object ((cached cached-http-request) stream)
   (with-slots (uri alias type) cached
     (print-unreadable-object (cached stream :type t)
-      (format stream "~A ~A ~A~@[ [~A~]] " (store-object-id cached) type uri alias))))
+      (format stream "~A ~A ~A~@[ [~A]~] " (store-object-id cached) type uri alias))))
 
 (defun cached-http-request-body (cached)
   (let ((element-type (case (blob-type cached)

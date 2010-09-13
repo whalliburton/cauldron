@@ -2,6 +2,9 @@
 
 (in-package :hardware)
 
+;; better to have just parsed the /sys/devices/system directory
+;; http://www.ibm.com/developerworks/linux/library/l-cpufreq-2/index.html
+
 (defun cpu-count ()
   "Return the number of CPU's on this machine."
   (iter (with count = 0)

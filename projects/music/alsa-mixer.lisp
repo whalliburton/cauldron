@@ -98,7 +98,7 @@
                             (collect (list channel 
                                            (snd-mixer-selem-channel-name channel)
                                            volume
-                                           (format nil "~d%" (* 100 (/ volume (second range))))
+                                           (format nil "~d%" (round (* 100 (/ volume (second range)))))
                                            (if (mixer-selem-get-playback-switch elem channel) 
                                              "on" "off")
                                            ))))))))))

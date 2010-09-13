@@ -2,6 +2,8 @@
 
 (in-package :databases)
 
+;; might be better to user google's weather api
+
 (defun weather (&optional (location "80905"))
   "Show the weather for the current location."
   (let ((xml
