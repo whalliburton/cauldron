@@ -7,7 +7,7 @@
   (:import-from flexi-streams with-output-to-sequence)
   (:import-from alexandria when-let)
   (:export translate say speak-in-english speak-in-russian
-           language-name-from-code))
+           language-name-from-code shtooka-word))
 
 (in-package :language)
 

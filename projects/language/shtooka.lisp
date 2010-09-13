@@ -58,8 +58,21 @@
   (or (assoc filename (list-shtooka-packet-words packet-name check-for-newer) :test #'string=)
       (error "Shtooka packet ~s does not have a file named ~s." packet-name filename)))
 
+(defclass shtooka-word (cached-http-request)
+  ((text :initarg :text :reader text))
+  (:metaclass persistent-class))
+
+(defmethod print-object ((shtooka-word shtooka-word) stream)
+  (print-unreadable-object (shtooka-word stream :type t)
+    (format stream "~A ~A" (store-object-id shtooka-word) (text shtooka-word))))
+
 (defun shtooka-packet-word (packet-name filename &optional check-for-newer)
   (ensure-valid-shtooka-packet-name packet-name check-for-newer)
   (cached-http-request
    (format nil "http://packs.shtooka.net/~a/ogg/~a" packet-name filename)
-   :check-for-newer check-for-newer :return-object t))
+   :check-for-newer check-for-newer :return-object t
+   :class 'shtooka-word
+   :initargs (list :text 
+                   (cdr (assoc :swac-text
+                               (cadr (assoc filename (list-shtooka-packet-words packet-name) 
+                                            :test #'string=)))))))
