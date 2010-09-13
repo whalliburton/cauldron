@@ -21,7 +21,8 @@
                (:file "simple-server")
                (:file "sharpl")
                (:file "hash-tables")
-               (:file "threads"))
-  :depends-on (:iterate :split-sequence :local-time :swank :usocket))
+               (:file "threads")
+               (:file "processes"))
+  :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process))
 
 

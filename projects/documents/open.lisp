@@ -38,11 +38,10 @@
 
 (defun untar (filename)
   (let ((directory (directory-namestring filename)))
-    (with-child-process (process (format nil "/bin/tar xvf ~A -C ~A" filename directory) :stdout t)
-      (print-table
-       (iter (for line = (read-line (process-output process) nil nil))
-             (while line)
-             (collect (list line (stat-formatted (concatenate 'string directory line)))))))))
+    (print-table
+     (iter (for line = (process-lines (format nil "/bin/tar xvf ~A -C ~A" filename directory)))
+           (while line)
+           (collect (list line (stat-formatted (concatenate 'string directory line))))))))
 
 (defun gunzip (filename)
   (let* ((directory (directory-namestring filename))
