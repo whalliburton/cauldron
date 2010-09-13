@@ -3,10 +3,11 @@
 (defpackage utilities
   (:use common-lisp iterate split-sequence local-time usocket sb-thread)
   (:import-from sb-ext quit run-program)
-  (:import-from alexandria once-only)
+  (:import-from alexandria once-only with-gensyms)
   (:import-from iolib.process with-child-process process-output)
   (:import-from sb-gray fundamental-character-output-stream
                 stream-write-char stream-force-output)
+  (:import-from fare-utils make-fifo fifo-head fifo-enqueue fifo-dequeue)  
   (:export newline slurp slurp-stream slurp-lines slurp-line last1 run
            string-starts-with string-ends-with string-contains-p
            chew-string process-string print-table print-heading
@@ -20,4 +21,7 @@
            enable-sharpL-reader
            list-threads kill-all-workers thread-backtrace thread-break
            view-in-web-browser
-           with-hash-values process-lines))
+           with-hash-values expiring-hash-table set-expiring-hash
+           gethash-expiring
+           process-lines
+           defun-simple-memoized))

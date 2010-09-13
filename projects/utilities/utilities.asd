@@ -22,7 +22,8 @@
                (:file "sharpl")
                (:file "hash-tables")
                (:file "threads")
-               (:file "processes"))
+               (:file "processes")
+               (:file "memoization"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process
                         :fare-utils))
 
