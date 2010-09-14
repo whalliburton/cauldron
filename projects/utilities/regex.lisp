@@ -23,11 +23,11 @@
            ,',str
            ,(cadr ,args))))))
 
-(defmacro match-mode-ppcre-lambda-form (args mods)
+(defmacro match-mode-ppcre-lambda-form (args mods fn)
   (once-only (args mods)
     (with-gensyms (str)
       ``(lambda (,',str)
-          (cl-ppcre:scan
+          (,,fn
            ,(if (zerop (length ,mods))
               (car ,args)
               (format nil "(?~a)~a" ,mods (car ,args)))
@@ -37,21 +37,22 @@
   (declare (ignore sub-char numarg))
   (let ((mode-char (read-char stream)))
     (cond
-      ((char= mode-char #\m)
-         (match-mode-ppcre-lambda-form
-           (segment-reader stream
-                           (read-char stream)
-                           1)
-           (coerce (iter (for c = (read-char stream))
-                         (while (alpha-char-p c))
-                         (collect c)
-                         (finally (unread-char c stream)))
-                   'string)))
+      ((or (char= mode-char #\m) (char= mode-char #\c))
+       (match-mode-ppcre-lambda-form
+        (segment-reader stream
+                        (read-char stream)
+                        1)
+        (coerce (iter (for c = (read-char stream))
+                      (while (alpha-char-p c))
+                      (collect c)
+                      (finally (unread-char c stream)))
+                'string)
+        (if (char= mode-char #\m) 'cl-ppcre:scan 'cl-ppcre:scan-to-strings)))
       ((char= mode-char #\s)
-         (subst-mode-ppcre-lambda-form
-           (segment-reader stream
-                           (read-char stream)
-                           2)))
+       (subst-mode-ppcre-lambda-form
+        (segment-reader stream
+                        (read-char stream)
+                        2)))
       (t (error "Unknown #~~ mode character")))))
 
 (set-dispatch-macro-character #\# #\~ #'|#~-reader|)
