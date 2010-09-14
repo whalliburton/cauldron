@@ -23,8 +23,9 @@
                (:file "hash-tables")
                (:file "threads")
                (:file "processes")
-               (:file "memoization"))
+               (:file "memoization")
+               (:file "regex"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process
-                        :fare-utils))
+                        :fare-utils :cl-ppcre))
 
 
