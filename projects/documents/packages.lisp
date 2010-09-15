@@ -6,7 +6,7 @@
         torrents)
   (:import-from sb-ext quit run-program)
   (:import-from alexandria if-let)
-  (:export list-documents read-document open-document))
+  (:export list-documents read-document open-document get-document))
 
 (in-package :documents)
 

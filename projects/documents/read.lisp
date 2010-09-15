@@ -78,6 +78,13 @@
 
 (defvar *inhibit-read-message* nil)
 
+(defun get-document (id)
+  (let ((document (or (store-object-with-id id)
+                      (error "No document with ID ~a found." id))))
+    (unless (typep document 'base-document)
+      (error "Object with id ~a is not a document." id))
+    document))
+
 (defgeneric read-document (document) 
   (:documentation "Read a document.")
   (:method ((document base-document))
@@ -113,12 +120,7 @@
             ("text/html" (read-document (import-html-document name)))
             ("application/x-bittorrent" (read-document (import-torrent name)))
             (t (format t "Uknown file type : ~A~%" mime)))))))
-  (:method ((id integer))
-    (let ((document (or (store-object-with-id id)
-                        (error "No document with ID ~a found." id))))
-      (unless (typep document 'base-document)
-        (error "Object with id ~a is not a document." id))
-      (read-document document))))
+  (:method ((id integer)) (read-document (get-document id))))
 
 (defun list-documents (&optional (maximum-column-width 40))
   "List all the readable documents."
