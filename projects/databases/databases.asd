@@ -11,6 +11,4 @@
                (:file "weather"))
   :depends-on (:drakma :cl-json :iterate :alexandria
                        :bknr.datastore :bknr.indices :bknr.utils
-                       :utilities :linux :anaphora))
-
-
+                       :utilities :linux :anaphora :closer-mop))
