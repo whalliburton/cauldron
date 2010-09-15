@@ -23,8 +23,10 @@
 ;; 16                   n/a
 
 (defun thermal-data ()
-  (let ((temps (mapcar #'parse-integer 
-                       (split-sequence #\Space (subseq (first (slurp-lines "/proc/acpi/ibm/thermal")) 14)))))
+  (let ((temps 
+         (mapcar #'parse-integer 
+                 (split-sequence #\Space 
+                                 (subseq (first (slurp-lines "/proc/acpi/ibm/thermal")) 14)))))
     (values
       `((:cpu ,(first temps))
         (:hdd ,(second temps))
@@ -34,4 +36,5 @@
       temps)))
 
 (defun thermal ()
+  "Display the temperatures of the thermal sensors."
   (print-table (thermal-data)))
