@@ -5,6 +5,8 @@
   :components ((:static-file "documents.asd")
 	       (:file "packages")
 	       (:file "read")
-	       (:file "open"))
-  :depends-on (:databases :iterate :split-sequence :utilities :editor :torrents
-                          :iolib.process :cl-bzip2 :gzip-stream))
+	       (:file "open")
+               (:file "torrent"))
+  :depends-on (:databases :iterate :split-sequence :utilities :editor
+                          :iolib.process :cl-bzip2 :gzip-stream :drakma :ironclad
+                          :flexi-streams :bencode))

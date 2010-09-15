@@ -18,7 +18,7 @@
 (defmethod print-object ((base-document base-document) stream)
   (with-slots (filename) base-document
     (print-unreadable-object (base-document stream :type t)
-      (format stream "~A" filename))))
+      (format stream "~A ~A" (store-object-id base-document) filename))))
 
 (defclass titled-document (base-document)
   ((title :initform nil :initarg :title :reader title))
@@ -91,7 +91,7 @@
     (view-in-emacs (filename document) (namestring (blob-pathname document))))
   (:method ((document torrent-document))
     (setf *inhibit-read-message* t)
-    (describe-torrent (namestring (blob-pathname document))))
+    (describe-torrent document))
   (:method :around ((document base-document))
     (let (*inhibit-read-message*)
       (call-next-method)
