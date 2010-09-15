@@ -8,9 +8,10 @@
 	       (:file "mail")
                (:file "irc")
                (:file "network")
-               (:file "ids"))
+               (:file "ids")
+               (:file "send-file"))
   :depends-on (:utilities :databases 
                           :iterate :named-readtables :cl-smtp
-                          :cl-irc :split-sequence))
+                          :cl-irc :split-sequence :iolib.process))
 
 
