@@ -47,12 +47,19 @@
   (unless (member name (list-shtooka-packet-names check-for-newer) :test #'string=)
     (error "No shtooka packet named ~S." name)))
 
-(defun list-shtooka-packet-words (packet-name &optional check-for-newer)
-  (ensure-valid-shtooka-packet-name packet-name)
-  (parse-shtooka-tags
-   (cached-http-request 
-    (format nil "http://packs.shtooka.net/~a/ogg/index.tags.txt" packet-name) 
-    :check-for-newer check-for-newer)))
+(defun list-shtooka-packet-words (packet-names &optional check-for-newer)
+  (etypecase packet-names
+    (cons (iter (for name in packet-names) 
+                (nconcing (list-shtooka-packet-words name))))
+    (string
+       (ensure-valid-shtooka-packet-name packet-names)
+       (mapcar
+        #L(cons (cdr (assoc :swac-text (second %))) 
+                (concatenate 'string packet-names "/" (first %)))
+        (parse-shtooka-tags
+         (cached-http-request 
+          (format nil "http://packs.shtooka.net/~a/ogg/index.tags.txt" packet-names) 
+          :check-for-newer check-for-newer))))))
 
 (defun ensure-valid-shtooka-packet-word (packet-name filename &optional check-for-newer)
   (or (assoc filename (list-shtooka-packet-words packet-name check-for-newer) :test #'string=)
@@ -76,3 +83,6 @@
                    (cdr (assoc :swac-text
                                (cadr (assoc filename (list-shtooka-packet-words packet-name) 
                                             :test #'string=)))))))
+
+
+;; (list-shtooka-packet-words '("rus-balm-voc" "rus-balm-voc-sakhno" "rus-nonfree"))
