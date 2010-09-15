@@ -57,7 +57,7 @@
             (newline))))
       (progn
         (newline)
-        (print-heading "Help is available on the following sybsystems")
+        (print-heading "Help is available on the following subsystems")
         (print-table
          (iter (for system in (all-subsystems))
                (collect

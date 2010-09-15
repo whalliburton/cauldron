@@ -39,7 +39,7 @@
 (defun untar (filename)
   (let ((directory (directory-namestring filename)))
     (print-table
-     (iter (for line = (process-lines (format nil "/bin/tar xvf ~A -C ~A" filename directory)))
+     (iter (for line in (process-lines (format nil "/bin/tar xvf ~A -C ~A" filename directory)))
            (while line)
            (collect (list line (stat-formatted (concatenate 'string directory line))))))))
 
