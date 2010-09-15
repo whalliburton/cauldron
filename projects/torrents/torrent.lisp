@@ -13,15 +13,20 @@
 (defun symbol-to-string (symbol)
   (substitute #\space #\- (string-downcase symbol)))
 
+;; http://bittorrent.org/beps/bep_0003.html
+
 (defgeneric describe-torrent (torrent)
   (:method ((torrent hash-table))
-    (with-hash-values ((announce created-by creation-date info) torrent :to-key #'symbol-to-string)
-      (with-hash-values ((name files) info :to-key #'string-downcase)
+    (with-hash-values ((announce created-by creation-date info comment)
+                       torrent :to-key #'symbol-to-string)
+      (with-hash-values ((name files piece-length) info :to-key #'symbol-to-string)
         (print-table 
          `(("name" ,name)
            ("created by" ,created-by)
-           ("creation date" ,creation-date)
-           ("announce" ,announce)))
+           ("creation date" ,(local-time:unix-to-timestamp creation-date))
+           ("announce" ,announce)
+           ("comment" ,comment)
+           ("piece length" ,piece-length)))
         (newline)
         (print-table 
          (iter (for file in files)
@@ -29,4 +34,3 @@
                               (gethash "length" file))))))))
   (:method ((filename string))
     (describe-torrent (load-torrent filename))))
-
