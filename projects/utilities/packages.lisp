@@ -24,4 +24,5 @@
            with-hash-values expiring-hash-table set-expiring-hash
            gethash-expiring
            process-lines
-           defun-simple-memoized))
+           defun-simple-memoized
+           list-hash-keys))

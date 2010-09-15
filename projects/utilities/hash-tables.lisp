@@ -84,3 +84,6 @@
                             ,hash)))
                keys))
        ,@body)))
+
+(defun list-hash-keys (hash-table)
+  (iter (for (k v) in-hashtable hash-table) (collect k)))
