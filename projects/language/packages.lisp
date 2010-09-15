@@ -2,7 +2,7 @@
 
 (defpackage language
   (:use common-lisp drakma json iterate usocket babel utilities string-case
-        anaphora databases bknr.datastore bknr.indices)
+        anaphora databases bknr.datastore bknr.indices split-sequence)
   (:import-from sb-ext quit run-program process-status process-kill)
   (:import-from flexi-streams with-output-to-sequence)
   (:import-from alexandria when-let)
