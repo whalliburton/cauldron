@@ -11,6 +11,7 @@
                (:file "freesound")
                (:file "alsa-mixer")
                (:file "noise")
+               (:file "octaves")
                (:file "initialize"))
   :depends-on (:linux 
                :sb-concurrency 
