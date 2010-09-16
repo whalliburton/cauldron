@@ -10,6 +10,7 @@
 	       (:file "play")
                (:file "freesound")
                (:file "alsa-mixer")
+               (:file "noise")
                (:file "initialize"))
   :depends-on (:linux 
                :sb-concurrency 
