@@ -7,7 +7,7 @@
   (* reference (expt (expt 2 (/ 1 12)) (- desired-pitch-number reference-pitch-number))))
 
 (defun key-number-to-note (key-number)
-  (multiple-value-bind (octave note) (floor (+ number 8) 12)
+  (multiple-value-bind (octave note) (floor (+ key-number 8) 12)
     (format nil "~A~A" 
             (aref #("C" "C#" "D" "D#" "E" "F" "F#" "G" "G#" "A" "A#" "B") note) 
             octave)))
@@ -18,5 +18,5 @@
 (defun play-octave (&optional (start-key 40))
   "Play an octave of equal temperament tones."
   (iter (for key from start-key to (+ start-key 12))
-        (format t "~4A ~A~%" (key-number-to-note key) (12TET-frequency key))
+        (format t "~4A ~,4F~%" (key-number-to-note key) (12TET-frequency key))
         (play-key key)))
