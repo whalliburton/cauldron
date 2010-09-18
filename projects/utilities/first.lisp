@@ -44,3 +44,8 @@
 (defun view-in-web-browser (filename)
   "Open a chromium tab viewing FILENAME."
   (run-program "/usr/bin/chromium" (list filename)))
+
+(defun ensure-string (string-or-symbol)
+  (etypecase string-or-symbol
+    (string string-or-symbol)
+    (symbol (symbol-name string-or-symbol))))

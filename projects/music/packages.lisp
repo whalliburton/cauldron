@@ -21,7 +21,8 @@
                 get-vorbis-comment get-vorbis-raw-tags-from-comment)
   (:import-from mixalot-vorbis make-vorbis-streamer vorbis-streamer)
   (:export *currently-playing* initialize-music play stop
-           freesound-search freesound-download mixer))
+           freesound-search freesound-download mixer
+           play-note play-notes))
 
 (in-package :music)
 

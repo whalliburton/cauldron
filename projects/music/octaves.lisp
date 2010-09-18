@@ -20,3 +20,19 @@
   (iter (for key from start-key to (+ start-key 12))
         (format t "~4A ~,4F~%" (key-number-to-note key) (12TET-frequency key))
         (play-key key)))
+
+(defun note-to-pitch-number (note)
+  (multiple-value-bind (all note sharp octave)
+      (#~c/([ABCDEFG])(#?)([0123456789]?)/ (ensure-string note))
+    (declare (ignore all))
+    (let ((octave (or (and (plusp (length octave)) (parse-integer octave)) 4))
+          (sharp (plusp (length sharp)))
+          (note (case (char note 0)
+                  (#\C 0) (#\D 2) (#\E 4) (#\F 5) (#\G 7) (#\A 9) (#\B 11))))
+      (+ (* octave 12) note (if sharp 1 0) -8))))
+
+(defun play-note (note)
+  (play-key (note-to-pitch-number note)))
+
+(defun play-notes (notes)
+  (mapc #'play-note notes))

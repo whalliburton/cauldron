@@ -27,4 +27,5 @@
            process-lines
            defun-simple-memoized
            list-hash-keys
-           agent start-agent list-agents))
+           agent start-agent list-agents 
+           ensure-string))
