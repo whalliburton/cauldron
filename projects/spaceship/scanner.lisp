@@ -7,3 +7,6 @@
   (battery)
   (newline)
   (cpu-info))
+
+(defun srs ()
+  (short-range-scan))
