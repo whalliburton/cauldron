@@ -27,6 +27,7 @@
                :journal
                :documents
                :communications
+               :paint-client
 
                ))
 

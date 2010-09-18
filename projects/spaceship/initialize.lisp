@@ -8,6 +8,7 @@
   (initialize-music)
   (start-shell-control-monitor)
   (load-email-identity)
+  (start-paint-server)
   (format t "~%Welcome to the spaceship.~%~%"))
 
 

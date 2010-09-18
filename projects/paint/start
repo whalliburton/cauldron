@@ -1,0 +1,7 @@
+#!/bin/bash
+
+/usr/local/bin/sbcl \
+    --dynamic-space-size 1024 \
+    --load /lisp/projects/paint/start.lisp \
+    --eval "(in-package :paint)" \
+    "$@"

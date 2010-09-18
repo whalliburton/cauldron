@@ -41,3 +41,6 @@
     (schedule-timer update-timer 0 :repeat-interval update-interval)))
 
 (defmethod draw ((window window)))
+
+(defun close-window (window)
+  (destroy (context window)))

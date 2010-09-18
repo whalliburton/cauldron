@@ -4,7 +4,7 @@
 
 (defclass simple-server ()
   ((host :initform "localhost" :initarg :host)
-   (port :initform 5020)
+   (port :initform 5020 :initarg :port)
    (handler :initarg :handler :initform 'simple-server-default-handler)
    accept-thread
    listen-socket))
