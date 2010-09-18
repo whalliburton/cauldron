@@ -14,9 +14,7 @@
 
 (defun ping (hostname)
   (when-let (rtn (second (process-lines (format nil "/bin/ping -c 1 ~s" hostname))))
-    (multiple-value-bind (all subs)
+    (multiple-value-bind (all hostname ip icmp-seq ttl time)
         (#~c/.* bytes from (.*) \((.*)\): icmp_seq=(.*) ttl=(.*) time=(.*) ms/ rtn)
-      (when subs
-        (destructuring-bind (hostname ip icmp-seq ttl time) (coerce subs 'list)
-          (values all hostname ip (parse-integer icmp-seq) (parse-integer ttl)
-                  (parse-float time)))))))
+      (values all hostname ip (parse-integer icmp-seq) (parse-integer ttl)
+              (parse-float time)))))

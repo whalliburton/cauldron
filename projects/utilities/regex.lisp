@@ -33,6 +33,11 @@
               (format nil "(?~a)~a" ,mods (car ,args)))
            ,',str)))))
 
+(defun scan-to-strings-values (regex target-string)
+  (multiple-value-bind (all subs)
+      (cl-ppcre:scan-to-strings regex target-string)
+    (values-list (nconc (list all) (when subs (coerce subs 'list))))))
+
 (defun |#~-reader| (stream sub-char numarg)
   (declare (ignore sub-char numarg))
   (let ((mode-char (read-char stream)))
@@ -47,7 +52,7 @@
                       (collect c)
                       (finally (unread-char c stream)))
                 'string)
-        (if (char= mode-char #\m) 'cl-ppcre:scan 'cl-ppcre:scan-to-strings)))
+        (if (char= mode-char #\m) 'cl-ppcre:scan 'scan-to-strings-values)))
       ((char= mode-char #\s)
        (subst-mode-ppcre-lambda-form
         (segment-reader stream
