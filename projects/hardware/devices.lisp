@@ -220,11 +220,16 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
          (nconcing (iter (for name in (sort (shorten-devices devices) #'string<))
                          (collect (list name (string-downcase class))))))))
 
+(defun list-batteries ()
+  (iter (for device in (list-devices :power_supply))
+        (when (typep device 'battery)
+          (collect device))))
+
 (defun battery ()
   "Print out the battery status."
   (print-table
-   (iter (for device in (list-devices :power_supply))
-         (when (typep device 'battery)
-           (collect (list (name device) 
-                          (format nil "~,2f%" (battery-percentage device))
-                          (battery-status device)))))))
+   (iter (for battery in (list-batteries))
+         (collect (list (name battery) 
+                        (format nil "~,2f%" (battery-percentage battery))
+                        (battery-status battery))))))
+

@@ -6,7 +6,8 @@
           network language linux journal documents
           communications windows bknr.datastore
           paint-client)
-  (:import-from sb-ext quit run-program posix-getenv)
+  (:import-from sb-ext quit run-program posix-getenv make-timer schedule-timer
+                list-all-timers)
   (:export help short-range-scan))
 
 (in-package :spaceship)

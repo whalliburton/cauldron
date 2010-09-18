@@ -8,6 +8,7 @@
                (:file "scanner")
                (:file "help")
                (:file "shell-control")
+	       (:file "monitors")
 	       (:file "initialize"))
   :depends-on (
                

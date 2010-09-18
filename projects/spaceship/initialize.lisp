@@ -9,6 +9,7 @@
   (start-shell-control-monitor)
   (load-email-identity)
   (start-paint-server)
+  (start-monitors)
   (format t "~%Welcome to the spaceship.~%~%"))
 
 
