@@ -4,7 +4,8 @@
   (:use common-lisp iterate split-sequence local-time usocket sb-thread)
   (:import-from sb-ext quit run-program)
   (:import-from alexandria once-only with-gensyms)
-  (:import-from iolib.process with-child-process process-output)
+  (:import-from iolib.process with-child-process process-output create-process
+                process-poll process-pid)
   (:import-from sb-gray fundamental-character-output-stream
                 stream-write-char stream-force-output)
   (:import-from fare-utils make-fifo fifo-head fifo-enqueue fifo-dequeue)  
@@ -25,4 +26,5 @@
            gethash-expiring
            process-lines
            defun-simple-memoized
-           list-hash-keys))
+           list-hash-keys
+           agent start-agent list-agents))

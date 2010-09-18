@@ -24,7 +24,8 @@
                (:file "threads")
                (:file "processes")
                (:file "memoization")
-               (:file "regex"))
+               (:file "regex")
+               (:file "agents"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process
                         :fare-utils :cl-ppcre))
 
