@@ -5,8 +5,9 @@
         utilities linux string-case editor databases iolib.process
         drakma flexi-streams)
   (:import-from sb-ext quit run-program)
-  (:import-from alexandria if-let)
-  (:export list-documents read-document open-document get-document))
+  (:import-from alexandria if-let when-let)
+  (:export list-documents read-document open-document get-document
+           delete-document))
 
 (in-package :documents)
 

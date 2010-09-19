@@ -2,6 +2,10 @@
 
 (in-package :documents)
 
+(defclass torrent-document (base-document)
+  ()
+  (:metaclass persistent-class))
+
 (defun load-torrent (filename)
   (with-open-file (stream filename :element-type '(unsigned-byte 8))
     (bencode:decode (flex:make-flexi-stream stream))))
@@ -58,4 +62,11 @@
     (track-torrent (load-torrent (namestring (blob-pathname torrent)))))
   (:method ((torrent-id integer))
     (track-torrent (get-document torrent-id))))
+
+(defmethod read-document ((document torrent-document))
+  (setf *inhibit-read-message* t)
+  (describe-torrent document))
+
+(defmethod import-document (name (type (eql :|application/x-bittorrent|)))
+   (import-simple-document name 'torrent-document))
 
