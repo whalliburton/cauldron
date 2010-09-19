@@ -59,18 +59,8 @@
         (blob-from-file document filename)
         document))))
 
-(defun import-text-document (filename)
-  (let ((document (make-object 'base-document :filename (file-namestring filename))))
-    (blob-from-file document filename)
-    document))
-
-(defun import-html-document (filename)
-  (let ((document (make-object 'titled-document :filename (file-namestring filename))))
-    (blob-from-file document filename)
-    document))
-
-(defun import-torrent (filename)
-  (let ((document (make-object 'torrent-document :filename (file-namestring filename))))
+(defun import-document (filename type)
+  (let ((document (make-object type :filename (file-namestring filename))))
     (blob-from-file document filename)
     document))
 
@@ -88,7 +78,9 @@
 (defgeneric read-document (document) 
   (:documentation "Read a document.")
   (:method ((document base-document))
-    (view-in-emacs (filename document) (namestring (blob-pathname document))))
+    (if swank::*emacs-connection*
+      (view-in-emacs (filename document) (namestring (blob-pathname document)))
+      (write-string (slurp (blob-pathname document) 'character))))
   (:method ((document torrent-document))
     (setf *inhibit-read-message* t)
     (describe-torrent document))
@@ -115,10 +107,11 @@
         (let ((mime (magic-mime name)))
           (string-case  (mime)
             ("application/pdf" (read-document (import-pdf-document name)))
-            ("text/plain" (read-document (import-text-document name)))
-            ("text/x-lisp" (read-document (import-text-document name)))
-            ("text/html" (read-document (import-html-document name)))
-            ("application/x-bittorrent" (read-document (import-torrent name)))
+            ("text/plain" (read-document (import-document name 'base-document)))
+            ("text/x-lisp" (read-document (import-document name 'base-document)))
+            ("text/html" (read-document (import-document name 'titled-document)))
+            ("audio/midi" (read-document (import-document name 'base-document)))
+            ("application/x-bittorrent" (read-document (import-document name 'torrent-document)))
             (t (format t "Uknown file type : ~A~%" mime)))))))
   (:method ((id integer)) (read-document (get-document id))))
 
