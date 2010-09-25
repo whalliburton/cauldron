@@ -28,10 +28,11 @@
       (values (mem-ref min :uint)
               (mem-ref max :uint)))))
 
-(defun cpu-info ()
+(defun cpu-info (&key as-list)
   "Print out information on this machines cpu(s)."
-  (print-table 
-   (iter (for cpu from 0 to (1- (cpu-count)))
-         (collect (nconc (list cpu (cpufreq-get-freq-kernel cpu))
-                         (multiple-value-list (cpu-limits cpu)))))
-   :headings '("cpu" "frequency (kHz)" "min (kHz)" "max (kHz)")))
+  (let ((list
+         (iter (for cpu from 0 to (1- (cpu-count)))
+               (collect (nconc (list cpu (cpufreq-get-freq-kernel cpu))
+                               (multiple-value-list (cpu-limits cpu)))))))
+    (if as-list list 
+      (print-table list :headings '("cpu" "frequency (kHz)" "min (kHz)" "max (kHz)")))))

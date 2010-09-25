@@ -225,11 +225,11 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
         (when (typep device 'battery)
           (collect device))))
 
-(defun battery ()
+(defun battery (&key as-list)
   "Print out the battery status."
-  (print-table
-   (iter (for battery in (list-batteries))
-         (collect (list (name battery) 
-                        (format nil "~,2f%" (battery-percentage battery))
-                        (battery-status battery))))))
-
+  (let ((list
+         (iter (for battery in (list-batteries))
+               (collect (list (name battery) 
+                              (format nil "~,2f%" (battery-percentage battery))
+                              (battery-status battery))))))
+    (if as-list list (print-table list))))
