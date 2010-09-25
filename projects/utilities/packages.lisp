@@ -28,4 +28,5 @@
            defun-simple-memoized
            list-hash-keys
            agent start-agent list-agents 
-           ensure-string bugout))
+           ensure-string bugout
+           destructuring-bind-list))
