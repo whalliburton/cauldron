@@ -78,3 +78,5 @@
                  (princ "~%" str))))
           (iter (for row in row-strings)
                 (apply #'format stream format-string row)))))))
+
+(defun blank-table-line () (list (list)))

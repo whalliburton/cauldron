@@ -11,7 +11,7 @@
   (:import-from fare-utils make-fifo fifo-head fifo-enqueue fifo-dequeue)  
   (:export newline slurp slurp-stream slurp-lines slurp-line last1 run
            string-starts-with string-ends-with string-contains-p
-           chew-string process-string print-table print-heading
+           chew-string process-string print-table print-heading blank-table-line
            pad-string
            seconds-to-duration-string with-assoc
            mkstr symb ksymb in-home
