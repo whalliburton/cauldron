@@ -26,3 +26,13 @@
   (write-char #\) stream)
   list)
 
+(defmacro breakout (&rest vars)
+  "Break with VARS, for debugging."
+  `(break ,(with-output-to-string (s)
+             (iter (for var in vars)
+                   (unless (first-iteration-p) (write-string "  " s))
+                   (typecase s
+                     (cons (prin1-with-ellipses var s))
+                     (t (prin1 var s)))
+                   (unless (keywordp var) (write-string " ~S" s))))
+          ,@(remove-if #'keywordp vars)))
