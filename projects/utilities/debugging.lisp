@@ -13,3 +13,16 @@
                 (write-string "~%~%" s))
            ,@(remove-if #'keywordp vars)))
 
+(defun prin1-with-ellipses (list &optional (stream *standard-output*) (max 20))
+  (write-char #\( stream)
+  (iter (with length = 0)
+        (for els on list)
+        (for el = (car els))
+        (for string = (prin1-to-string el))
+        (incf length (1+ (length string)))
+        (princ string stream)
+        (when (> length max) (princ " ..." stream) (return))
+        (when (cdr els) (write-char #\space stream)))
+  (write-char #\) stream)
+  list)
+
