@@ -69,6 +69,17 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
       (string val)
       (integer (parse-integer val :junk-allowed t)))))
 
+(defun list-fields (device &optional with-data)
+  (let ((names
+         (remove-if-not #L(plusp (length %))
+                        (mapcar #'file-namestring (list-directory (path device))))))
+    (if with-data 
+      (mapcar #L(list % (ignore-errors (with-output-to-string (str)
+                                         (prin1-with-ellipses (sysfs-field device %) str 
+                                                              50 #'princ-to-string))))
+              names)
+      names)))
+
 (defmethod print-object ((device device) stream)
   (with-slots (name class) device
     (print-unreadable-object (device stream :type t) 
@@ -212,13 +223,16 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
                                :class class))
               (list-directory path)))))
 
-(defun devices ()
+(defun devices (&optional with-fields)
   "List all the devices on this machine."
-  (print-table 
+  (print-table
    (iter (for (class devices) in-hashtable 
               (group (list-devices) (lambda (el) (slot-value el 'class))))
-         (nconcing (iter (for name in (sort (shorten-devices devices) #'string<))
-                         (collect (list name (string-downcase class))))))))
+         (nconcing
+          (iter (for name in (sort (shorten-devices devices) #'string<))
+                (collect (list name (string-downcase class)))
+                (when with-fields 
+                  (collect `(:subtable ,@(list-fields (first devices) t)))))))))
 
 (defun list-batteries ()
   (iter (for device in (list-devices :power_supply))
