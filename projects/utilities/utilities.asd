@@ -4,6 +4,7 @@
   :serial t
   :components ((:static-file "utilities.asd")
                (:file "isaac")
+               (:file "testing")
                (:file "string-case")
 	       (:file "packages")
 	       (:file "first")
@@ -12,6 +13,7 @@
 	       (:file "run")
                (:file "strings")
                (:file "print-table")
+               (:file "test-print-table")
                (:file "pretty-printing")
                (:file "time")
                (:file "symbols")
@@ -27,8 +29,7 @@
                (:file "regex")
                (:file "agents")
                (:file "debugging")
-               (:file "lists")
-               (:file "testing"))
+               (:file "lists"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process
                         :fare-utils :cl-ppcre :lift))
 
