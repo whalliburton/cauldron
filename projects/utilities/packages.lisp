@@ -33,4 +33,5 @@
            symbol-ends-with symbol-start-with
            prologue list-testsuites list-all-tests list-tests 
            describe-test-result
-           run-testsuites run-test remove-all-tests test tests))
+           run-testsuites run-test remove-all-tests test tests
+           sg clear-debugging-globals))
