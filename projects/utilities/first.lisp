@@ -49,3 +49,6 @@
   (etypecase string-or-symbol
     (string string-or-symbol)
     (symbol (symbol-name string-or-symbol))))
+
+(defun plural (list)
+  (not (null (cdr list))))
