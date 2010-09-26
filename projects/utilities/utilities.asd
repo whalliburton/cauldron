@@ -27,8 +27,9 @@
                (:file "regex")
                (:file "agents")
                (:file "debugging")
-               (:file "lists"))
+               (:file "lists")
+               (:file "testing"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process
-                        :fare-utils :cl-ppcre))
+                        :fare-utils :cl-ppcre :lift))
 
 

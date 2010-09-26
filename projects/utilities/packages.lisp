@@ -29,4 +29,8 @@
            list-hash-keys
            agent start-agent list-agents 
            ensure-string bugout prin1-with-ellipses breakout
-           destructuring-bind-list))
+           destructuring-bind-list
+           symbol-ends-with symbol-start-with
+           prologue list-testsuites list-all-tests list-tests 
+           describe-test-result
+           run-testsuites run-test remove-all-tests test tests))
