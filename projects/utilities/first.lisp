@@ -52,3 +52,7 @@
 
 (defun plural (list)
   (not (null (cdr list))))
+
+(defun home (&optional path)
+  (pathname (concatenate 'string (namestring (user-homedir-pathname)) path)))
+

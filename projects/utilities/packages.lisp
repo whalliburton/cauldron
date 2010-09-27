@@ -35,4 +35,4 @@
            describe-test-result
            run-testsuites run-test remove-all-tests test tests
            sg clear-debugging-globals
-           plural))
+           plural home))
