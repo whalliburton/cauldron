@@ -3,7 +3,8 @@
 (in-package :spaceship)
 
 (defun initialize ()
-  (start-local-database ".spaceship")
+  (setup-data-directory)
+  (start-local-database (database-directory))
   (start-udev-monitor)
   (initialize-music)
   (start-shell-control-monitor)

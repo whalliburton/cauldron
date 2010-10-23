@@ -13,7 +13,9 @@ escaped=${filename//\ /\\\ }
 output=`mktemp -u`
 mkfifo $output
 
-echo $base $output $escaped >> ~/.spaceship/control
+control="$HOME/.spaceship/${DISPLAY:1:1}/control"
+
+echo $base $output $escaped >> $control
 
 cat $output
 rm $output

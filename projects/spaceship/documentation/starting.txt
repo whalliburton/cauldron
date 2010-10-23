@@ -1,0 +1,17 @@
+
+Setting up and starting the SPACESHIP
+=====================================
+
+setting up the .xinitrc
+=======================
+
+The ~/.xinitrc file should contain one line:
+
+exec /usr/bin/ssh-agent /lisp/projects/spaceship/spaceship
+
+
+starting a second X server
+=========================
+
+$ startx -- :1
+

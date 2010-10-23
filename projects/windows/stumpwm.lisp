@@ -4,9 +4,15 @@
 
 (setf *startup-message* nil)
 
+(defun default-swank-port ()
+  (+ 20000
+     (parse-integer
+      (or (sb-ext:posix-getenv "DISPLAY") 
+          (error "No DISPLAY set.")) :start 1 :end 2)))
+
 (defcommand swank () ()
   (setf stumpwm:*top-level-error-action* :break)
-  (loop for try-port = 4005 then (1+ try-port)
+  (loop for try-port = (default-swank-port) then (1+ try-port)
         while (handler-case 
                   (progn
                     (swank:create-server :port try-port

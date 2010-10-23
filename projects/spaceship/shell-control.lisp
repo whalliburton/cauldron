@@ -2,9 +2,11 @@
 
 (in-package :spaceship)
 
-(defparameter *shell-control-pipe* (in-home "/.spaceship/control"))
+(defvar *shell-control-pipe* nil)
 
 (defun ensure-shell-control-pipe ()
+  (setf *shell-control-pipe* 
+        (concatenate 'string *spaceship-data-directory* "control"))
   (unless (probe-file *shell-control-pipe*)
     (ensure-directories-exist *shell-control-pipe*)
     (sb-posix:mkfifo *shell-control-pipe* #o700)))
