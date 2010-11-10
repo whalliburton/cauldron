@@ -68,7 +68,8 @@
 (defcommand xpdf () ()
   (let ((hits (append
                (find-matching-windows '(:title "Xpdf") t nil)
-               (find-matching-windows '(:instance "acroread") t nil))))
+               (find-matching-windows '(:instance "acroread") t nil)
+               (find-matching-windows '(:instance "gv") t nil))))
     (if (car hits)
       (goto-win (car hits))
       (message "No running Xpdf."))))
@@ -92,9 +93,8 @@
    (kbd "F6")        "start-terminal 1"
    (kbd "F7")        "start-terminal 2"
    (kbd "F8")        "start-terminal 3"
-   (kbd "F8")        "start-terminal 4"
+   (kbd "F9")        "xpdf"
    (kbd "s-a")       "anki"
-   (kbd "s-p")       "xpdf"
    (kbd "s-h")       "htop"
    (kbd "s-i")       "iotop"
    (kbd "s-Up")      "move-focus up"
