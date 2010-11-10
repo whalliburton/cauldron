@@ -15,10 +15,17 @@
               (stumpwm::window-title window))))
    :headings '("" "class" "title")))
 
+(defun find-window (number)
+  (or (find number (stumpwm::screen-windows (current-screen))
+            :test #'= :key 'stumpwm::window-number)
+      (error "No window with number ~S found." number)))
+
 (defun destroy-window (number)
   "Destroy the window with number NUMBER."
-  (stumpwm::destroy-window
-   (or (find number (stumpwm::screen-windows (current-screen))
-             :test #'= :key 'stumpwm::window-number)
-       (error "No window with number ~S found." number))))
+  (stumpwm::destroy-window (find-window number)))
 
+;; This seems to only works from slime when you jiggle the mouse
+;; afterwards, but it works fine from the shell.
+(defun show-window (number)
+  "Show and focus the window with number NUMBER."
+  (stumpwm::focus-window (find-window number)))
