@@ -6,6 +6,7 @@
                (:file "packages")
                (:file "base")
                (:file "pdf")
+               (:file "postscript")
                (:file "midi")
                (:file "open")
                (:file "torrent"))
