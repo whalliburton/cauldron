@@ -13,8 +13,8 @@
   (if (running)
     (warn "Timidity is already running.")
     (progn
-      (setf *timidity* 
-            (run-program "/usr/bin/timidity" '("-ie" "") 
+      (setf *timidity*
+            (run-program "/usr/bin/timidity" '("-ie" "")
                          :input :stream :output :stream :wait nil)
             *message-read-thread*
             (make-thread #'message-read-thread :name "message-read-thread")))))
@@ -27,7 +27,7 @@
 
 (defun stop-midi ()
   (if (running)
-    (progn 
+    (progn
       (destroy-thread *message-read-thread*)
       (process-kill *timidity* sb-unix:sigkill))
     (warn "Timidity is not running.")))

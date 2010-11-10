@@ -30,12 +30,12 @@
   (start-irc-monitor))
 
 (defun irc-monitor-thread ()
-  (iter 
+  (iter
     (while (cl-irc::connectedp *irc-connection*))
     (for message = (cl-irc::read-irc-message *irc-connection*))
     (typecase message
-      ((or irc-privmsg-message ctcp-action-message) 
-         (make-object 'irc-message 
+      ((or irc-privmsg-message ctcp-action-message)
+         (make-object 'irc-message
                       :type (typecase message
                               (irc-privmsg-message :privmsg)
                               (ctcp-action-message :action))
@@ -46,6 +46,6 @@
                                  (typecase message
                                    (irc-privmsg-message base)
                                    (ctcp-action-message (subseq base 8 (1- (length base))))))))
-      (irc-ping-message 
+      (irc-ping-message
          (cl-irc:pong *irc-connection* (first (cl-irc:arguments message))))
       (t (describe message)))))

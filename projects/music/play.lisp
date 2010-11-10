@@ -10,7 +10,7 @@
      (if (not (probe-file what))
        (format t "No file named ~s found." what)
        (let ((mime (magic-mime what)))
-         (cond 
+         (cond
            ((string= mime "audio/midi") (play-midi what))
            ((string= mime "audio/x-wav") (play-wav (read-wav what)))
            ((string= mime "application/ogg") (play-ogg what))

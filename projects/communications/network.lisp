@@ -9,7 +9,7 @@
                   (subseq (slurp-lines "/proc/net/dev") 2))))
 
 (defun network-statistics ()
-  (mapcar #L(list (first %) 
+  (mapcar #L(list (first %)
                   (second (second %))   ;revieved packets
                   (first (second %))    ;recieved bytes
                   (tenth (second %))    ;transmitted packets
@@ -18,5 +18,5 @@
 
 (defun network ()
   "Print network statistics."
-  (print-table (network-statistics) 
+  (print-table (network-statistics)
                :headings '("interface" "out packets" "out bytes" "in packets" "in bytes")))

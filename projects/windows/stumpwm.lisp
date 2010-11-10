@@ -7,20 +7,20 @@
 (defun default-swank-port ()
   (+ 20000
      (parse-integer
-      (or (sb-ext:posix-getenv "DISPLAY") 
+      (or (sb-ext:posix-getenv "DISPLAY")
           (error "No DISPLAY set.")) :start 1 :end 2)))
 
 (defcommand swank () ()
   (setf stumpwm:*top-level-error-action* :break)
   (loop for try-port = (default-swank-port) then (1+ try-port)
-        while (handler-case 
+        while (handler-case
                   (progn
                     (swank:create-server :port try-port
                                          :style swank:*communication-style*
                                          :dont-close t :coding-system "utf-8-unix")
                     (message "Swank started on port ~a." try-port)
                     nil)
-                (sb-bsd-sockets:address-in-use-error () 
+                (sb-bsd-sockets:address-in-use-error ()
                   (warn "SWANK port ~a taken, trying the next." try-port)
                   t))))
 
@@ -33,10 +33,10 @@
   (run-or-raise "chromium --enable-ipv6" '(:title "Chromium")))
 
 (defcommand firefox () ()
-  (run-or-raise "firefox" '(:title "Firefox"))) 
+  (run-or-raise "firefox" '(:title "Firefox")))
 
 (defcommand conkeror () ()
-  (run-or-raise "conkeror" '(:title "Conkeror"))) 
+  (run-or-raise "conkeror" '(:title "Conkeror")))
 
 (defcommand iptraf () ()
   (run-or-raise "exec urxvt -e /lisp/scripts/paused-iptraf" '(:title "iptraf")))
@@ -52,6 +52,9 @@
 
 (defcommand iotop () ()
   (run-or-raise "exec urxvt -e iotop -o" '(:title "iotop")))
+
+(defcommand anki () ()
+  (run-or-raise "anki" '(:title "anki")))
 
 (defun goto-win (win)
   (let* ((group (window-group win))
@@ -76,8 +79,8 @@
 (progn
   (setf *top-map* nil *root-map* nil *help-map* nil *group-top-map* nil
         *tile-group-top-map* nil *tile-group-root-map* nil *groups-map* nil)
-  
-  (fill-keymap 
+
+  (fill-keymap
    *top-map*
    (kbd "s-x")       '*root-map*
    (kbd "s-h")       *help-map*
@@ -90,6 +93,7 @@
    (kbd "F7")        "start-terminal 2"
    (kbd "F8")        "start-terminal 3"
    (kbd "F8")        "start-terminal 4"
+   (kbd "s-a")       "anki"
    (kbd "s-p")       "xpdf"
    (kbd "s-h")       "htop"
    (kbd "s-i")       "iotop"
@@ -111,8 +115,8 @@
    (kbd "s-1")       "only"
    (kbd "s-f")       "firefox"
    (kbd "s-n")       "iptraf")
-  
-  (fill-keymap 
+
+  (fill-keymap
    *root-map*
    (kbd "m")   "lastmsg"
    (kbd "b")   "banish"
@@ -123,10 +127,10 @@
    (kbd "g")   '*groups-map*
    (kbd "h")   '*help-map*)
 
-  (fill-keymap 
+  (fill-keymap
    *group-top-map*
    (kbd "s-x") '*group-root-map*)
-  
+
   (fill-keymap *group-root-map*
                (kbd "s-u") "next-urgent"
                (kbd "w")   "windows"
@@ -140,12 +144,12 @@
                (kbd "F11") "fullscreen"
                (kbd "A")   "title"
                (kbd "i")   "info")
-  
-  (fill-keymap 
+
+  (fill-keymap
    *tile-group-top-map*
    (kbd "s-x") '*tile-group-root-map*)
-  
-  (fill-keymap 
+
+  (fill-keymap
    *tile-group-root-map*
 
    (kbd "n")       "pull-hidden-next"
@@ -182,8 +186,8 @@
    (kbd "+")       "balance-frames"
    (kbd "l")       "redisplay"
    (kbd "C-l")     "redisplay")
-  
-  (fill-keymap 
+
+  (fill-keymap
    *groups-map*
    (kbd "g")     "groups"
    (kbd "c")     "gnew"
@@ -203,8 +207,8 @@
    (kbd "k")     "gkill"
    (kbd "A")     "grename"
    (kbd "r")     "grename")
-  
-  (fill-keymap 
+
+  (fill-keymap
    *help-map*
    (kbd "v") "describe-variable"
    (kbd "f") "describe-function"

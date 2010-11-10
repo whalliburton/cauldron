@@ -3,27 +3,27 @@
 (defsystem :spaceship
   :serial t
   :components ((:file "packages")
-	       (:file "files")
+               (:file "files")
                (:file "new-project")
                (:file "scanner")
                (:file "help")
                (:file "shell-control")
-	       (:file "monitors")
-	       (:file "initialize"))
+               (:file "monitors")
+               (:file "initialize"))
   :depends-on (
-               
+
                :swank
                :iterate
 
                :windows
                :hardware
                :linux
-               :cards 
-               :web 
-               :music 
-               :databases 
-               :timer 
-               :network 
+               :cards
+               :web
+               :music
+               :databases
+               :timer
+               :network
                :language
                :journal
                :documents

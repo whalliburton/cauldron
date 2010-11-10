@@ -9,6 +9,6 @@
           (play-notes '(c e g)))))
 
 (defun start-monitors ()
-  (schedule-timer (make-timer 'battery-monitor :name "battery monitor") 
+  (schedule-timer (make-timer 'battery-monitor :name "battery monitor")
                   0 :repeat-interval (* 60 10)))
 

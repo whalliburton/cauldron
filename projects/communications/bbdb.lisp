@@ -10,7 +10,7 @@
   (read-delimited-list #\] stream t))
 
 (defparameter *bbdb-readtable*
-  (defreadtable bbdb-readtable 
+  (defreadtable bbdb-readtable
     (:merge :standard)
     (:macro-char #\[ 'read-vector-as-list)
     (:macro-char #\] (get-macro-character #\)))))
@@ -26,7 +26,7 @@
 
 (defun contacts ()
   "List all contacts."
-  (print-table 
+  (print-table
    (iter (for (first-name last-name aka company phones addresses net-addresses notes)
               in (sort (read-bbdb-file) #'string< :key #'second))
          (collect (list (or first-name "") (or last-name "") (or (first net-addresses) ""))))

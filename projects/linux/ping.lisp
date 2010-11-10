@@ -5,7 +5,7 @@
 ;; As much as I'd rather do this all from Lisp, I have been unable to
 ;; get SBCL to run suid root.
 
-;; The format expected is what I see with 
+;; The format expected is what I see with
 
 ;; $ ping -V
 ;; ping utility, iputils-sss20071127

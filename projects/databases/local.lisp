@@ -17,11 +17,11 @@
     (make-instance 'mp-store :directory base
                    :subsystems (list (make-instance 'store-object-subsystem)
                                      (make-instance 'blob-subsystem)))
-    (setf *temporary-blob-directory* 
+    (setf *temporary-blob-directory*
           (ensure-directories-exist (concatenate 'string base "tmp/")))))
 
 (defun create-blob-link (name blob)
-  (let ((link-name (concatenate 'string *temporary-blob-directory* name)))  
+  (let ((link-name (concatenate 'string *temporary-blob-directory* name)))
     (when (probe-file link-name)
       (sb-posix:unlink link-name))
     (sb-posix:link (blob-pathname blob) link-name)

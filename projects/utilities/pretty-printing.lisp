@@ -12,7 +12,7 @@
 (defun prin1-with-ellipses (object &optional (stream *standard-output*) (max 20)
                                    (printer #'prin1-to-string))
   (typecase object
-    (cons 
+    (cons
        (write-char #\( stream)
        (iter (with length = 0)
              (for els on object)

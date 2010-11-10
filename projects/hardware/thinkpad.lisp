@@ -23,9 +23,9 @@
 ;; 16                   n/a
 
 (defun thermal-data ()
-  (let ((temps 
-         (mapcar #'parse-integer 
-                 (split-sequence #\Space 
+  (let ((temps
+         (mapcar #'parse-integer
+                 (split-sequence #\Space
                                  (subseq (first (slurp-lines "/proc/acpi/ibm/thermal")) 14)))))
     (values
       `((:cpu ,(first temps))

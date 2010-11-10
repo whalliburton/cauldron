@@ -3,9 +3,9 @@
 (defsystem :hardware
   :serial t
   :components ((:static-file "hardware.asd")
-	       (:file "subsystem")
-	       (:file "thinkpad")
-	       (:file "devices")
+               (:file "package")
+               (:file "thinkpad")
+               (:file "devices")
                (:file "memory")
                (:file "processes")
                (:file "monitor")

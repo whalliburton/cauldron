@@ -9,8 +9,8 @@
   (typecase ip-or-ips
     (string
        (print-heading (format nil "~a ~a" ip-or-ips command))
-       (princ (with-output-to-string (str) 
+       (princ (with-output-to-string (str)
                 (run-program "/usr/bin/ssh" (list ip-or-ips command) :output str))))
-    (cons 
+    (cons
        (mapc (lambda (el) (ssh-command command el) (newline)) ip-or-ips)))
   nil)

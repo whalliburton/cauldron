@@ -16,7 +16,7 @@
   (:import-from mixalot main-thread-init create-mixer destroy-mixer mixer-add-streamer
                 streamer-cleanup)
   (:import-from vorbisfile
-                vorbis-file vorbis-open vorbis-close 
+                vorbis-file vorbis-open vorbis-close
                 get-vorbis-rate
                 get-vorbis-comment get-vorbis-raw-tags-from-comment)
   (:import-from mixalot-vorbis make-vorbis-streamer vorbis-streamer)

@@ -7,7 +7,7 @@
 
 (defun ids ()
   "List the currently active network ids."
-  (print-table (mapcar #L(list (first %) (second %) (third %) 
+  (print-table (mapcar #L(list (first %) (second %) (third %)
                                (string-trim '(#\( #\)) (fourth %)))
                         (list-ssh-ids))
                :headings '("size" "fingerprint" "filename" "type")))

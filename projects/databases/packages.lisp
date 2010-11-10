@@ -1,7 +1,7 @@
 ;; packages.lisp
 
 (defpackage databases
-  (:use common-lisp drakma json iterate 
+  (:use common-lisp drakma json iterate
         bknr.datastore bknr.indices bknr.utils
         utilities linux string-case anaphora)
   (:import-from alexandria if-let)
@@ -15,10 +15,10 @@
 (defparameter *help-text* "Access to online and local databases.")
 
 
-  
 
-	   
-	   
 
-	   
-	
+
+
+
+
+

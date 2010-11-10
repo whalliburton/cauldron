@@ -8,7 +8,7 @@
 (defun url-encode (string)
   (with-output-to-string (stream)
     (iter (for char in-vector string)
-          (if (alphanumericp char) 
+          (if (alphanumericp char)
             (write-char char stream)
             (format stream "%~2,'0x" (char-code char))))))
 
@@ -22,7 +22,7 @@
 (defun translate (query &optional (langpair "en|ru"))
   "Translate QUERY from one language to another."
   (cdr (assoc :translated-text
-	      (cdr (assoc :response-data
-			  (google-translate query langpair))))))
+              (cdr (assoc :response-data
+                          (google-translate query langpair))))))
 
 

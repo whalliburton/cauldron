@@ -11,10 +11,10 @@
 
 (defun start-process-monitor ()
   (stop-process-monitor)
-  (setf *monitor-thread* 
-        (make-thread 
-         (lambda () 
-           (iter 
+  (setf *monitor-thread*
+        (make-thread
+         (lambda ()
+           (iter
              (process-monitor-heartbeat)
              (sleep *monitor-sleep*)))
          :name "monitor")))
@@ -35,13 +35,13 @@
                (return (subseq arg 13 (1- (length arg))))))))))
 
 (defun print-monitoring ()
-  (print-table 
+  (print-table
    (iter (for (pid data) in-hashtable *monitoring*)
-         (when (first-iteration-p) 
+         (when (first-iteration-p)
            (collect (list "name" "pid" "comm" "state" "utime" "stime" "cutime" "cstime")))
          (let ((stat (first data)))
            (with-assoc (comm state utime stime cutime cstime)
-             (collect 
+             (collect
                  (list (name-from-cmdline pid)
                        pid (:comm stat) (:state stat) (:utime stat) (:stime stat)
                        (:cutime stat) (:cstime stat))))))))

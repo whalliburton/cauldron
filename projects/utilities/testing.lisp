@@ -12,7 +12,6 @@
        (declaim (optimize ,@optimize))
        (lift:deftestsuite ,sym () ()))))
 
-
 (defun list-testsuites ()
   (iter (for suite in (lift:testsuites))
         (for name = (symbol-name suite))
@@ -46,9 +45,9 @@
     `(%run-testsuites ',suites)
     `(%run-testsuites)))
 
-(defun find-test-suite (name)
-  (iter (for (suite . tests) in (list-all-tests))
-        (when (member name tests) (return (symb suite '-tests)))))
+;; (defun find-test-suite (name)
+;;   (iter (for (suite . tests) in (list-all-tests))
+;;         (when (member name tests) (return (symb suite '-tests)))))
 
 (defun %run-test (&rest tests)
   (let ((result (lift:make-test-result :multiple :multiple)))

@@ -7,7 +7,7 @@
     (and (boundp symbol) (symbol-value symbol))))
 
 (defun all-subsystems ()
-  (sort 
+  (sort
    (iter (for package in (list-all-packages))
          (when-let (help (subsystem-help-text package))
            (collect package)))
@@ -26,7 +26,7 @@
         (nconcing (subsystem-functions subsystem))))
 
 
-;; Any package with a *help-text* external symbol is considered a subsystem. 
+;; Any package with a *help-text* external symbol is considered a subsystem.
 ;; All external functions in these packages should have docstrings.
 
 (defun help (&optional subsystem)
@@ -46,7 +46,7 @@
             (newline)
             (print-heading (format nil "Help for the ~(~A~) subsystem" subsystem))
             (format t "  ~A~%~%" help-text)
-            (print-table 
+            (print-table
              (sort
               (iter (for sym in-package subsystem external-only t)
                     (when (fboundp sym)

@@ -7,12 +7,12 @@
   (newline)
   (print-table (nconc (battery :as-list t)
                       (blank-table-line)
-                      (destructuring-bind-list (cpu freq min max) (cpu-info :as-list t)
+                      (destructuring-bind-list (cpu freq min max) (cpus :as-list t)
                         (list (format nil "CPU~A" cpu)
                               (format nil "~D MHz" (/ freq 1000))
                               (format nil "(~D MHz max)" (/ max 1000))))))
   (newline))
 
 (defun srs ()
-  "Scan the immediate area."  
+  "Scan the immediate area."
   (short-range-scan))

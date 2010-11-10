@@ -11,8 +11,8 @@
           1))
 
 (defun setup-data-directory ()
-  (ensure-directories-exist 
-   (setf *spaceship-data-directory* 
+  (ensure-directories-exist
+   (setf *spaceship-data-directory*
          (concatenate 'string
                       (or (posix-getenv "HOME")
                           (error "HOME is not set."))

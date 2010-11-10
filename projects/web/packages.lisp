@@ -10,10 +10,10 @@
 (defparameter *help-text* "Tools for accessing the World Wide Web.")
 
 
-  
 
-	   
-	   
 
-	   
-	
+
+
+
+
+

@@ -28,7 +28,7 @@ tags are retured as an assoc list with the tag names keywordified."
   (let* ((tags (ogg-tags filename))
          (rate (cdr (assoc :rate tags)))
          (mixer (create-mixer :rate rate)))
-    (let ((streamer (make-vorbis-streamer filename :output-rate rate 
+    (let ((streamer (make-vorbis-streamer filename :output-rate rate
                                           :class 'music-vorbis-streamer)))
       (mixer-add-streamer mixer streamer)
       (setf *currently-playing* (list :ogg filename tags mixer)))))

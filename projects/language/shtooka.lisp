@@ -4,13 +4,13 @@
 
 (defun parse-shtooka-tags (data)
   (with-input-from-string (stream data)
-    (iter 
+    (iter
       (for line = (read-line stream nil))
       (while line)
       (when (and (plusp (length line)) (char= #\[ (char line 0)))
-        (collect 
+        (collect
             (list (subseq line 1 (1- (length line)))
-                  (iter 
+                  (iter
                     (for line = (read-line stream nil))
                     (while line)
                     (when (zerop (length line)) (return tags))
@@ -21,9 +21,9 @@
                         into tags)))))))))
 
 (defun list-shtooka-packets (&optional check-for-newer)
-  (parse-shtooka-tags 
-   (cached-http-request 
-    "http://packs.shtooka.net/index.packs.txt" 
+  (parse-shtooka-tags
+   (cached-http-request
+    "http://packs.shtooka.net/index.packs.txt"
     :check-for-newer check-for-newer)))
 
 (defun list-shtooka-packet-names (&optional check-for-newer)
@@ -49,16 +49,16 @@
 
 (defun list-shtooka-packet-words (packet-names &optional check-for-newer)
   (etypecase packet-names
-    (cons (iter (for name in packet-names) 
+    (cons (iter (for name in packet-names)
                 (nconcing (list-shtooka-packet-words name))))
     (string
        (ensure-valid-shtooka-packet-name packet-names)
        (mapcar
-        #L(cons (cdr (assoc :swac-text (second %))) 
+        #L(cons (cdr (assoc :swac-text (second %)))
                 (concatenate 'string packet-names "/" (first %)))
         (parse-shtooka-tags
-         (cached-http-request 
-          (format nil "http://packs.shtooka.net/~a/ogg/index.tags.txt" packet-names) 
+         (cached-http-request
+          (format nil "http://packs.shtooka.net/~a/ogg/index.tags.txt" packet-names)
           :check-for-newer check-for-newer))))))
 
 (defun ensure-valid-shtooka-packet-word (packet-name filename &optional check-for-newer)
@@ -79,9 +79,9 @@
    (format nil "http://packs.shtooka.net/~a/ogg/~a" packet-name filename)
    :check-for-newer check-for-newer :return-object t
    :class 'shtooka-word
-   :initargs (list :text 
+   :initargs (list :text
                    (cdr (assoc :swac-text
-                               (cadr (assoc filename (list-shtooka-packet-words packet-name) 
+                               (cadr (assoc filename (list-shtooka-packet-words packet-name)
                                             :test #'string=)))))))
 
 

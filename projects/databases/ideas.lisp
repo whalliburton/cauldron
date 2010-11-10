@@ -18,6 +18,6 @@
   "List all the ideas in the idea database."
   (mapc
    (lambda (el) (princ (slot-value el 'text)) (newline))
-   (sort (store-objects-with-class 'idea) #'< 
+   (sort (store-objects-with-class 'idea) #'<
          :key (lambda (el) (slot-value el 'bknr.datastore::last-change))))
   (values))

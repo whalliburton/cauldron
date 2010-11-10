@@ -3,9 +3,9 @@
 (defsystem :new-project
   :serial t
   :components ((:static-file "new-project.asd")
-	       (:file "packages")
-	       (:file "first")
-	       (:file "initialize"))
+               (:file "packages")
+               (:file "first")
+               (:file "initialize"))
   :depends-on ())
 
 

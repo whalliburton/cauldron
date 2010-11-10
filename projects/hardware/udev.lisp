@@ -9,7 +9,7 @@
 
 (defmacro with-udev ((var) &body body)
   `(let ((,var (udev-new)))
-     (unwind-protect 
+     (unwind-protect
           (progn ,@body)
        (udev-unref ,var))))
 
@@ -47,20 +47,20 @@
 
 (defmacro with-enumerate ((var udev) &body body)
   `(let ((,var (udev-enumerate-new ,udev)))
-     (unwind-protect 
+     (unwind-protect
           (progn ,@body)
        (udev-enumerate-unref ,var))))
 
 (defun list-subsystems ()
   (flatten
-   (with-udev (udev) 
+   (with-udev (udev)
      (with-enumerate (enum udev)
        (udev-enumerate-scan-subsystems enum)
        (list-entry-to-list (udev-enumerate-get-list-entry enum))))))
 
 (defun list-udev-devices ()
   (flatten
-   (with-udev (udev) 
+   (with-udev (udev)
      (with-enumerate (enum udev)
        (udev-enumerate-scan-devices enum)
        (list-entry-to-list (udev-enumerate-get-list-entry enum))))))
@@ -89,10 +89,10 @@
     (iter (for subsystem in *udev-monitor-subsystems*)
           (udev-monitor-filter-add-match-subsystem-devtype monitor subsystem (null-pointer)))
     (udev-monitor-enable-receiving monitor)
-    (iter (send-message 
-           *udev-messages* 
+    (iter (send-message
+           *udev-messages*
            (list-entry-to-list
-            (udev-device-get-properties-list-entry 
+            (udev-device-get-properties-list-entry
              (udev-monitor-receive-device monitor)))))))
 
 (defun print-pending-udev-messages ()

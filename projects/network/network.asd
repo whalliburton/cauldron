@@ -7,4 +7,4 @@
 	       (:file "ec2")
                (:file "ssh")
                (:file "initialize"))
-  :depends-on (:utilities :alexandria :ec2 :iterate :local-time))
+  :depends-on (:utilities :alexandria :ec2 :iterate :local-time :web))

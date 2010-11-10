@@ -2,7 +2,7 @@
 
 (in-package :paint)
 
-(defmacro with-window ((var &rest args) &body body) 
+(defmacro with-window ((var &rest args) &body body)
   `(let* ((,var (make-instance 'window ,@args))
           (*context* (context ,var)))
      ,@body))

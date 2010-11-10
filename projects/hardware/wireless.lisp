@@ -11,7 +11,7 @@
 
 (defmacro with-iw-socket ((skfd) &body body)
   `(let ((,skfd (iw-sockets-open)))
-     (unwind-protect 
+     (unwind-protect
           (progn ,@body)
        (iw-sockets-close ,skfd))))
 

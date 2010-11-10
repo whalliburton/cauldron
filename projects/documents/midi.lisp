@@ -15,8 +15,8 @@
 
 (defun midi-note-number-to-note (number)
   (multiple-value-bind (octave note) (floor number 12)
-    (format nil "~A~A" 
-            (aref #("C" "C#" "D" "D#" "E" "F" "F#" "G" "G#" "A" "A#" "B") note) 
+    (format nil "~A~A"
+            (aref #("C" "C#" "D" "D#" "E" "F" "F#" "G" "G#" "A" "A#" "B") note)
             (1- octave))))
 
 (defun describe-midi (filename)
@@ -33,7 +33,7 @@
 (defparameter *show-midi-status* t)
 
 (defgeneric pretty-print-midi-message (message)
-  (:method :before (message) 
+  (:method :before (message)
     (format t "  ~@[~2X  ~]~30A" (when *show-midi-status* (midi::message-status message))
             (midi-message-name message)))
   (:method (message))

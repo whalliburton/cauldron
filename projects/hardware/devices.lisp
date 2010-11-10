@@ -8,19 +8,19 @@
   "READ-LINE, but with a workaround for a known SBCL/Linux bug
 regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
   (let ((buf (make-array blocksize
-			 :element-type '(unsigned-byte 8)
-			 :initial-element 0))
-	(fd (sb-sys:fd-stream-fd stream))
-	(string-filled 0)
-	(string (make-string blocksize))
-	bytes-read
-	pos
-	(stringlen blocksize))
+                         :element-type '(unsigned-byte 8)
+                         :initial-element 0))
+        (fd (sb-sys:fd-stream-fd stream))
+        (string-filled 0)
+        (string (make-string blocksize))
+        bytes-read
+        pos
+        (stringlen blocksize))
 
     (loop
        ;; Read in the raw bytes
        (setf bytes-read
-	     (sb-unix:unix-read fd (sb-sys:vector-sap buf) blocksize))
+             (sb-unix:unix-read fd (sb-sys:vector-sap buf) blocksize))
 
        ;; Why does SBCL return NIL when an error occurs?
        (when (or (null bytes-read)
@@ -32,23 +32,23 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
 
        ;; Resize the string if necessary.
        (when (> (+ pos string-filled) stringlen)
-	 (setf stringlen (max (+ pos string-filled)
-			      (* 2 stringlen)))
-	 (let ((new (make-string stringlen)))
-	   (replace new string)
-	   (setq string new)))
+         (setf stringlen (max (+ pos string-filled)
+                              (* 2 stringlen)))
+         (let ((new (make-string stringlen)))
+           (replace new string)
+           (setq string new)))
 
        ;; Translate read bytes to string
        (setf (subseq string string-filled)
-	     (sb-ext:octets-to-string (subseq buf 0 pos)))
+             (sb-ext:octets-to-string (subseq buf 0 pos)))
 
        (incf string-filled pos)
 
        (if (< pos blocksize)
-	   (return (subseq string 0 string-filled))))))
+           (return (subseq string 0 string-filled))))))
 
 (defun read-sysfs-field (path field-name)
- (with-open-file 
+ (with-open-file
      (file (merge-pathnames (make-pathname :name field-name) path))
    (read-line-from-sysfs file)))
 
@@ -73,25 +73,25 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
   (let ((names
          (remove-if-not #L(plusp (length %))
                         (mapcar #'file-namestring (list-directory (path device))))))
-    (if with-data 
+    (if with-data
       (mapcar #L(list % (ignore-errors (with-output-to-string (str)
-                                         (prin1-with-ellipses (sysfs-field device %) str 
+                                         (prin1-with-ellipses (sysfs-field device %) str
                                                               50 #'princ-to-string))))
               names)
       names)))
 
 (defmethod print-object ((device device) stream)
   (with-slots (name class) device
-    (print-unreadable-object (device stream :type t) 
+    (print-unreadable-object (device stream :type t)
       (format stream "~a ~a" class name))))
 
-(defclass power-supply (device) 
+(defclass power-supply (device)
   ((type :initarg :type)))
 
 (defmethod print-object ((power-supply power-supply) stream)
   (with-slots (name type) power-supply
-    (print-unreadable-object (power-supply stream :type t) 
-      (format stream "~a ~a ~(~a~)" name type 
+    (print-unreadable-object (power-supply stream :type t)
+      (format stream "~a ~a ~(~a~)" name type
               (case (sysfs-field power-supply "online" 'integer)
                 (1 :online) (0 :offline))))))
 
@@ -110,7 +110,7 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
 
 (defmethod print-object ((battery battery) stream)
   (with-slots (name type) battery
-    (print-unreadable-object (battery stream :type t) 
+    (print-unreadable-object (battery stream :type t)
       (format stream "~a ~,2f% ~a" name (battery-percentage battery) (battery-status battery)))))
 
 (defclass input (device)
@@ -122,17 +122,17 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
 
 (defmethod print-object ((input input) stream)
   (with-slots (name) input
-    (print-unreadable-object (input stream :type t) 
+    (print-unreadable-object (input stream :type t)
       (format stream "~a" name))))
 
 (defun class-from-sysfs-class-path (class path)
   (case class
-    (:power_supply 
+    (:power_supply
        (let ((type (read-sysfs-field path "type")))
-         (cond 
+         (cond
            ((string= type "Battery") 'battery)
            (t 'power-supply))))
-    (:input 
+    (:input
        (if (string-starts-with (last1 (pathname-directory path)) "input")
          'input
          'device))
@@ -143,7 +143,7 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
         (for is-digit = (digit-char-p (char string x)))
         (for was-digit previous is-digit)
         (while is-digit)
-        (finally (return (when was-digit 
+        (finally (return (when was-digit
                            (list
                              (subseq string 0 (1+ x))
                              (parse-integer string :start (1+ x))))))))
@@ -151,7 +151,7 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
 (defun group (list key-fn)
   (let ((hash (make-hash-table :test 'equal)))
    (mapc
-     (lambda (el) 
+     (lambda (el)
        (let* ((key (funcall key-fn el))
               (val (gethash key hash)))
          (setf (gethash key hash) (cons el val))))
@@ -160,11 +160,11 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
 
 (defun shorten-devices (devices)
   (iter (for (k v) in-hashtable
-             (group 
+             (group
               devices
-              (lambda (el) 
+              (lambda (el)
                  (first (split-at-integer-suffix (slot-value el 'name))))))
-        (cond 
+        (cond
           ((null k) (when (null k)
                       (nconcing (mapcar #'(lambda (el) (slot-value el 'name)) v))))
           ((null (cdr v)) (collect (slot-value (first v) 'name)))
@@ -172,7 +172,7 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
                                     k
                                     (range-description
                                      (iter (for el in v)
-                                           (collect (second 
+                                           (collect (second
                                                      (split-at-integer-suffix
                                                       (slot-value el 'name))))))))))))
 
@@ -186,7 +186,7 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
             (for el = (car els))
             (for last previous el)
             (cond
-              ((not inside) 
+              ((not inside)
                (princ el stream)
                (setf inside t leading el))
               ((null (cdr els))
@@ -216,9 +216,9 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
     (let ((path (format nil "/sys/class/~(~a~)" class)))
       (unless (probe-file path)
         (error "SYSFS class ~a does not exists." class))
-      (mapcar (lambda (el) 
+      (mapcar (lambda (el)
                 (make-instance (class-from-sysfs-class-path class el)
-                               :name (last1 (pathname-directory el)) 
+                               :name (last1 (pathname-directory el))
                                :path el
                                :class class))
               (list-directory path)))))
@@ -226,12 +226,12 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
 (defun devices (&optional with-fields)
   "List all the devices on this machine."
   (print-table
-   (iter (for (class devices) in-hashtable 
+   (iter (for (class devices) in-hashtable
               (group (list-devices) (lambda (el) (slot-value el 'class))))
          (nconcing
           (iter (for name in (sort (shorten-devices devices) #'string<))
                 (collect (list name (string-downcase class)))
-                (when with-fields 
+                (when with-fields
                   (collect `(:subtable ,@(list-fields (first devices) t)))))))))
 
 (defun list-batteries ()
@@ -243,7 +243,7 @@ regarding files in sysfs. Data is read in chunks of BLOCKSIZE bytes."
   "Print out the battery status."
   (let ((list
          (iter (for battery in (list-batteries))
-               (collect (list (name battery) 
+               (collect (list (name battery)
                               (format nil "~,2f%" (battery-percentage battery))
                               (battery-status battery))))))
     (if as-list list (print-table list))))

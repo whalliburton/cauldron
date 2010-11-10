@@ -18,7 +18,7 @@
     (with-hash-values ((announce created-by creation-date info comment)
                        torrent :to-key #'symbol-to-string)
       (with-hash-values ((name files piece-length) info :to-key #'symbol-to-string)
-        (print-table 
+        (print-table
          `(("name" ,name)
            ("created by" ,created-by)
            ("creation date" ,(local-time:unix-to-timestamp creation-date))
@@ -26,7 +26,7 @@
            ("comment" ,comment)
            ("piece length" ,piece-length)))
         (newline)
-        (print-table 
+        (print-table
          (iter (for file in files)
                (collect (list (car (gethash "path" file))
                               (gethash "length" file))))))))
@@ -40,7 +40,7 @@
 
 (defun torrent-info-sha1 (torrent)
   (coerce
-   (mapcar #'code-char 
+   (mapcar #'code-char
            (coerce (ironclad:digest-sequence :sha1 (bencode:encode (gethash "info" torrent) nil))
                    'list))
    'string))
@@ -49,9 +49,9 @@
   (:method ((torrent hash-table))
     (with-hash-values ((announce) torrent :to-key #'symbol-to-string)
       (multiple-value-bind (body status-code headers uri stream to-close reason)
-          (http-request announce 
+          (http-request announce
                         :parameters `(("peer_id" . ,(random-string 10))
-                                      ("info_hash" . ,(torrent-info-sha1 torrent))) 
+                                      ("info_hash" . ,(torrent-info-sha1 torrent)))
                         :force-binary t )
         (declare (ignore headers uri stream to-close reason ))
         (when (eql status-code 200)

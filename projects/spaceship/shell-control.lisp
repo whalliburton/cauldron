@@ -5,7 +5,7 @@
 (defvar *shell-control-pipe* nil)
 
 (defun ensure-shell-control-pipe ()
-  (setf *shell-control-pipe* 
+  (setf *shell-control-pipe*
         (concatenate 'string *spaceship-data-directory* "control"))
   (unless (probe-file *shell-control-pipe*)
     (ensure-directories-exist *shell-control-pipe*)
@@ -18,7 +18,7 @@
           (when line
             (handler-case
                 (handle-shell-control line)
-              (error (c) 
+              (error (c)
                 (warn "Error in shell-control line ~S. ~A" line c)))))))
 
 (defparameter *shell-control-functions* (all-functions))
@@ -28,18 +28,18 @@
          (cmd (read-from-string (preprocess-shell-control-line line))))
     (let* ((output (second cmd))
            (rtn (with-output-to-string (*standard-output*)
-                  (handler-case 
-                      (if-let (fn (caar (member (first cmd) *shell-control-functions* 
+                  (handler-case
+                      (if-let (fn (caar (member (first cmd) *shell-control-functions*
                                                 :key #'car :test #'string-equal)))
                         (eval (cons fn (cddr cmd)))
                         (format t "No command named: ~A.~%" (first cmd)))
                     (error (e) (format t "Error: ~A~%" e))))))
-      (with-open-file (out output :direction :output :if-exists :append)  
+      (with-open-file (out output :direction :output :if-exists :append)
         (write-string rtn out)))))
 
 (defun valid-integer-string (string)
-  (handler-case 
-      (progn 
+  (handler-case
+      (progn
         (parse-integer string)
         t)
     (sb-int:simple-parse-error () nil)))
@@ -47,7 +47,7 @@
 (defun split-on-spaces (string)
   "Split STRING on spaces while ignoring escaped spaces."
   (iter (with length = (length string))
-        (with front = 0) 
+        (with front = 0)
         (for index from 0 to (1- length))
         (for char = (char string index))
         (for pchar previous char)
@@ -69,7 +69,7 @@
               (write-char #\" stream)
               (write-string el stream)
               (write-char #\" stream)))
-          (if (cdr els) 
+          (if (cdr els)
             (write-char #\space stream)
             (write-char #\) stream)))))
 
@@ -77,5 +77,5 @@
 
 (defun start-shell-control-monitor ()
   (ensure-shell-control-pipe)
-  (setf *shell-control-monitor-thread* 
+  (setf *shell-control-monitor-thread*
         (make-thread 'shell-control-monitor-thread :name "shell-control-monitor")))

@@ -5,7 +5,7 @@
 (defun list-windows ()
   "List all the desktop windows."
   (print-table
-   (iter (for window in 
+   (iter (for window in
               (sort (stumpwm::screen-windows (current-screen))
                     #'string< :key #'stumpwm::window-class))
          (collect
@@ -17,7 +17,7 @@
 
 (defun destroy-window (number)
   "Destroy the window with number NUMBER."
-  (stumpwm::destroy-window 
+  (stumpwm::destroy-window
    (or (find number (stumpwm::screen-windows (current-screen))
              :test #'= :key 'stumpwm::window-number)
        (error "No window with number ~S found." number))))

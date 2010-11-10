@@ -5,15 +5,15 @@
 (defvar *paint-server*)
 
 (defun start-server ()
-  (setf *paint-server* 
-        (make-instance 'simple-server 
+  (setf *paint-server*
+        (make-instance 'simple-server
                        :handler 'paint-server-handler
                        :port 5021)))
 
 (defparameter *commands* '(alert))
 
 (defun paint-server-handler (command)
-  (handler-case 
+  (handler-case
       (progn
         (unless (consp command)
           (error "Invalid command: ~S." command))

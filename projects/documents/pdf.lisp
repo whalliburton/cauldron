@@ -15,7 +15,7 @@
       (format stream "~A~@[ by ~A~]~@[ ~Ap~]" (or title filename) author pages))))
 
 (defun pdf-info (filename)
-  (iter (for line 
+  (iter (for line
              in (split-sequence #\Newline
                                 (run "/usr/bin/pdfinfo" filename)
                                 :remove-empty-subseqs t))
@@ -28,7 +28,7 @@
     (flet ((info (name) (cadr (assoc name info-data :test #'string-equal))))
       (let ((document
              (make-object 'pdf
-                          :filename (file-namestring filename) 
+                          :filename (file-namestring filename)
                           :title (info 'title)
                           :author (info 'author)
                           :pages (info 'pages))))

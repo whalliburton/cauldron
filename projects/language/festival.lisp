@@ -41,9 +41,9 @@
 
 (defun set-festival-parameter (name val)
   (send-to-festival (format nil "(Parameter.set '~a '~a)" name val)))
-       
+
 (defun read-binary-line (stream)
-  (octets-to-string 
+  (octets-to-string
    (with-output-to-sequence (str)
      (loop for char = (read-byte stream)
            while (/= char #.(char-code #\Newline))
@@ -55,7 +55,7 @@
     (loop for char = (read-byte stream)
           while (and (listen stream)
                      ;; HACK
-                     (not (string-ends-with 
+                     (not (string-ends-with
                            (flexi-streams::vector-stream-vector str)
                            *festival-key* :test #'=)))
           do (write-byte char str))))
@@ -66,7 +66,7 @@
                     *festival-stream*)
     (force-output *festival-stream*)
     (let ((rtn (read-binary-line *festival-stream*)))
-      (values 
+      (values
         (string-case (rtn)
           ("LP" (read-binary-line *festival-stream*))
           ("ER" (error "festival error"))
@@ -83,14 +83,14 @@
       (string (print arg str)))))
 
 (defmacro define-festival-command (name &rest args)
-  (let ((funname (if (consp name) (first name) 
+  (let ((funname (if (consp name) (first name)
                    (substitute-if #\- (lambda (el) (member el '(#\. #\_)))
                                   (string-upcase name))))
         (fesname (if (consp name) (second name) name)))
     `(defun ,(symb 'festival- funname) (,@args)
-       (let ((raw (send-to-festival 
-                   (format nil "(~a~{ ~a~})" ,fesname 
-                           ,(when args `(mapcar #'process-festival-arg 
+       (let ((raw (send-to-festival
+                   (format nil "(~a~{ ~a~})" ,fesname
+                           ,(when args `(mapcar #'process-festival-arg
                                                 (list ,@args)))))))
          (if (or (vectorp raw) (string-starts-with raw "#<"))
            raw

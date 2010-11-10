@@ -6,25 +6,25 @@
 (defparameter *freesound-password* "freesound")
 (defparameter *freesound-cookies* (make-instance 'drakma:cookie-jar))
 
-(defun freesound-login (&key (username *freesound-username*) 
-			     (password *freesound-password*))
-  (http-request 
+(defun freesound-login (&key (username *freesound-username*)
+                             (password *freesound-password*))
+  (http-request
    "http://www.freesound.org/forum/login.php"
    :method :post
    :parameters `(("username" . ,username)
-		 ("password" . ,password)
-		 ("redirect" . "../index.php")
-		 ("login" . "login")
-		 ("autologin" . "0"))
+                 ("password" . ,password)
+                 ("redirect" . "../index.php")
+                 ("login" . "login")
+                 ("autologin" . "0"))
    :cookie-jar *freesound-cookies*))
 
 (defun ensure-freesound-login ()
   (unless (cookie-jar-cookies *freesound-cookies*)
     (freesound-login)))
 
-(define-xml-request raw-freesound-search-text 
-    (&key search (start 0) (search-descriptions 1) (search-tags 1) 
-          (search-filenames 0) (search-usernames 0) (duration-min 0) 
+(define-xml-request raw-freesound-search-text
+    (&key search (start 0) (search-descriptions 1) (search-tags 1)
+          (search-filenames 0) (search-usernames 0) (duration-min 0)
           (duration-max 20) (order 0) (limit 100))
   "http://www.freesound.org/searchTextXML.php"
   :camel-caps t
@@ -56,7 +56,7 @@
   :cookie-jar *freesound-cookies* :raw t :remove-whitespace t
   :initial ensure-freesound-login :force-binary t)
 
-(defun freesound-view (id &key (with-id t) date channels (duration t) 
+(defun freesound-view (id &key (with-id t) date channels (duration t)
                        filesize (tags t) description (extension t) &allow-other-keys)
   (let* ((raw (raw-freesound-view-single :id id))
          (props (delete-if 'null (cddr (assoc "sample" (cdr raw) :test #'string=)))))
@@ -66,14 +66,14 @@
           ,@(when date (list (first (extract "date"))))
           ,@(when channels (list (first (extract "channels"))))
           ,@(when extension (list (first (extract "extension"))))
-          ,@(when duration (list (format nil "~,2F" (parse-float (first (extract "duration")))))) 
+          ,@(when duration (list (format nil "~,2F" (parse-float (first (extract "duration"))))))
           ,@(when filesize (list (first (extract "filesize"))))
           ,@(when tags (list (mapcar #'third (extract "tags"))))
-          ,@(when description 
+          ,@(when description
               (list (first (extract "text" (cddr (first (extract "descriptions")))))))))))
 
 (defun freesound-download (id)
   (ensure-freesound-login)
-  (cached-http-request 
+  (cached-http-request
    (format nil "http://www.freesound.org/samplesDownload.php?id=~a" id)
    :cookie-jar *freesound-cookies* :force-binary t :return-object t))

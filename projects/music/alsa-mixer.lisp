@@ -18,7 +18,7 @@
 
 (defmacro with-mixer ((var) &rest body)
   `(let ((,var (open-mixer)))
-     (unwind-protect 
+     (unwind-protect
           (progn ,@body)
        (close-mixer ,var))))
 
@@ -39,9 +39,9 @@
 (defcfun snd-mixer-selem-has-playback-channel :int (elem :pointer) (channel :int))
 (defcfun snd-mixer-selem-has-capture-channel :int (elem :pointer) (channel :int))
 (defcfun snd-mixer-selem-channel-name :string (channel :int))
-(defcfun snd-mixer-selem-get-playback-volume-range :int (elem :pointer) 
+(defcfun snd-mixer-selem-get-playback-volume-range :int (elem :pointer)
          (pmin :pointer) (pmax :pointer))
-(defcfun snd-mixer-selem-get-capture-volume-range :int (elem :pointer) 
+(defcfun snd-mixer-selem-get-capture-volume-range :int (elem :pointer)
          (pmin :pointer) (pmax :pointer))
 (defcfun snd-mixer-selem-get-playback-volume :int (elem :pointer)
          (channel :int) (value :pointer))
@@ -90,32 +90,32 @@
           (let ((range (mixer-selem-get-playback-volume-range elem)))
             (list
              range
-             (cond 
+             (cond
                ((plusp (snd-mixer-selem-is-playback-mono elem)) (list (list nil "Mono")))
                (t (iter (for channel from 0 to *snd-mixer-schn-last*)
                         (when (plusp (snd-mixer-selem-has-playback-channel elem channel))
                           (let ((volume (mixer-selem-get-playback-volume elem channel)))
-                            (collect (list channel 
+                            (collect (list channel
                                            (snd-mixer-selem-channel-name channel)
                                            volume
                                            (format nil "~d%" (round (* 100 (/ volume (second range)))))
-                                           (if (mixer-selem-get-playback-switch elem channel) 
+                                           (if (mixer-selem-get-playback-switch elem channel)
                                              "on" "off")
                                            ))))))))))
         (when (snd-mixer-selem-has-capture-volume elem)
           (let ((range (mixer-selem-get-capture-volume-range elem)))
             (list
              range
-             (cond 
+             (cond
                ((plusp (snd-mixer-selem-is-capture-mono elem)) (list (list nil "Mono")))
                (t (iter (for channel from 0 to *snd-mixer-schn-last*)
                         (when (plusp (snd-mixer-selem-has-capture-channel elem channel))
                           (let ((volume (mixer-selem-get-capture-volume elem channel)))
-                            (collect (list channel 
+                            (collect (list channel
                                            (snd-mixer-selem-channel-name channel)
                                            volume
                                            (format nil "~d%" (* 100 (/ volume (second range))))
-                                           (if (mixer-selem-get-capture-switch elem channel) 
+                                           (if (mixer-selem-get-capture-switch elem channel)
                                              "on" "off")
                                            ))))))))))))
 

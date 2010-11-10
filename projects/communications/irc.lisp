@@ -12,7 +12,7 @@
 (defun connect-to-irc ()
   (setf *irc-connection* (cl-irc:connect :nickname *irc-nickname*)))
 
-(defparameter *colors* 
+(defparameter *colors*
   '("black" "blue" "red" "green" "yellow" "magenta" "cyan" "white")
   "Emacs colors for handle highlighting.")
 
@@ -52,18 +52,18 @@ respective foreground color.")
 
 (defun handle-face (handle &optional check-only)
   (if-let (watching (member handle *watching-handles* :test #'equal :key #'car))
-    (list :foreground  (second (car watching)) 
-          :background *watching-background* 
+    (list :foreground  (second (car watching))
+          :background *watching-background*
           :weight 'bold)
     (or (gethash handle *handle-faces*)
         (unless check-only
-          (prog1 
+          (prog1
               (setf (gethash handle *handle-faces*) (first *faces*))
             (setf *faces* (left-rotate *faces*)))))))
 
 (defun word-wrap (string &key (width 70) (indent 0))
-  (format nil (concatenate 'string 
-                           "~{~<~%~" (princ-to-string indent) 
+  (format nil (concatenate 'string
+                           "~{~<~%~" (princ-to-string indent)
                            "T~1," (princ-to-string width) ":;~A~> ~}")
           (split-sequence #\space string)))
 
@@ -72,7 +72,7 @@ respective foreground color.")
   (:method ((type (eql :privmsg)) data stream)
     (destructuring-bind (source target message) data
       (declare (ignore target))
-      (format t "<~a> ~a~%~%" source 
+      (format t "<~a> ~a~%~%" source
               (word-wrap message :indent (+ (length source) 3)))))
   (:method ((type (eql :action)) data stream)
     (destructuring-bind (source target message) data
@@ -107,13 +107,13 @@ respective foreground color.")
 (defun call-sentry (&optional since)
   (call-simple-server since :host *sentry-hostname* :port *sentry-port*))
 
-(defun latest-irc (&optional (since (gethash-database 'last-irc-message-time)) 
+(defun latest-irc (&optional (since (gethash-database 'last-irc-message-time))
                    (stream *chats-stream*))
   "Print all the unread irc messages."
   (when (typep stream 'emacs-output-stream)
-    (write-emacs-command stream '(progn 
-                                  (setf buffer-read-only nil) 
-                                  (end-of-buffer) 
+    (write-emacs-command stream '(progn
+                                  (setf buffer-read-only nil)
+                                  (end-of-buffer)
                                   (push-mark))))
   (iter (for messages on (call-sentry since))
         (for message = (car messages))
@@ -121,8 +121,8 @@ respective foreground color.")
         (when (null (cdr messages))
           (setf (gethash-database 'last-irc-message-time) (second message))))
   (when (typep stream 'emacs-output-stream)
-    (write-emacs-command stream '(progn 
-                                  (font-lock-mode t) 
-                                  (setf buffer-read-only t) 
+    (write-emacs-command stream '(progn
+                                  (font-lock-mode t)
+                                  (setf buffer-read-only t)
                                   (goto-char (mark)))))
   (force-output stream))

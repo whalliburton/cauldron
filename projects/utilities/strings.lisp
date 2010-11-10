@@ -46,4 +46,5 @@
 (defun pad-string (string min-length &optional (character #\space))
   (let ((len (length string)))
     (if (< len min-length)
-      (concatenate 'string string (make-string (- min-length len) :initial-element character )))))
+      (concatenate 'string string (make-string (- min-length len) :initial-element character)))))
+

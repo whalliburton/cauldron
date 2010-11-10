@@ -8,7 +8,7 @@
 
 (defun system ()
   "List various sundry system properties."
-  (print-table 
+  (print-table
    (mapcar (lambda (el) (list (first el) (typecase (second el)
                                            (string (truncate-string (second el) 70))
                                            (cons (second el)))))

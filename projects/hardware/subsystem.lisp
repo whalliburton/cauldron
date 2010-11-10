@@ -5,9 +5,9 @@
         sb-thread sb-concurrency)
   (:import-from sb-ext quit)
   (:import-from alexandria flatten)
-  (:export thermal 
+  (:export thermal
            devices device power-supply battery input
-           memory-information 
+           memory-information
            processes process describe-process
            identities ssh-identity
            system

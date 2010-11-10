@@ -4,7 +4,7 @@
 
 (defun recipe-query (query &optional ingredients page)
   (multiple-value-bind (rtn code)
-      (http-request 
+      (http-request
        (format nil "http://www.recipepuppy.com/api/?~@[i=~{~a~^,~}&~]q=~a~@[&p=~a~]"
                ingredients query page))
     (when (eql code 200)

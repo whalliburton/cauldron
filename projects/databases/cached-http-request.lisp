@@ -5,13 +5,13 @@
 (defclass cached-http-request (blob)
   ((uri :initarg :uri
         :reader uri
-        :index-type unique-index 
+        :index-type unique-index
         :index-initargs (:test #'equalp)
         :index-reader cached-http-request-with-uri
         :index-values all-cached-http-requests)
    (alias :initarg :alias
           :reader alias
-          :index-type unique-index 
+          :index-type unique-index
           :index-initargs (:test #'equalp)
           :index-reader cached-http-request-with-alias)
    (last-modified :initarg :last-modified :reader last-modified))
@@ -36,7 +36,7 @@
          (cdr (assoc :last-modified headers)))))
 
 (defun cached-http-request-newer-exists (cached)
-  (not (equalp (last-modified cached) 
+  (not (equalp (last-modified cached)
                (uri-last-modified (uri cached)))))
 
 (deftransaction set-last-modified (cached last-modified)
@@ -48,15 +48,15 @@
 (defun set-cached-http-request (uri &rest args &key return-object alias class initargs
                                     &allow-other-keys)
   (with-assoc (content-type last-modified location)
-    (multiple-value-bind (body code headers) 
+    (multiple-value-bind (body code headers)
         (apply 'http-request uri :redirect nil
                (remove-keywords args :return-object :check-for-newer :alias :class :initargs))
       (cond
         ((eql code 200)
          (let* ((type (blob-type-from-content-type (:content-type headers)))
                 (object (or (cached-http-request-with-uri uri)
-                            (apply 'make-object 
-                                   (or class 'cached-http-request) 
+                            (apply 'make-object
+                                   (or class 'cached-http-request)
                                    :uri uri :type type :alias alias
                                    initargs))))
            (set-last-modified object (:last-modified headers))
@@ -70,18 +70,18 @@
          (apply 'set-cached-http-request (:location headers) :alias uri args))))))
 
 (defun maybe-set-type-from-magic (object)
-  (awhen (string-case ((magic-mime (namestring (blob-pathname object))) 
+  (awhen (string-case ((magic-mime (namestring (blob-pathname object)))
                     :default nil )
            ("audio/x-wav" :wav))
     (set-blob-type object it)))
 
 (defun blob-type-from-content-type (content-type)
-  (cond 
+  (cond
     ((string-starts-with content-type "text/plain") :text)
     ((string-starts-with content-type "application/ogg") :ogg)
     (t :unknown)))
 
-(defun cached-http-request (uri &rest args 
+(defun cached-http-request (uri &rest args
                                 &key check-for-newer return-object class initargs
                             &allow-other-keys)
   (let ((cached (or (cached-http-request-with-uri uri)

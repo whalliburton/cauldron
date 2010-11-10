@@ -5,7 +5,7 @@
 (load-foreign-library "/usr/lib/libsane.so")
 
 (defcenum sane-status
-  :good :unsupported :cancelled :device-busy :invalid :eof 
+  :good :unsupported :cancelled :device-busy :invalid :eof
   :jammed :no-docs :cover-open :io-error
   :no-mem :access-denied)
 
@@ -31,13 +31,13 @@
         (iter (for x upfrom 0)
               (for device-pointer = (mem-aref (mem-ref pointer :pointer) :pointer x))
               (while (not (null-pointer-p device-pointer)))
-              (collect 
+              (collect
                   (with-foreign-slots ((name vendor model type) device-pointer sane-device)
                     (list name vendor model type))))
         (error 'failed-to-detect-sane-devices :return-code rtn)))))
 
 (define-condition failed-to-open-sane-device (error)
-  ((name :initarg :name) 
+  ((name :initarg :name)
    (return-code :initarg :return-code)))
 
 (defcfun ("sane_open" %sane-open) sane-status (name :string) (handle :pointer))
@@ -85,7 +85,7 @@
                     (:int (mem-ref pointer :int))
                     (:fixed (mem-ref pointer :int))
                     (:string (foreign-string-to-lisp pointer))
-                    (:bool (= 1 (mem-ref pointer :int)))) 
+                    (:bool (= 1 (mem-ref pointer :int))))
                   name unit title desc))))))
 
 (defun sane-get-options (handle)

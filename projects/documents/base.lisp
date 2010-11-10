@@ -4,7 +4,7 @@
 
 (defclass base-document (blob)
   ((filename :initarg :filename :reader filename
-             :index-type unique-index 
+             :index-type unique-index
              :index-initargs (:test #'equalp)
              :index-reader document-with-filename))
   (:metaclass persistent-class))
@@ -38,7 +38,7 @@
 
 (defparameter *html-viewer* :emacs)
 
-(defgeneric read-document (document) 
+(defgeneric read-document (document)
   (:documentation "Read a document.")
   (:method ((document base-document))
     (if swank::*emacs-connection*
@@ -77,14 +77,15 @@
 
 (defun list-documents (&optional (maximum-column-width 40))
   "List all the readable documents."
-  (print-table 
-   (mapcar (lambda (doc) (list (store-object-id doc) 
-                               (pathname-name (filename doc)) 
-                               (pathname-type (filename doc))
-                               (or (author doc) "")
-                               (or (pages doc) "") 
-                               (or (title doc) "")))
-           (sort (store-objects-with-class 'base-document)
-                 #'string< :key #'filename))
-   :headings '("id" "filename" "type" "author" "pages" "title")
-   :max-column-width maximum-column-width :oversize-suffix "..."))
+  (if-let ((base-documents (store-objects-with-class 'base-document)))
+    (print-table
+     (mapcar (lambda (doc) (list (store-object-id doc)
+                                 (pathname-name (filename doc))
+                                 (pathname-type (filename doc))
+                                 (or (author doc) "")
+                                 (or (pages doc) "")
+                                 (or (title doc) "")))
+             (sort base-documents #'string< :key #'filename))
+     :headings '("id" "filename" "type" "author" "pages" "title")
+     :max-column-width maximum-column-width :oversize-suffix "...")
+    (format t "none~%")))

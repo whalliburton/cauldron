@@ -5,13 +5,13 @@
 (defun open-document (which &optional (error-on-unknown-p t))
   "Open for reading any readable file or unarchive any archive."
   (etypecase which
-    (string 
+    (string
        (if (probe-file which)
          (string-case
              ((let ((mime (magic-mime which)))
                 (warn "mime ~A" mime)
                 mime)
-              :default 
+              :default
               (when error-on-unknown-p
                 (format t "OPEN-DOCUMENT does not know how to handle a document of mime type : ~A.~%"
                         (magic-mime which))))
@@ -22,7 +22,7 @@
 
 (defun bunzip2 (filename)
   (let* ((suffix (pathname-type filename))
-         (unzipped-filename (subseq (namestring filename) 0 
+         (unzipped-filename (subseq (namestring filename) 0
                                     (- (length filename) (1+ (length suffix))))))
     (if (probe-file unzipped-filename)
       (format t "The destination file ~S already exists.~%" unzipped-filename)
@@ -48,7 +48,7 @@
          (base-name (pathname-name filename))
          (extension (pathname-type filename))
          (uncompressed-filename
-          (concatenate 'string directory base-name 
+          (concatenate 'string directory base-name
                        (string-case (extension :default "")
                          ("tgz" ".tar")))))
     (assert (string/= (namestring filename) uncompressed-filename))

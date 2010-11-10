@@ -2,7 +2,7 @@
 
 (defpackage spaceship
     (:use common-lisp sb-thread iterate alexandria
-          utilities databases cards hardware web music 
+          utilities databases cards hardware web music
           network language linux journal documents
           communications windows bknr.datastore
           paint-client)
@@ -16,10 +16,10 @@
 
 
 
-  
 
-	   
-	   
 
-	   
-	
+
+
+
+
+
