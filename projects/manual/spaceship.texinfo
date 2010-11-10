@@ -1,0 +1,100 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename spaceship.info
+@settitle Spaceship
+@c %**end of header
+
+@settitle Spaceship
+
+@c for install-info
+@dircategory Toys
+@direntry
+* Spaceship:           An exploration in Common Lisp
+@end direntry
+
+@titlepage
+
+@title Spaceship
+
+@end titlepage
+
+An exploration into the mental space at Common Lisp warp speed.
+
+@contents
+
+@ifnottex
+
+@include include/ifnottex.texinfo
+
+@end ifnottex
+
+@chapter Getting Started
+
+@chapter The Bridge
+
+@include include/fun-spaceship-help.texinfo
+@include include/fun-spaceship-short-range-scan.texinfo
+
+@chapter Communications
+
+@include include/fun-communications-contacts.texinfo
+@include include/fun-communications-ids.texinfo
+@include include/fun-communications-latest-irc.texinfo
+@include include/fun-communications-mail.texinfo
+@include include/fun-communications-network.texinfo
+
+@chapter Databases
+
+@include include/fun-databases-add-idea.texinfo
+@include include/fun-databases-list-ideas.texinfo
+@include include/fun-databases-recipe.texinfo
+@include include/fun-databases-weather.texinfo
+
+@chapter Hardware
+
+@include include/fun-hardware-battery.texinfo
+@include include/fun-hardware-cpus.texinfo
+@include include/fun-hardware-devices.texinfo
+@include include/fun-hardware-system.texinfo
+@include include/fun-hardware-thermal.texinfo
+
+@chapter Journal
+
+@include include/fun-journal-journal.texinfo
+
+@chapter Language
+
+@include include/fun-language-language-name-from-code.texinfo
+@include include/fun-language-say.texinfo
+@include include/fun-language-speak-in-english.texinfo
+@include include/fun-language-speak-in-russian.texinfo
+@include include/fun-language-translate.texinfo
+
+@chapter Music
+
+@include include/fun-music-mixer.texinfo
+@include include/fun-music-play.texinfo
+@include include/fun-music-stop.texinfo
+
+@chapter Network
+
+@include include/fun-network-instances.texinfo
+@include include/fun-network-ssh-command.texinfo
+
+@chapter Web
+
+@include include/fun-web-web.texinfo
+@include include/macro-web-google.texinfo
+@include include/macro-web-javadoc.texinfo
+@include include/macro-web-rfc.texinfo
+@include include/macro-web-rhyme.texinfo
+@include include/macro-web-thesaurus.texinfo
+
+@chapter Windows
+
+@include include/fun-windows-destroy-window.texinfo
+@include include/fun-windows-focus-window.texinfo
+@include include/fun-windows-list-windows.texinfo
+@include include/fun-windows-show-window.texinfo
+
+@bye
