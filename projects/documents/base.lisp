@@ -59,8 +59,10 @@
       (progn
         (warn "A document with filename ~a has already been imported, reading this." name)
         (read-document document))
-      (progn
-        (unless (probe-file name) (error "File not found: ~s" name))
+      (if (null (probe-file name))
+        (if-let (number (parse-integer (file-namestring name) :junk-allowed t))
+          (read-document number)
+          (error "File not found: ~s" name))
         (read-document (import-document name (ksymb (magic-mime name)))))))
   (:method ((id integer)) (read-document (get-document id))))
 
