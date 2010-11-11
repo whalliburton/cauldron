@@ -8,7 +8,7 @@
                 process-poll process-pid)
   (:import-from sb-gray fundamental-character-output-stream
                 stream-write-char stream-force-output)
-  (:import-from fare-utils make-fifo fifo-head fifo-enqueue fifo-dequeue)  
+  (:import-from fare-utils make-fifo fifo-head fifo-enqueue fifo-dequeue)
   (:export newline slurp slurp-stream slurp-lines slurp-line last1 run
            string-starts-with string-ends-with string-contains-p
            chew-string process-string print-table print-heading blank-table-line
@@ -23,17 +23,21 @@
            list-threads kill-all-workers thread-backtrace thread-break
            view-in-web-browser
            with-hash-values expiring-hash-table set-expiring-hash
-           gethash-expiring
-           process-lines
+           gethash-expiring maphash-expiring
+           process-lines iterate-process-lines
            defun-simple-memoized
            list-hash-keys
-           agent start-agent list-agents 
-           ensure-string bugout prin1-with-ellipses breakout
+           agent start-agent list-agents
+           ensure-string bugout prin1-with-ellipses prin1-with-ellipses-to-string
+           breakout
            destructuring-bind-list
            symbol-ends-with symbol-start-with
-           prologue list-testsuites list-all-tests list-tests 
+           prologue list-testsuites list-all-tests list-tests
            describe-test-result
            run-testsuites run-test remove-all-tests test tests
            sg clear-debugging-globals
            plural home
-           ssh-in-emacs))
+           ssh-in-emacs
+           defalias
+           temporary-file-name with-temporary-file
+           intersperse))

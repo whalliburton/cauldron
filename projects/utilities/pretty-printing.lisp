@@ -30,3 +30,7 @@
             str))
         stream)))
   object)
+
+(defun prin1-with-ellipses-to-string (obj &optional (max 20) (printer #'prin1-to-string))
+  (with-output-to-string (str)
+    (prin1-with-ellipses obj str max printer)))

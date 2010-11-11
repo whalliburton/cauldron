@@ -22,7 +22,7 @@
     (multiple-value-bind (vals long)
         (iter (for (key value) in-hashtable hash-table)
               (for x upfrom 0)
-              (when (and *maximum-hash-table-pretty-print-size* 
+              (when (and *maximum-hash-table-pretty-print-size*
                          (>= x *maximum-hash-table-pretty-print-size*))
                 (return (values rtn t)))
               (collect key into rtn)
@@ -42,7 +42,7 @@
 ;; 100 or so sets.
 
 (defclass expiring-hash-table ()
-  (table fifo lock 
+  (table fifo lock
    (timeout :initform 10 :initarg :timeout)))
 
 (defmethod print-object ((table expiring-hash-table) stream)
@@ -74,10 +74,10 @@
       (gethash key table))))
 
 (defmacro with-hash-values ((keys hash &key (to-key nil to-key-set)) &body body)
-  (once-only (hash to-key) 
-    `(let (,@(mapcar 
-              (lambda (key) 
-                (list key `(gethash 
+  (once-only (hash to-key)
+    `(let (,@(mapcar
+              (lambda (key)
+                (list key `(gethash
                             ,@(if to-key-set
                                 `((funcall ,to-key ',key))
                                 `(',key))
@@ -87,3 +87,7 @@
 
 (defun list-hash-keys (hash-table)
   (iter (for (k v) in-hashtable hash-table) (collect k)))
+
+(defun maphash-expiring (fn expiring-hash-table)
+  (with-slots (table) expiring-hash-table
+    (iter (for (k v) in-hashtable table) (funcall fn k v))))

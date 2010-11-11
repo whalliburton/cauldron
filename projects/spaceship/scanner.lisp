@@ -13,6 +13,4 @@
                               (format nil "(~D MHz max)" (/ max 1000))))))
   (newline))
 
-(defun srs ()
-  "Scan the immediate area."
-  (short-range-scan))
+(defalias srs short-range-scan)

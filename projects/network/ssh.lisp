@@ -2,15 +2,34 @@
 
 (in-package :network)
 
-(defparameter *watched-ips* nil)
+(defvar *ssh-ips* nil)
 
-(defun ssh-command (command &optional (ip-or-ips *watched-ips*))
+(defparameter *ssh-options* "-o StrictHostKeyChecking=no -A")
+
+(defun ssh-command-collect (command ip &key (username "root"))
+  (let ((rtn))
+    (iterate-process-lines (line (format nil "/usr/bin/ssh ~A -l ~A ~A ~S"
+                                         *ssh-options*
+                                         username ip command))
+      (push line rtn))
+    (nreverse rtn)))
+
+(defun ssh-command (command &optional (ip-or-ips *ssh-ips*) (username "root"))
   "Execute COMMAND on IP-OR-IPS."
   (typecase ip-or-ips
     (string
-       (print-heading (format nil "~a ~a" ip-or-ips command))
-       (princ (with-output-to-string (str)
-                (run-program "/usr/bin/ssh" (list ip-or-ips command) :output str))))
+       (print-heading (format nil "executing on ~A@~A ~A" username ip-or-ips command))
+       (iterate-process-lines (line
+                               (format nil "/usr/bin/ssh ~A -l ~A ~A ~S"
+                                       *ssh-options*
+                                       username ip-or-ips command))
+         (format t "  ~A~%" line)))
     (cons
        (mapc (lambda (el) (ssh-command command el) (newline)) ip-or-ips)))
-  nil)
+  (values))
+
+(defparameter *scp-options* "-o StrictHostKeyChecking=no")
+
+(defun scp (from to)
+  "SCP from FROM to TO."
+  (process-lines (format nil "/usr/bin/scp ~A ~A ~A" *scp-options* from to)))

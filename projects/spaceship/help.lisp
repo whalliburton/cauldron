@@ -18,7 +18,9 @@
    (iter (for sym in-package subsystem external-only t)
          (when (fboundp sym)
            (when-let (doc (documentation sym 'function))
-             (collect (list sym doc)))))
+             (collect (list sym doc))
+             (when-let (alias (get sym :alias))
+               (collect (list alias doc))))))
    'string< :key 'car))
 
 (defun all-functions ()
@@ -49,9 +51,12 @@
             (print-table
              (sort
               (iter (for sym in-package subsystem external-only t)
+                    (for alias = (get sym :alias))
                     (when (fboundp sym)
                       (when-let (doc (documentation sym 'function))
-                        (collect (list (string-downcase sym) doc)))))
+                        (collect (list (string-downcase sym)
+                                       (or (and alias (string-downcase alias)) "")
+                                       doc)))))
               'string< :key 'car)
              :indent 2 :spacing 3)
             (newline))))

@@ -11,7 +11,7 @@
   (car (last list)))
 
 (defun in-home (suffix)
-  (concatenate 'string 
+  (concatenate 'string
                (or (sb-posix:getenv "HOME")
                    (let ((dir (concatenate 'string  "/tmp/" (random-string))))
                      (progn (warn "No HOME environment set, using ~a" dir) dir)))
@@ -22,7 +22,7 @@
     (read-from-string string)))
 
 (defun remove-keyword (list keyword)
-  (iter (with remove) 
+  (iter (with remove)
         (for i in list)
         (cond
           ((eql i keyword) (setf remove t))
@@ -38,8 +38,8 @@
   (let ((*read-eval* nil))
     (let ((val (read-from-string s)))
       (cond
-	((typep val 'float) val)
-	((typep val 'fixnum) (coerce val 'float))))))
+        ((typep val 'float) val)
+        ((typep val 'fixnum) (coerce val 'float))))))
 
 (defun view-in-web-browser (filename)
   "Open a chromium tab viewing FILENAME."
@@ -55,4 +55,16 @@
 
 (defun home (&optional path)
   (pathname (concatenate 'string (namestring (user-homedir-pathname)) path)))
+
+(defmacro defalias (from to)
+  `(progn
+     (defun ,from (&rest args) (apply ',to args))
+     (setf (get ',to :alias) ',from
+           (get ',from :aliases) ',to)))
+
+(defun intersperse (list element)
+  (iter (for el in list)
+        (unless (first-iteration-p)
+          (collect element))
+        (collect el)))
 
