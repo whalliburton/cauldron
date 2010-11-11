@@ -9,8 +9,9 @@
            run-instance run
            terminate-instance terminate
            view-instance view
-           images set-aws-keys ssh-command))
+           images set-aws-keys ssh-command
+           console list-lisps))
 
 (in-package :network)
 
-(defparameter *help-text* "Inspect remote systems.")
+(defparameter *help-text* "Run, operate on, and inspect remote systems.")
