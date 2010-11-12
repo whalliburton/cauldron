@@ -68,3 +68,4 @@
           (collect element))
         (collect el)))
 
+(defvar *called-from-the-shell* nil)

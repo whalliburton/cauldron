@@ -32,8 +32,7 @@
                (:file "debugging")
                (:file "lists")
                (:file "repl")
-               (:file "files"))
+               (:file "files")
+               (:file "bash"))
   :depends-on (:iterate :split-sequence :local-time :swank :usocket :iolib.process
                         :fare-utils :cl-ppcre :lift))
-
-

@@ -41,4 +41,6 @@
            defalias
            temporary-file-name with-temporary-file
            intersperse
-           indent print-box))
+           indent print-box
+           *called-from-the-shell*
+           bash-string))

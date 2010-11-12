@@ -31,7 +31,8 @@
                   (handler-case
                       (if-let (fn (caar (member (first cmd) *shell-control-functions*
                                                 :key #'car :test #'string-equal)))
-                        (eval (cons fn (cddr cmd)))
+                        (let ((*called-from-the-shell* t))
+                          (eval (cons fn (cddr cmd))))
                         (format t "No command named: ~A.~%" (first cmd)))
                     (error (e) (format t "Error: ~A~%" e))))))
       (with-open-file (out output :direction :output :if-exists :append)
@@ -79,3 +80,6 @@
   (ensure-shell-control-pipe)
   (setf *shell-control-monitor-thread*
         (make-thread 'shell-control-monitor-thread :name "shell-control-monitor")))
+
+(defun stop-shell-control-monitor ()
+  (terminate-thread *shell-control-monitor-thread*))

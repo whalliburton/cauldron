@@ -13,6 +13,12 @@ else
     echo $base $output $1 $2 $3 $4 $5 $6 >> $control
 fi
 
-cat $output
+rtn=`cat $output`
 rm $output
+
+if [ ${rtn:0:2} = "#!" ]; then
+    eval "$rtn"
+else
+    echo "$rtn"
+fi
 

@@ -59,7 +59,8 @@
                                        doc)))))
               'string< :key 'car)
              :indent 2 :spacing 3)
-            (newline))))
+            ;; the odd space is because bash's echo will strip a lone newline
+            (format t " ~%"))))
       (progn
         (newline)
         (print-heading "Help is available on the following subsystems")
@@ -71,5 +72,4 @@
          :indent 2 :spacing 3)
         (newline)
         (format t "  Call HELP with a subsystem name for help on a particular subsystem,~%")
-        (format t "  or ALL for help on all subsystems.~%")
-        (newline)))))
+        (format t "  or ALL for help on all subsystems.~% ~%")))))
