@@ -6,6 +6,7 @@
         utilities linux string-case anaphora)
   (:import-from alexandria if-let)
   (:import-from sb-ext quit posix-getenv)
+  (:shadowing-import-from utilities with-temporary-file)
   (:export cached-http-request recipe start-local-database
            gethash-database add-idea list-ideas
            create-blob-link weather))
