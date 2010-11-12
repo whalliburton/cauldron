@@ -36,12 +36,37 @@
     (let ((stat (sb-posix:stat filename)))
       (format nil "~A" (sb-posix:stat-size stat)))))
 
-(defun untar (filename)
+(defun check-tar-for-single-root-directory (filename)
   (let ((directory (directory-namestring filename)))
-    (print-table
-     (iter (for line in (process-lines (format nil "/bin/tar xvf ~A -C ~A" filename directory)))
-           (while line)
-           (collect (list line (stat-formatted (concatenate 'string directory line))))))))
+    (iter (for line in (process-lines (format nil "/bin/tar tf ~A -C ~A" filename directory)))
+          (for dir = (subseq line 0 (position #\/ line)))
+          (for last-dir previous dir)
+          (while line)
+          (when (and last-dir (string/= dir last-dir))
+            (return nil))
+          (finally (return t)))))
+
+(defun untar (filename)
+  (if (check-tar-for-single-root-directory filename)
+    (let ((directory (directory-namestring filename)))
+      (print-table
+       (iter (for line in (process-lines (format nil "/bin/tar xvf ~A -C ~A" filename directory)))
+             (while line)
+             (collect (list line (stat-formatted (concatenate 'string directory line)))))))
+    (let ((dir (pathname-name filename)))
+      (format t "~A would not expand into a single directory.~%Expanding instead into ~A~%"
+              (file-namestring filename) dir)
+      (let ((new-dir (concatenate 'string (directory-namestring filename) dir)))
+        (if (probe-file new-dir)
+          (format t "~A already exists, aborting.~%" dir)
+          (progn
+            (sb-posix:mkdir new-dir #o700)
+            (print-table
+             (iter (for line in (process-lines
+                                 (format nil "/bin/tar xvf ~A -C ~A" filename new-dir)))
+                   (while line)
+                   (collect (list line (stat-formatted (concatenate 'string new-dir "/" line))))
+                   ))))))))
 
 (defun gunzip (filename)
   (let* ((directory (directory-namestring filename))
