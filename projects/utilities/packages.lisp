@@ -40,4 +40,5 @@
            ssh-in-emacs
            defalias
            temporary-file-name with-temporary-file
-           intersperse))
+           intersperse
+           indent print-box))

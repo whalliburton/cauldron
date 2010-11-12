@@ -34,3 +34,28 @@
 (defun prin1-with-ellipses-to-string (obj &optional (max 20) (printer #'prin1-to-string))
   (with-output-to-string (str)
     (prin1-with-ellipses obj str max printer)))
+
+(defun indent (depth &optional (stream *standard-output*))
+  (dotimes (x depth) (format stream "  ")))
+
+(defun print-box (str &optional (stream *standard-output*) (indent 0) (newlines t))
+  (when newlines (newline))
+  (let* ((len (length str))
+         (padded (+ len 5)))
+    (flet ((line ()
+             (indent indent)
+             (iter (for x from 0 to padded)
+                   (for last-iteration-p = (eql x padded))
+                   (write-char
+                    (cond
+                      ((or (first-iteration-p) last-iteration-p) #\+)
+                      (t #\-)) stream)
+                   (finally (newline stream)))))
+      (line)
+      (indent indent)
+      (write-string "|  " stream)
+      (write-string str stream)
+      (write-string "  |" stream)
+      (newline stream)
+      (line)))
+  (when newlines (newline)))
