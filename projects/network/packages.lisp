@@ -10,7 +10,8 @@
            terminate-instance terminate
            view-instance view
            images set-aws-keys ssh-command
-           console list-lisps))
+           console list-lisps
+           ssh-to))
 
 (in-package :network)
 

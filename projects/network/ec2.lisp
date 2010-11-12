@@ -195,12 +195,15 @@
           (write-string text)
           (format t "No console output."))))))
 
-(defun ssh (instance-index &key (user "root"))
+(defun ssh-to (instance-index &key (user "root"))
   "Open a new shell on the instance."
   (with-instance-from-index (instance-index)
     (let ((host (format nil "~A@~A" user (get-public-ip-address instance))))
-      (format t "SSHing to ~A ~A (~A).~%" host instance-id instance-index)
-      (ssh-in-emacs host :agent-forwarding t))))
+      (if *called-from-the-shell*
+        (princ (bash-string "/usr/bin/ssh ~A" host))
+        (progn
+          (format t "SSHing to ~A ~A (~A).~%" host instance-id instance-index)
+          (ssh-in-emacs host :agent-forwarding t))))))
 
 (defun protect (&rest instance-indexes)
   "Protect the instance from termination."
