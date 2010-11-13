@@ -54,6 +54,11 @@
     (values (slot-value obj 'value) t)
     (values nil nil)))
 
+(defun remhash-database (key)
+  (when-let (obj (database-key-value-with-key key))
+    (delete-object obj)
+    t))
+
 (defun packetize-object (obj)
   (let ((class (class-of obj)))
     (iter (with ignore-packages = (list (find-package :bknr.indices)
