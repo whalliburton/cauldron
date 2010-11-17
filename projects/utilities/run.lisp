@@ -2,6 +2,6 @@
 
 (in-package :utilities)
 
-(defun run (filename &rest args)
+(defun run-to-string (filename &rest args)
   (with-output-to-string (str)
     (run-program filename args :output str)))

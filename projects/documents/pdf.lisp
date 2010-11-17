@@ -17,7 +17,7 @@
 (defun pdf-info (filename)
   (iter (for line
              in (split-sequence #\Newline
-                                (run "/usr/bin/pdfinfo" filename)
+                                (run-to-string "/usr/bin/pdfinfo" filename)
                                 :remove-empty-subseqs t))
         (for split = (position #\: line))
         (collect (list (subseq line 0 split)

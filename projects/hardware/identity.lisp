@@ -19,4 +19,5 @@
               (make-instance 'ssh-identity
                              :key-size size :fingerprint fingerprint :filename filename :type type)))
           (mapcar (lambda (el) (split-sequence #\space el))
-                  (split-sequence '#\newline (run "/usr/bin/ssh-add" "-l") :remove-empty-subseqs t))))
+                  (split-sequence '#\newline (run-to-string "/usr/bin/ssh-add" "-l")
+                                  :remove-empty-subseqs t))))

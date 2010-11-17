@@ -9,7 +9,7 @@
   (:import-from sb-gray fundamental-character-output-stream
                 stream-write-char stream-force-output)
   (:import-from fare-utils make-fifo fifo-head fifo-enqueue fifo-dequeue)
-  (:export newline slurp slurp-stream slurp-lines slurp-line last1 run
+  (:export newline slurp slurp-stream slurp-lines slurp-line last1 run-to-string
            string-starts-with string-ends-with string-contains-p
            chew-string process-string print-table print-heading blank-table-line
            pad-string
