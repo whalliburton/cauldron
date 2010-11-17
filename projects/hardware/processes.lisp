@@ -76,34 +76,42 @@
 (defun proc-stat (pid)
   (iter (for x upfrom 0)
         (for el in (split-sequence #\space (slurp-line (format nil "/proc/~a/stat" pid))))
-        (awhen (cond
-                 ((= x 1) (cons :comm (subseq el 1 (1- (length el)))))
-                 ((= x 2) (cons :state
-                                (case (char el 0)
-                                  (#\R :running)
-                                  (#\S :sleeping)
-                                  (#\D :disk-sleep)
-                                  (#\Z :zombie)
-                                  (#\T :traced)
-                                  (#\W :paging))))
-                 ((= x 13) (cons :utime (parse-integer el)))
-                 ((= x 14) (cons :stime (parse-integer el)))
-                 ((= x 15) (cons :cutime (parse-integer el)))
-                 ((= x 16) (cons :cstime (parse-integer el)))
-                 )
-          (collect it))))
+        (when-let (line (cond
+                          ((= x 0) (cons :pid (parse-integer el)))
+                          ((= x 1) (cons :comm (subseq el 1 (1- (length el)))))
+                          ((= x 2) (cons :state
+                                         (case (char el 0)
+                                           (#\R :running)
+                                           (#\S :sleeping)
+                                           (#\D :disk-sleep)
+                                           (#\Z :zombie)
+                                           (#\T :traced)
+                                           (#\W :paging))))
+                          ((= x 3) (cons :parent-pid (parse-integer el)))
+                          ((= x 13) (cons :utime (parse-integer el)))
+                          ((= x 14) (cons :stime (parse-integer el)))
+                          ((= x 15) (cons :cutime (parse-integer el)))
+                          ((= x 16) (cons :cstime (parse-integer el)))
+                          ))
+          (collect line))))
 
 (defmethod initialize-instance :after ((process process) &rest rest)
   (declare (ignore rest))
   (with-slots (pid name) process
     (setf name (cdr (assoc :comm (proc-stat pid))))))
 
+(defun process-ids ()
+  (mapcar #'parse-integer
+          (remove-if-not
+           #L(every #'digit-char-p %)
+           (mapcar #L(last1 (pathname-directory %))
+                   (cl-fad:list-directory "/proc/")))))
+
 (defun processes ()
   (mapcan
-   (lambda (el)
-     (awhen (ignore-errors (parse-integer (last1 (pathname-directory el))))
-       (list (make-instance 'process :pid it))))
-   (list-directory "/proc/")))
+   (lambda (pid)
+     (list (make-instance 'process :pid pid)))
+   (process-ids)))
 
 (defun describe-process (pid)
   (print-table (slot-value (make-instance 'process :pid pid) 'status)))
@@ -112,3 +120,24 @@
   (remove-if-not (lambda (process) (string= (name process) name))
                  (processes)))
 
+(defun pid-tree ()
+  (let ((stats (mapcar #'proc-stat (process-ids))))
+    (labels ((recur (pid)
+               (cons pid
+                     (iter (for child in
+                                (iter (for stat in stats)
+                                      (when (= (cdr (assoc :parent-pid stat)) pid)
+                                        (collect (cdr (assoc :pid stat))))))
+                           (collect (recur child))))))
+      (recur 1))))
+
+(defun process-tree ()
+  "Print out all the running processes."
+  (labels ((recur (tree indent)
+             (let ((pid (car tree)))
+               (format t "~7A" pid)
+               (indent indent)
+               (format t "~A~%"(cdr (assoc :comm (proc-stat pid)))))
+             (mapcar #L(recur % (1+ indent)) (cdr tree))))
+    (recur (pid-tree) 0))
+  (values))
