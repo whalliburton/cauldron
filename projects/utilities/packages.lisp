@@ -3,7 +3,7 @@
 (defpackage utilities
   (:use common-lisp iterate split-sequence local-time usocket sb-thread)
   (:import-from sb-ext quit run-program)
-  (:import-from alexandria once-only with-gensyms)
+  (:import-from alexandria once-only with-gensyms if-let)
   (:import-from iolib.process with-child-process process-output create-process
                 process-poll process-pid)
   (:import-from sb-gray fundamental-character-output-stream
@@ -43,4 +43,5 @@
            intersperse
            indent print-box
            *called-from-the-shell*
-           bash-string))
+           bash-string
+           use-naked-repl))

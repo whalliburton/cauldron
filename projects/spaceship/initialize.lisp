@@ -11,6 +11,7 @@
   (load-email-identity)
   (start-paint-server)
   (start-monitors)
+  (use-naked-repl)
   (format t "~%Welcome to the spaceship.~%~%"))
 
 
