@@ -9,6 +9,7 @@
                (:file "help")
                (:file "shell-control")
                (:file "monitors")
+               (:file "time")
                (:file "initialize"))
   :depends-on (
 

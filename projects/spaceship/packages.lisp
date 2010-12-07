@@ -8,7 +8,7 @@
           paint-client)
   (:import-from sb-ext quit run-program posix-getenv make-timer schedule-timer
                 list-all-timers)
-  (:export help short-range-scan srs))
+  (:export help short-range-scan srs universal-time))
 
 (in-package :spaceship)
 
