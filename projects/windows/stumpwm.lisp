@@ -92,7 +92,7 @@
    (kbd "F5")        "start-terminal 0"
    (kbd "F6")        "start-terminal 1"
    (kbd "F7")        "start-terminal 2"
-   (kbd "F8")        "start-terminal 3"
+   (kbd "F8")        "firefox"
    (kbd "F9")        "xpdf"
    (kbd "s-a")       "anki"
    (kbd "s-h")       "htop"
