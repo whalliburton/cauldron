@@ -41,7 +41,8 @@
   (if-let (timer (nth (1- index) *countdown-timers*))
     (progn
       (unschedule-timer timer)
-      (delete-countdown-timer timer))
+      (delete-countdown-timer timer)
+      (format t "Countdown ~S has been canceled.~%" (timer-name timer)))
     (error "No countdown timer with index ~A" index)))
 
 (defun default-countdown-finished-handler ()
