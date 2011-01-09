@@ -12,7 +12,8 @@
              (list
               (stumpwm::window-number window)
               (stumpwm::window-class window)
-              (stumpwm::window-title window))))
+              (prin1-with-ellipses-to-string
+               (stumpwm::window-title window) 80 #'princ-to-string))))
    :headings '("" "class" "title")))
 
 (defun find-window (number)
