@@ -64,7 +64,7 @@
   "Schedule a countdown alarm or list existing countdowns."
   (if (null length)
     (list-countdowns)
-    (let ((timer (make-timer handler :name name)))
+    (let ((timer (make-timer handler :name name :thread t)))
       (schedule-timer timer (time-to-seconds length unit))
       (with-mutex (*countdown-timers-lock*)
         (push timer *countdown-timers*))
