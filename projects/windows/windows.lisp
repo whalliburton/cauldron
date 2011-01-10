@@ -23,7 +23,9 @@
 
 (defun destroy-window (number)
   "Destroy the window with number NUMBER."
-  (stumpwm::destroy-window (find-window number)))
+  (let ((window(find-window number) ))
+    (stumpwm::destroy-window window)
+    (format t "Destroyed window ~S." (stumpwm::window-title window))))
 
 ;; This seems to only works from slime when you jiggle the mouse
 ;; afterwards, but it works fine from the shell.
