@@ -54,7 +54,7 @@
   (run-or-raise "exec urxvt -e iotop -o" '(:title "iotop")))
 
 (defcommand anki () ()
-  (run-or-raise "anki" '(:title "anki")))
+  (run-or-raise "anki" '(:title "Anki")))
 
 (defun goto-win (win)
   (let* ((group (window-group win))
